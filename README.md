@@ -37,8 +37,6 @@ Chức năng của từng folder đây nhó:
 <li>views — To make the project faster to read I separate the components that are routed and put them in this folder. The components that are routed for me are more than a component since they represent pages and they have routes, I put them in “views” then when you check a page you go to this folder.</li>
 </ul>
 
-Có 1 cái video tutorial về project structure: https://www.youtube.com/watch?v=B1e7grp2svY
-
 <b>Lưu ý:</b><br>
 _ Component để trong file .vue (Single-file component)<br>
 
