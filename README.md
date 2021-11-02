@@ -8,6 +8,11 @@ Quy trình:
 <li>Push changes lên repo đã fork (không phải repo chính nhe)</li>
 <li>Tạo pull requests tới repo chính</li>
 
+## Quy ước
+<li>Component khi đặt tên và khi gọi đều phải đặt tên dưới định dạng Camel Case (Viết hoa từng chữ cái đầu)</li>
+<li>Một tab luôn có đơn vị là 4 spaces</li>
+
+
 ## Build Setup
 
 ```
