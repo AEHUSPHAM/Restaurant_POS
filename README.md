@@ -1,12 +1,8 @@
 # restaurant_pos
 
 ## Commit changes
-KHÔNG COMMIT THẲNG LÊN REPO CHÍNH<br>
-Quy trình:
-<li>Fork repo về</li>
-<li>Clone repo đã fork về local</li>
-<li>Push changes lên repo đã fork (không phải repo chính nhe)</li>
-<li>Tạo pull requests tới repo chính</li>
+KHÔNG COMMIT THẲNG VÀO main<br>
+Chỉ commit vào branch của feature mình đang làm thôi nhó
 
 ## Quy ước
 <li>Component khi đặt tên và khi gọi đều phải đặt tên dưới định dạng Camel Case (Viết hoa từng chữ cái đầu)</li>
