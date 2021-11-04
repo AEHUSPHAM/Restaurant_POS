@@ -21,6 +21,12 @@
 
 <script>
 import FilterItem from '@/components/FilterItem.vue'
+import fast_food_img from '@/assets/filter/fast_food.png'
+import rice_img from '@/assets/filter/rice.png'
+import ice_cream_img from '@/assets/filter/ice_cream.png'
+import milk_img from '@/assets/filter/milk.png'
+import noodle_img from '@/assets/filter/noodle.png'
+import clear_img from '@/assets/filter/clear.png'
 
 export default {
     name: 'FilterWrapper',
@@ -30,13 +36,13 @@ export default {
     data() {
         return {
             filter_items: [
-                { id: 0 ,img_src: "https://cdn-icons-png.flaticon.com/512/3075/3075977.png", img_alt: "fastfood", tag: "Fast Food", isActive: false },
-                { id: 1, img_src: "https://cdn-icons-png.flaticon.com/512/3067/3067788.png", img_alt: "Rice", tag: "Rice", isActive: false },
-                { id: 2, img_src: "https://cdn-icons-png.flaticon.com/512/938/938063.png", img_alt: "ice_cream", tag: "Ice Cream", isActive: false },
-                { id: 3, img_src: "https://cdn-icons-png.flaticon.com/512/3500/3500270.png", img_alt: "milk", tag: "Milk", isActive: false },
-                { id: 4, img_src: "https://cdn-icons-png.flaticon.com/512/1623/1623675.png", img_alt: "noodles", tag: "Noodles", isActive: false },
+                { id: 0 ,img_src: fast_food_img, img_alt: "fastfood", tag: "Fast Food", isActive: false },
+                { id: 1, img_src: rice_img, img_alt: "Rice", tag: "Rice", isActive: false },
+                { id: 2, img_src: ice_cream_img, img_alt: "ice_cream", tag: "Ice Cream", isActive: false },
+                { id: 3, img_src: milk_img, img_alt: "milk", tag: "Milk", isActive: false },
+                { id: 4, img_src: noodle_img, img_alt: "noodles", tag: "Noodles", isActive: false },
             ],
-            clear_btn: {img_src:"https://cdn-icons-png.flaticon.com/512/126/126497.png", text: "Clear Filter"},
+            clear_btn: {img_src:clear_img, text: "Clear Filter"},
             prev_active: -1,
         }
     },
