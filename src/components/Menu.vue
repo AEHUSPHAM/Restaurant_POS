@@ -1,39 +1,39 @@
 <template>
-    <div class = "wrapper" >
- 
-    <FilterItem
-        v-for= "(item,index) in items"
-        v-bind:key = "index"
-        v-bind:img_src= "item.img_src"
-        v-bind:alt = "item.img_alt"
-        v-bind:p = "item.p"
-    />
+    <div class="menu-wrapper container">
+        <div class="row">
+            <MenuItem
+                v-for= "(item,index) in items"
+                v-bind:key = "index"
+                v-bind:img_src= "item.img_src"
+                v-bind:img_alt = "item.img_alt"
+                v-bind:item_index = "index + 1"
+                v-bind:item_name = "item.item_name"
+                v-bind:item_price = "item.item_price"
+                v-bind:item_tag = "item.item_tag"
+            />
+        </div>
     </div>
 </template>
 
-<script>
-import FilterItem from './FilterItem.vue'
 
-export default {
+<script>
+import MenuItem from '@/components/MenuItem.vue'
+export default ({
     name: 'Menu',
     components: {
-        FilterItem,
+        MenuItem,
     },
     props: {
-        items: Object
+        items: Array,
+        default: []
     }
-}
+})
 </script>
 
+
 <style scoped>
-.wrapper {
-    width: 70%;
-	height: 140px;
-    margin: 10px;
-	padding: 10px;
-    outline: 1px solid #808080;
-    float: left;
-    display: flex;
-    overflow-x: auto;
-}
+    menu-wrapper {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
 </style>

@@ -1,19 +1,13 @@
 <template>
-    <div class = "item_container" v-bind:class="{ active: isActive }" @click="isActive = !isActive">
-            <img v-bind:src = "img_src" v-bind:alt = "img_alt"/>
-            <p>{{p}}</p>
-            <button @click = "onClick"> {{p}}</button>
+    <div class = "item_container col-sm" v-bind:class="{ active: isActive }" @click="onClick">
+        <img v-bind:src = "img_src" v-bind:alt = "img_alt"/>
+        <p>{{tag}}</p>
     </div>
 </template>
 
 <script>
 export default {
     name: 'FilterItem',
-    data() {
-        return {
-            isActive: false,
-        }
-    },
 
     props: {
         img_src: {
@@ -24,22 +18,28 @@ export default {
             type: String,
             default: "",
         },
-        p: {
+        tag: {
             type: String,
             default: "",
         },
         callback: {
             type: Function,
+        },
+        isActive: {
+            type: Boolean,
+            default: false
+        },
+        changeColor: {
+            type: Function
+        },
+        id: {
+            type: Number
         }
-
     },
     methods: {
         onClick: function() {
-            // this.item_list = this.item_list.filter((value) => {
-            //     return value === this.tag;
-            // });
-            // console.log(this.item_list)
-            this.callback(this.p);
+            this.changeColor(this.id)
+            this.callback(this.tag);
         },
     }
 
@@ -50,23 +50,28 @@ export default {
 
 <style scoped>
 .item_container {
+    max-width: 160px;
     min-width: 100px;
-    max-width: 100px;
-	height: 100px;
+    max-height: 100px;
 	padding: 20px;
     margin-left: 10px;
     margin-right: 10px;
-    border-radius: 25px;
     font-weight: 600;
-    outline: 1px solid #808080;
-    box-shadow: inset 0 0 0 0 #B1DD9E;
+    box-shadow: inset 0 0 0 1pt #808080;
     transition: ease-out 0.4s;
-
+    word-break: break-all;
+    border-radius: 10px;
+    border-collapse: separate; 
 }
 
 .item_container:hover {
     box-shadow: inset 140px 0 0 0 #B1DD9E;
     background-color: #B1DD9E;
+}
+
+.item_container_red:hover {
+    box-shadow: inset 140px 0 0 0 #FFC2CD;
+    background-color: #FFC2CD;
 }
 
 .active {
@@ -77,5 +82,18 @@ img {
     width: 100%;
     height: 60%; 
     object-fit: contain;
+    margin-bottom: 5px;
+}
+@media screen and (min-width: 601px) {
+    p {
+        font-size: 18px;
+    }
+}
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+    p {
+        font-size: 10px;
+    }
 }
 </style>
