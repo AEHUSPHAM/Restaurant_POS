@@ -65,8 +65,8 @@ export default {
 }
 
 .item_container:hover {
-    box-shadow: inset 140px 0 0 0 #B1DD9E;
-    background-color: #B1DD9E;
+    box-shadow: inset 140px 0 0 0 #FFFF00;
+    background-color: #FFFF00;
 }
 
 .item_container_red:hover {
