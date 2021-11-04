@@ -84,14 +84,14 @@ img {
     object-fit: contain;
     margin-bottom: 5px;
 }
-@media screen and (min-width: 601px) {
+@media screen and (min-width: 1551px) {
     p {
         font-size: 18px;
     }
 }
 
 /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1550px) {
     p {
         font-size: 10px;
     }
