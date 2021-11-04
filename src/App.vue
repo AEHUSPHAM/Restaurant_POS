@@ -41,12 +41,16 @@ export default {
                 {img_src: hamburger_img, img_alt: "Hamburger", item_name: "Hamburger", item_price: "Vnd 4000.0", item_tag: "Fast Food"},
             ],
             display_list: [
-                {img_src: "https://p7.hiclipart.com/preview/179/257/277/pepe-the-frog-cartoon-internet-meme-clip-art-frog.jpg", img_alt: "Pepe", item_name: "Milk", item_price: "Vnd 4000.0", item_tag: "Milk"},
-                {img_src: "https://s.tcdn.co/4dd/300/4dd300fd-0a89-3f3d-ac53-8ec93976495e/1.png", img_alt: "Pepe", item_name: "Fast Food", item_price: "Vnd 4000.0", item_tag: "Fast food"},
-                {img_src: "https://s.tcdn.co/4dd/300/4dd300fd-0a89-3f3d-ac53-8ec93976495e/1.png", img_alt: "Pepe", item_name: "Fast Food", item_price: "Vnd 4000.0", item_tag: "Fast food"},
-                {img_src: "https://s.tcdn.co/4dd/300/4dd300fd-0a89-3f3d-ac53-8ec93976495e/1.png", img_alt: "Pepe", item_name: "Fast Food", item_price: "Vnd 4000.0", item_tag: "Fast food"},
-                {img_src: "https://s.tcdn.co/4dd/300/4dd300fd-0a89-3f3d-ac53-8ec93976495e/1.png", img_alt: "Pepe", item_name: "Rice", item_price: "Vnd 4000.0", item_tag: "Rice"},
-                {img_src: "https://s.tcdn.co/4dd/300/4dd300fd-0a89-3f3d-ac53-8ec93976495e/1.png", img_alt: "Pepe", item_name: "Rice", item_price: "Vnd 4000.0", item_tag: "Rice"}
+                {img_src: blueberry_ice_cream_img, img_alt: "Blueberry Ice Cream", item_name: "Blueberry Ice Cream", item_price: "Vnd 4000.0", item_tag: "Ice Cream"},
+                {img_src: chocolate_ice_cream_img, img_alt: "Chocolate Ice Cream", item_name: "Chocolate Ice Cream", item_price: "Vnd 4000.0", item_tag: "Ice Cream"},
+                {img_src: chocolate_milk_img, img_alt: "Chocolate Milk", item_name: "Chocolate Milk", item_price: "Vnd 4000.0", item_tag: "Milk"},
+                {img_src: strawberry_milk_img, img_alt: "Strawberry Milk", item_name: "Strawberry Milk", item_price: "Vnd 4000.0", item_tag: "Milk"},
+                {img_src: pasta_img, img_alt: "Pasta", item_name: "Pasta", item_price: "Vnd 4000.0", item_tag: "Noodles"},
+                {img_src: ramen_img, img_alt: "Ramen", item_name: "Ramen", item_price: "Vnd 4000.0", item_tag: "Noodles"},
+                {img_src: fried_rice_img, img_alt: "Fried Rice", item_name: "Fried Rice", item_price: "Vnd 4000.0", item_tag: "Rice"},
+                {img_src: sushi_img, img_alt: "Sushi", item_name: "Sushi", item_price: "Vnd 4000.0", item_tag: "Rice"},
+                {img_src: french_fries_img, img_alt: "French Fries", item_name: "French Fries", item_price: "Vnd 4000.0", item_tag: "Fast Food"},
+                {img_src: hamburger_img, img_alt: "Hamburger", item_name: "Hamburger", item_price: "Vnd 4000.0", item_tag: "Fast Food"},
             ],
         }
     },
