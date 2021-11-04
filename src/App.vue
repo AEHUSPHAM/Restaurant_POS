@@ -8,7 +8,6 @@
 <script>
 import FilterWrapper from '@/components/FilterWrapper.vue'
 import Menu from '@/components/Menu.vue'
-import images from '@/assets/images/'
 
 export default {
     name: 'App',
@@ -17,7 +16,6 @@ export default {
         Menu
     },
     data() {
-        console.log(images.pancake_img)
         return {
             menu_items: [
                 {img_src: "https://p7.hiclipart.com/preview/179/257/277/pepe-the-frog-cartoon-internet-meme-clip-art-frog.jpg", img_alt: "Pepe", item_name: "Milk", item_price: "Vnd 6969.0", item_tag: "Milk"},
