@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import FilterItem from './FilterItem.vue'
+import FilterItem from '@/components/FilterItem.vue'
 
 export default {
     name: 'FilterWrapper',
