@@ -1,99 +1,103 @@
 <template>
-    <div class = "item_container col-sm" v-bind:class="{ active: isActive }" @click="onClick">
-        <img v-bind:src = "img_src" v-bind:alt = "img_alt"/>
-        <p>{{tag}}</p>
+    <div class="filter-item-wrapper col-md-2 col-sm-3 col-6 p-auto">        
+        <div
+            v-bind:class="is_active ? 'filter-item-active': 'filter-item'"
+            class="container rounded"
+            @click = "onClick"
+        >
+            <div class="filter-item-image-wrapper row ratio ratio-4x3 mb-1 mt-2">
+                <div class=" col-md-12 col-sm-12 col-12">
+                    <img v-bind:src = "img_src" v-bind:alt="img_alt" class="filter-item-image img-fluid">
+                </div>
+            </div>
+
+            <div class="filter-item-name row">
+                <div class=" col-md-12 col-sm-12 col-12">
+                    {{tag}}
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
-<script>
-export default {
-    name: 'FilterItem',
 
+
+<script>
+export default({
+    name: 'FilterItem',
     props: {
-        img_src: {
+        item_index: {
+            type: Number
+        },
+        img_src : {
             type: String,
-            default: "",
+            default: ""
         },
         img_alt: {
             type: String,
-            default: "",
+            default: ""
         },
         tag: {
             type: String,
-            default: "",
+            default: ""
         },
-        callback: {
-            type: Function,
-        },
-        isActive: {
+        is_active: {
             type: Boolean,
             default: false
         },
-        changeColor: {
+        callback: {
             type: Function
-        },
-        id: {
-            type: Number
         }
     },
     methods: {
-        onClick: function() {
-            this.changeColor(this.id)
-            this.callback(this.tag);
-        },
+        onClick: function(){
+            this.$emit('updateActiveItem', this.item_index);
+        }
     }
-
-}
+})
 </script>
 
 
 
 <style scoped>
-.item_container {
-    max-width: 160px;
-    min-width: 100px;
-    max-height: 100px;
-	padding: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
-    font-weight: 600;
-    box-shadow: inset 0 0 0 1pt #808080;
-    transition: ease-out 0.4s;
-    word-break: break-all;
-    border-radius: 10px;
-    border-collapse: separate; 
-}
-
-.item_container:hover {
-    box-shadow: inset 140px 0 0 0 #FFFF00;
-    background-color: #FFFF00;
-}
-
-.item_container_red:hover {
-    box-shadow: inset 140px 0 0 0 #FFC2CD;
-    background-color: #FFC2CD;
-}
-
-.active {
-    background-color: #91f086;
-}
-
-img {
-    width: 100%;
-    height: 60%; 
-    object-fit: contain;
-    margin-bottom: 5px;
-}
-@media screen and (min-width: 1551px) {
-    p {
-        font-size: 18px;
+    .filter-item {
+        background: #ffffff;
+        border: 1px solid #dbd2d2;
+        max-width: 80%;
     }
-}
-
-/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
-@media screen and (max-width: 1550px) {
-    p {
-        font-size: 10px;
+    .filter-item-name {
+        font-weight: bold;
+        font-size: 80%;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
-}
+    .filter-item-active {
+        background: #2c3a57;
+        border: 2px solid #f8f8f8;
+        max-width: 80%;
+    }
+    .filter-item .filter-item-name {
+        color: #000000;
+    }
+    .filter-item-active .filter-item-name {
+        color: #ffffff
+    }
+    .filter-item, .filter-item-active {
+        padding: 5% 0 5% 0;
+    }
+    .filter-item-image-wrapper {
+        margin: auto;
+        width: 70%;
+    }
+    .filter-item-image {
+        height: 95%;
+        width: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+    .rounded {
+        border-radius:.80rem!important;
+    }
 </style>

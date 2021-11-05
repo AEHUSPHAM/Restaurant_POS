@@ -33,7 +33,7 @@ export default ({
 
 <style scoped>
     menu-wrapper {
-        margin-left: 10%;
-        margin-right: 10%;
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>

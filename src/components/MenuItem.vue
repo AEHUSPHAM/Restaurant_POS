@@ -1,14 +1,13 @@
 <template>
-    <div class=" menu-item-wrapper col-md-3 col-sm-3 col-6 mb-5">
+    <div class=" menu-item-wrapper col-md-3 col-sm-4 col-6 mb-5">
         <!-- Image of menu item -->
-        <div class="container menu-item rounded shadow p-0">
-
-            <div class="row p-3">
-                <img v-bind:src="img_src" v-bind:alt="img_alt" class=" menu-item-image img-fluid">
+        <div class="menu-item container rounded shadow p-0">
+            <div class="menu-item-image-wrapper row ratio ratio-4x3">
+                <img v-bind:src="img_src" v-bind:alt="img_alt" class="menu-item-image img-fluid">
             </div>
 
 
-            <div class="container menu-item-details">
+            <div class="menu-item-details container">
                 <!-- Menu Item name -->
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-12">
@@ -17,6 +16,7 @@
                         </div>
                     </div>
                 </div>
+
 
                 <div class="row">
                     <!-- Menu Item price -->
@@ -51,10 +51,7 @@ export default ({
         },
         item_index: {
             type: Number,
-            default: 0,
-            validiator: function(value){ //validiator for the item_index propertu
-                return Number.isInteger(value);
-            }
+
         },
         item_name: {
             type: String,
@@ -95,10 +92,13 @@ export default ({
     .rounded, .btn-rounded {
         border-radius:.60rem!important
     }
-    .menu-item-image {
+    .menu-item-image-wrapper {
         margin-left: auto;
         margin-right: auto;
-        max-width: 90%;
+        width: 100%;
+    }
+    .menu-item-image {
+        padding: 10%;
     }
     .menu-item-details {
         width: 100%;
@@ -112,7 +112,6 @@ export default ({
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    
     .menu-item-name {
         font-size: 95%;
         width: 100%;
@@ -130,6 +129,7 @@ export default ({
     .cart-button {
         background: #ff0000;
         float: right;
+        max-width: 100%;
     }
     .cart-button .fa-shopping-cart {
         color: #ffffff;
