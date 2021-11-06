@@ -100,4 +100,40 @@ export default({
     .rounded {
         border-radius:.80rem!important;
     }
+
+    @media only screen and (max-width: 420px){
+        .filter-item-name {
+            font-size: 65%;
+        }
+    }
+
+    @media only screen and (min-width: 421px) and (max-width: 575px){
+        .filter-item-name {
+            font-size: 80%;
+        }
+    }
+
+    @media only screen and (min-width: 576px) and (max-width: 767px){
+        .filter-item-name {
+            font-size: 55%;
+        }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px){
+        .filter-item-name {
+            font-size: 55%;
+        }
+    }
+
+    @media only screen and (min-width: 992px) and (max-width: 1199px){
+        .filter-item-name {
+            font-size: 65%;
+        }
+    }
+
+    @media only screen and (min-width: 1200px){
+        .filter-item-name {
+            font-size: 80%;
+        }
+    }
 </style>

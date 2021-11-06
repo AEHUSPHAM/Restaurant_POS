@@ -2,8 +2,8 @@
     <nav class="navbar-wrapper navbar navbar-light bg-white">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <button type="button" class="home-button"><i class="fa fa-home"></i></button>
-                <span>Back to home</span>
+                <button type="button" class="home-button"><i class="fa fa-home home_icon"></i></button>
+                <span class="home_text">Back to home</span>
             </a>
         </div>
     </nav>
@@ -140,6 +140,10 @@ export default {
     background: #2c3a57;
     border: none;
     border-radius:.70rem!important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
 }
 .body-wrapper {
     padding-left: 5%;
@@ -157,5 +161,122 @@ export default {
 .title {
     float: left;
     font-weight: bold;
+    font-size: 25px;
+}
+
+@media only screen and (max-width: 420px){
+    .home_text {
+        font-size: 17px;
+    }
+    .home-button {
+        height: 30px;
+        width: 30px;
+        border-radius:.50rem!important;
+    }
+    .home_icon {
+        font-size: 70%;
+    }
+    .title {
+        font-size: 17px;
+        position:relative;
+        top:5px;
+    }
+
+}
+
+@media only screen and (min-width: 421px) and (max-width: 575px){
+    .home_text {
+        font-size: 19px;
+        position: relative;
+        top: 4px;
+    }
+    .home-button {
+        height: 35px;
+        width: 35px;
+        border-radius:.54rem!important;
+    }
+    .home_icon {
+        font-size: 75%;
+    }
+    .title {
+        font-size: 23px;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px){
+    .home_text {
+        font-size: 19px;
+        position: relative;
+        top: 4px;
+    }
+    .home-button {
+        height: 35px;
+        width: 35px;
+        border-radius:.54rem!important;
+    }
+    .home_icon {
+        font-size: 80%;
+    }
+    .title {
+        font-size: 19px;
+        position:relative;
+        top:5px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px){
+    .home_text {
+        font-size: 23px;
+        position: relative;
+        top: 3px;
+    }
+    .home-button {
+        height: 35px;
+        width: 35px;
+        border-radius:.54rem!important;
+    }
+    .home_icon {
+        font-size: 80%;
+    }
+    .title {
+        font-size: 19px;
+        position:relative;
+        top:5px;
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px){
+    .home_text {
+        font-size: 28px;
+        position: relative;
+        top: 2px;
+    }
+    .home-button {
+        height: 40px;
+        width: 40px;
+        border-radius:.62rem!important;
+    }
+    .home_icon {
+        font-size: 90%;
+    }
+    .title {
+        font-size: 23px;
+        position:relative;
+        top:2px;
+    }
+}
+
+@media only screen and (min-width: 1200px){
+    .home_text {
+        font-size: 33px;
+    }
+    .home-button {
+        height: 43px;
+        width: 43px;
+        border-radius:.70rem!important;
+    }
+    .title {
+        font-size: 25px;
+    }
 }
 </style>
