@@ -125,7 +125,6 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3a57;
-    background: #f8f8f8;
 }
 .navbar-wrapper span {
     font-weight: bold;
@@ -166,15 +165,17 @@ export default {
 
 @media only screen and (max-width: 420px){
     .home_text {
-        font-size: 17px;
+        font-size: 15px;
+        position: relative;
+        bottom: 1px;
     }
     .home-button {
-        height: 30px;
-        width: 30px;
-        border-radius:.50rem!important;
+        height: 29px;
+        width: 29px;
+        border-radius:.58rem!important;
     }
     .home_icon {
-        font-size: 70%;
+        font-size: 21px;
     }
     .title {
         font-size: 17px;
@@ -186,36 +187,38 @@ export default {
 
 @media only screen and (min-width: 421px) and (max-width: 575px){
     .home_text {
-        font-size: 19px;
+        font-size: 17px;
         position: relative;
-        top: 4px;
+        top: 1px;
     }
     .home-button {
-        height: 35px;
-        width: 35px;
-        border-radius:.54rem!important;
+        height: 32px;
+        width: 32px;
+        border-radius:.64rem!important;
     }
     .home_icon {
-        font-size: 75%;
+        font-size: 23px;
     }
     .title {
-        font-size: 23px;
+        font-size: 19px;
+        position:relative;
+        top:5px;
     }
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px){
     .home_text {
-        font-size: 19px;
+        font-size: 15px;
         position: relative;
-        top: 4px;
+        bottom: 1px;
     }
     .home-button {
-        height: 35px;
-        width: 35px;
-        border-radius:.54rem!important;
+        height: 29px;
+        width: 29px;
+        border-radius:.58rem!important;
     }
     .home_icon {
-        font-size: 80%;
+        font-size: 21px;
     }
     .title {
         font-size: 19px;
@@ -226,17 +229,17 @@ export default {
 
 @media only screen and (min-width: 768px) and (max-width: 991px){
     .home_text {
-        font-size: 23px;
+        font-size: 15px;
         position: relative;
-        top: 3px;
+        bottom: 1px;
     }
     .home-button {
-        height: 35px;
-        width: 35px;
-        border-radius:.54rem!important;
+        height: 29px;
+        width: 29px;
+        border-radius:.58rem!important;
     }
     .home_icon {
-        font-size: 80%;
+        font-size: 21px;
     }
     .title {
         font-size: 19px;
@@ -247,17 +250,17 @@ export default {
 
 @media only screen and (min-width: 992px) and (max-width: 1199px){
     .home_text {
-        font-size: 28px;
+        font-size: 17px;
         position: relative;
-        top: 2px;
+        top: 1px;
     }
     .home-button {
-        height: 40px;
-        width: 40px;
-        border-radius:.62rem!important;
+        height: 32px;
+        width: 32px;
+        border-radius:.64rem!important;
     }
     .home_icon {
-        font-size: 90%;
+        font-size: 23px;
     }
     .title {
         font-size: 23px;
@@ -268,12 +271,17 @@ export default {
 
 @media only screen and (min-width: 1200px){
     .home_text {
-        font-size: 33px;
+        font-size: 19px;
+        position: relative;
+        top: 4px;
     }
     .home-button {
-        height: 43px;
-        width: 43px;
+        height: 35px;
+        width: 35px;
         border-radius:.70rem!important;
+    }
+    .home_icon {
+        font-size: 25px;
     }
     .title {
         font-size: 25px;
