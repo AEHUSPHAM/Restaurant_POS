@@ -6,7 +6,7 @@
 <li>Each variable's name should be lowercase with underscore e.g., my_var, my_var_2, ...</li>
 <li>Each function's/method's name should be camel case with lowercase first letter, e.g., myFunction, ...</li>
 <li>Each tab is equal to 4 spaces.</li>
-
+</ul>
 
 ## Build Setup
 
