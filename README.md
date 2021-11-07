@@ -1,6 +1,6 @@
 # restaurant_pos
 
-## Naming Conventions
+## Conventions
 <ul>
 <li>Each component's name has to be camel case , e.g., MyComponent, ...</li>
 <li>Each variable's name should be lowercase with underscore e.g., my_var, my_var_2, ...</li>
