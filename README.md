@@ -1,7 +1,7 @@
 # restaurant_pos
 
 ## Commit changes
-DO NOT COMMIT STRAIT TO MAIN<br>
+DO NOT COMMIT STRAIGHT TO MAIN<br>
 Commit to the feature's branch you are doing only.
 
 ## Convention
