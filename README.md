@@ -1,12 +1,14 @@
 # restaurant_pos
 
 ## Commit changes
+
 DO NOT COMMIT STRAIGHT TO MAIN<br>
 Commit to the feature's branch you are doing only.
 
 ## Convention
 Each component name has to be Camel Case.
 Each tab is equal to 4 spaces.
+
 
 ## Build Setup
 
