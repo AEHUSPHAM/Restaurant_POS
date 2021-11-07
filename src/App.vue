@@ -2,8 +2,8 @@
     <nav class="navbar-wrapper navbar navbar-light bg-white">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <button type="button" class="home-button"><i class="fa fa-home home_icon"></i></button>
-                <span class="home_text">Back to home</span>
+                <button type="button" class="home-button"><i class="fa fa-home home-icon"></i></button>
+                <span class="home-text">Back to home</span>
             </a>
         </div>
     </nav>
@@ -30,25 +30,8 @@
 <script>
 import FilterMenu from '@/components/FilterMenu.vue'
 import Menu from '@/components/Menu.vue'
-import blueberry_ice_cream_img from '@/assets/menu/blueberry_ice_cream.jpg'
-import chocolate_ice_cream_img from '@/assets/menu/chocolate_ice_cream.jpg'
-import chocolate_milk_img from '@/assets/menu/chocolate_milk.jpg'
-import strawberry_milk_img from '@/assets/menu/strawberry_milk.jpg'
-import pasta_img from '@/assets/menu/pasta.jpg'
-import ramen_img from '@/assets/menu/ramen.jpg'
-import fried_rice_img from '@/assets/menu/fried_rice.jpg'
-import sushi_img from '@/assets/menu/sushi.jpg'
-import french_fries_img from '@/assets/menu/french_fries.jpg'
-import hamburger_img from '@/assets/menu/hamburger.jpg'
 
-import all_img from '@/assets/filter/all.png'
-import fast_food_img from '@/assets/filter/fast_food.png'
-import rice_img from '@/assets/filter/rice.png'
-import ice_cream_img from '@/assets/filter/ice_cream.png'
-import milk_img from '@/assets/filter/milk.png'
-import noodle_img from '@/assets/filter/noodle.png'
-import soup_img from '@/assets/filter/soup.png'
-import tea_img from '@/assets/filter/tea.png'
+import {menuItems, tagList} from '@/Data.js'
 
 
 export default {
@@ -60,40 +43,9 @@ export default {
     data() {
         return {
             active_tag: "All dishes",
-            display_list: [
-                {img_src: blueberry_ice_cream_img, img_alt: "Blueberry Ice Cream", item_name: "Blueberry Ice Cream", item_price: "Vnd 4000.0", tag: "Ice Cream"},
-                {img_src: chocolate_ice_cream_img, img_alt: "Chocolate Ice Cream", item_name: "Chocolate Ice Cream", item_price: "Vnd 4000.0", tag: "Ice Cream"},
-                {img_src: chocolate_milk_img, img_alt: "Chocolate Milk", item_name: "Chocolate Milk", item_price: "Vnd 4000.0", tag: "Milk"},
-                {img_src: strawberry_milk_img, img_alt: "Strawberry Milk", item_name: "Strawberry Milk", item_price: "Vnd 4000.0", tag: "Milk"},
-                {img_src: pasta_img, img_alt: "Pasta", item_name: "Pasta", item_price: "Vnd 4000.0", tag: "Noodles"},
-                {img_src: ramen_img, img_alt: "Ramen", item_name: "Ramen", item_price: "Vnd 4000.0", tag: "Noodles"},
-                {img_src: fried_rice_img, img_alt: "Fried Rice", item_name: "Fried Rice", item_price: "Vnd 4000.0", tag: "Rice"},
-                {img_src: sushi_img, img_alt: "Sushi", item_name: "Sushi", item_price: "Vnd 4000.0", tag: "Rice"},
-                {img_src: french_fries_img, img_alt: "French Fries", item_name: "French Fries", item_price: "Vnd 4000.0", tag: "Fast Food"},
-                {img_src: hamburger_img, img_alt: "Hamburger", item_name: "Hamburger", item_price: "Vnd 4000.0", tag: "Fast Food"},
-            ],
-            menu_items: [
-                {img_src: blueberry_ice_cream_img, img_alt: "Blueberry Ice Cream", item_name: "Blueberry Ice Cream", item_price: "Vnd 4000.0", tag: "Ice Cream"},
-                {img_src: chocolate_ice_cream_img, img_alt: "Chocolate Ice Cream", item_name: "Chocolate Ice Cream", item_price: "Vnd 4000.0", tag: "Ice Cream"},
-                {img_src: chocolate_milk_img, img_alt: "Chocolate Milk", item_name: "Chocolate Milk", item_price: "Vnd 4000.0", tag: "Milk"},
-                {img_src: strawberry_milk_img, img_alt: "Strawberry Milk", item_name: "Strawberry Milk", item_price: "Vnd 4000.0", tag: "Milk"},
-                {img_src: pasta_img, img_alt: "Pasta", item_name: "Pasta", item_price: "Vnd 4000.0", tag: "Noodles"},
-                {img_src: ramen_img, img_alt: "Ramen", item_name: "Ramen", item_price: "Vnd 4000.0", tag: "Noodles"},
-                {img_src: fried_rice_img, img_alt: "Fried Rice", item_name: "Fried Rice", item_price: "Vnd 4000.0", tag: "Rice"},
-                {img_src: sushi_img, img_alt: "Sushi", item_name: "Sushi", item_price: "Vnd 4000.0", tag: "Rice"},
-                {img_src: french_fries_img, img_alt: "French Fries", item_name: "French Fries", item_price: "Vnd 4000.0", tag: "Fast Food"},
-                {img_src: hamburger_img, img_alt: "Hamburger", item_name: "Hamburger", item_price: "Vnd 4000.0", tag: "Fast Food"},
-            ],
-            tag_list: [
-                {img_src: all_img, img_alt: "all", tag: "All Dishes"},
-                {img_src: fast_food_img, img_alt: "fastfood", tag: "Fast Food"},
-                {img_src: rice_img, img_alt: "Rice", tag: "Rice"},
-                {img_src: noodle_img, img_alt: "noodles", tag: "Noodles"},
-                {img_src: soup_img, img_alt: "soup", tag: "Soup"},
-                {img_src: ice_cream_img, img_alt: "ice_cream", tag: "Ice Cream"},
-                {img_src: milk_img, img_alt: "milk", tag: "Milk"},
-                {img_src: tea_img, img_alt: "tea", tag: "Tea"}
-            ],
+            display_list: menuItems().slice(),
+            menu_items: menuItems().slice(),
+            tag_list: tagList().slice()
         }
     },
     methods: {
@@ -162,9 +114,8 @@ export default {
     font-weight: bold;
     font-size: 25px;
 }
-
 @media only screen and (max-width: 420px){
-    .home_text {
+    .home-text {
         font-size: 15px;
         position: relative;
         bottom: 1px;
@@ -174,7 +125,7 @@ export default {
         width: 29px;
         border-radius:.58rem!important;
     }
-    .home_icon {
+    .home-icon {
         font-size: 21px;
     }
     .title {
@@ -182,11 +133,9 @@ export default {
         position:relative;
         top:5px;
     }
-
 }
-
 @media only screen and (min-width: 421px) and (max-width: 575px){
-    .home_text {
+    .home-text {
         font-size: 17px;
         position: relative;
         top: 1px;
@@ -196,7 +145,7 @@ export default {
         width: 32px;
         border-radius:.64rem!important;
     }
-    .home_icon {
+    .home-icon {
         font-size: 23px;
     }
     .title {
@@ -205,9 +154,8 @@ export default {
         top:5px;
     }
 }
-
 @media only screen and (min-width: 576px) and (max-width: 767px){
-    .home_text {
+    .home-text {
         font-size: 15px;
         position: relative;
         bottom: 1px;
@@ -217,7 +165,7 @@ export default {
         width: 29px;
         border-radius:.58rem!important;
     }
-    .home_icon {
+    .home-icon {
         font-size: 21px;
     }
     .title {
@@ -226,9 +174,8 @@ export default {
         top:5px;
     }
 }
-
 @media only screen and (min-width: 768px) and (max-width: 991px){
-    .home_text {
+    .home-text {
         font-size: 15px;
         position: relative;
         bottom: 1px;
@@ -238,7 +185,7 @@ export default {
         width: 29px;
         border-radius:.58rem!important;
     }
-    .home_icon {
+    .home-icon {
         font-size: 21px;
     }
     .title {
@@ -247,9 +194,8 @@ export default {
         top:5px;
     }
 }
-
 @media only screen and (min-width: 992px) and (max-width: 1199px){
-    .home_text {
+    .home-text {
         font-size: 17px;
         position: relative;
         top: 1px;
@@ -259,7 +205,7 @@ export default {
         width: 32px;
         border-radius:.64rem!important;
     }
-    .home_icon {
+    .home-icon {
         font-size: 23px;
     }
     .title {
@@ -268,9 +214,8 @@ export default {
         top:2px;
     }
 }
-
 @media only screen and (min-width: 1200px){
-    .home_text {
+    .home-text {
         font-size: 19px;
         position: relative;
         top: 4px;
@@ -280,7 +225,7 @@ export default {
         width: 35px;
         border-radius:.70rem!important;
     }
-    .home_icon {
+    .home-icon {
         font-size: 25px;
     }
     .title {

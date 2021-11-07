@@ -90,7 +90,7 @@ export default ({
         max-width: 90%;
     }
     .rounded, .btn-rounded {
-        border-radius:.55rem!important;
+        border-radius:.80rem!important;
     }
     .menu-item-image-wrapper {
         margin-left: auto;
@@ -152,9 +152,7 @@ export default ({
         .rounded, .btn-rounded {
             border-radius:.35rem!important;
         }
-
     }
-
     @media only screen and (min-width: 421px) and (max-width: 575px){
         .menu-item-name {
             font-size: 95%;
@@ -170,7 +168,6 @@ export default ({
             border-radius:.35rem!important;
         }
     }
-
     @media only screen and (min-width: 576px) and (max-width: 767px){
         .menu-item-name {
             font-size: 62%;
@@ -186,7 +183,6 @@ export default ({
             border-radius:.40rem!important;
         }
     }
-
     @media only screen and (min-width: 768px) and (max-width: 991px){
         .menu-item-name {
             font-size: 62%;
@@ -202,7 +198,6 @@ export default ({
             border-radius:.45rem!important;
         }
     }
-
     @media only screen and (min-width: 992px) and (max-width: 1199px){
         .menu-item-name {
             font-size: 75%;
@@ -218,7 +213,6 @@ export default ({
             border-radius:.45rem!important;
         }
     }
-
     @media only screen and (min-width: 1200px){
         .menu-item-name {
             font-size: 95%;
