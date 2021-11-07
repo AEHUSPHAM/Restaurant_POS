@@ -1,11 +1,11 @@
 # restaurant_pos
 
 ## Naming Conventions
-
-Each component's name has to be camel case , e.g., MyComponent, ...
-Each variable's name should be lowercase with underscore e.g., my_var, my_var_2, ...
-Each function's/method's name should be camel case with lowercase first letter, e.g., myFunction, ...
-Each tab is equal to 4 spaces.
+<ul>
+<li>Each component's name has to be camel case , e.g., MyComponent, ...</li>
+<li>Each variable's name should be lowercase with underscore e.g., my_var, my_var_2, ...</li>
+<li>Each function's/method's name should be camel case with lowercase first letter, e.g., myFunction, ...</li>
+<li>Each tab is equal to 4 spaces.</li>
 
 
 ## Build Setup
