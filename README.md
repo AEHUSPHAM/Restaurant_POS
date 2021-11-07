@@ -1,5 +1,8 @@
 # restaurant_pos
 
+## Design documents
+Design documents are stored in the `documents` folder.
+
 ## Conventions
 <ul>
 <li>Each component's name has to be camel case , e.g., MyComponent, ...</li>
