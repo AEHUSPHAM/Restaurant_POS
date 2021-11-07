@@ -9,7 +9,7 @@ const menu_items = [
     {img_src: loadImage('menu/chocolate_ice_cream.jpg') , img_alt: "Chocolate Ice Cream"    , item_name: "Chocolate Ice Cream"  , item_price: "Vnd 50.000"  , tag: "Ice Cream"},
     {img_src: loadImage('menu/chocolate_milk.jpg')      , img_alt: "Chocolate Milk"         , item_name: "Chocolate Milk"       , item_price: "Vnd 30.000"  , tag: "Milk"},
     {img_src: loadImage('menu/strawberry_milk.jpg')     , img_alt: "Strawberry Milk"        , item_name: "Strawberry Milk"      , item_price: "Vnd 30.000"  , tag: "Milk"},
-    {img_src: loadImage('menu/strawberry_milk.jpg')     , img_alt: "Pasta"                  , item_name: "Pasta"                , item_price: "Vnd 50.000"  , tag: "Noodles"},
+    {img_src: loadImage('menu/pasta.jpg')               , img_alt: "Pasta"                  , item_name: "Pasta"                , item_price: "Vnd 50.000"  , tag: "Noodles"},
     {img_src: loadImage('menu/ramen.jpg')               , img_alt: "Ramen"                  , item_name: "Ramen"                , item_price: "Vnd 50.000"  , tag: "Noodles"},
     {img_src: loadImage('menu/fried_rice.jpg')          , img_alt: "Fried Rice"             , item_name: "Fried Rice"           , item_price: "Vnd 30.000"  , tag: "Rice"},
     {img_src: loadImage('menu/sushi.jpg')               , img_alt: "Sushi"                  , item_name: "Sushi"                , item_price: "Vnd 50.000"  , tag: "Rice"},
