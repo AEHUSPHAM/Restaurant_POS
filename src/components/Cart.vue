@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style scoped>
-.cart_close {
+.cart-close {
     height: 100%;
     width: 0;
     position: fixed;
@@ -28,7 +28,7 @@ export default {
     transition: 0.5s;
     padding-top: 60px;
 }
-.cart_open {
+.cart-open {
     height: 100%;
     width: 250px;
     position: fixed;
