@@ -6,6 +6,7 @@ Design documents are stored in the `documents` folder.
 ## Important notes
 <ul>
 <li>We are using Vue 3, Bootstrap v5.0.2, jQuery 3.5.1, so pay attention to the framework version when looking for documents</li>
+<li>The Firebase CLI must be installed in order to work with Firebase</li>
 <li>DO NOT use the relative path like "./file" or "../../file" to import a file, use the "@" alias which refers to the src folder. For example, "@/components/Menu.vue"</li>
 <li>Tutorial for vue-router in Vue 3: https://www.vuemastery.com/blog/vue-router-a-tutorial-for-vue-3/</li>
 <li>The routes are configured in "@/router/index.js"</li>
@@ -19,6 +20,9 @@ Design documents are stored in the `documents` folder.
 ## Build Setup
 
 ```
+# Log in to Firebase
+firebase login
+
 # Installs required Node packages
 npm install
 
@@ -27,6 +31,9 @@ npm run serve
 
 # Compiles and minifies for production
 npm run build
+
+# Deploy the web to Firebase Hosting
+firebase deploy
 
 # Lints and fixes files
 npm run lint
