@@ -1,27 +1,30 @@
 <template>
-    <nav class="navbar-wrapper navbar navbar-light bg-white">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <button type="button" class="home-button"><i class="fa fa-home home-icon"></i></button>
-                <span class="home-text">Back to home</span>
-            </a>
-        </div>
-    </nav>
-
-    <div class="body-wrapper container">
-        <div class="row">
-            <FilterMenu
-                v-bind:items = 'tag_list'
-                @updateMenuByCate="updateMenuByCate($event)"
-            />
-        </div>
-        <div class="title-wrapper row">
-            <div class="col-md-12 col-sm-12 col-12">
-                <h4 class="title">{{active_tag}}&nbsp;&nbsp;</h4><hr>
+    <Cart v-bind:active = 'cart_active'/>
+    <div>
+        <nav class="navbar-wrapper navbar navbar-light bg-white">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <button type="button" class="home-button"><i class="fa fa-home home-icon"></i></button>
+                    <span class="home-text">Back to home</span>
+                </a>
             </div>
-        </div>
-        <div class="row">
-            <Menu v-bind:items = 'display_list'/>
+        </nav>
+        <button @click="cart_active = !cart_active">Cart</button>
+        <div class="body-wrapper container">
+            <div class="row">
+                <FilterMenu
+                    v-bind:items = 'tag_list'
+                    @updateMenuByCate="updateMenuByCate($event)"
+                />
+            </div>
+            <div class="title-wrapper row">
+                <div class="col-md-12 col-sm-12 col-12">
+                    <h4 class="title">{{active_tag}}&nbsp;&nbsp;</h4><hr>
+                </div>
+            </div>
+            <div class="row">
+                <Menu v-bind:items = 'display_list'/>
+            </div>
         </div>
     </div>
 </template>
@@ -30,6 +33,7 @@
 <script>
 import FilterMenu from '@/components/FilterMenu.vue'
 import Menu from '@/components/Menu.vue'
+import Cart from '@/components/Cart.vue'
 
 import {menuItems, tagList} from '@/Data.js'
 
@@ -38,14 +42,16 @@ export default {
     name: 'MenuPage',
     components: {
         FilterMenu,
-        Menu
+        Menu,
+        Cart
     },
     data() {
         return {
             active_tag: "All dishes",
             display_list: menuItems().slice(),
             menu_items: menuItems().slice(),
-            tag_list: tagList().slice()
+            tag_list: tagList().slice(),
+            cart_active: false
         }
     },
     methods: {
