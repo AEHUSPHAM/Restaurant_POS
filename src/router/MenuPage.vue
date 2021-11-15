@@ -112,7 +112,7 @@ export default {
     font-size: 25px;
 }
 .menu-reduce {
-    margin-right: 500px;
+    margin-right: 30%;
 }
 @media only screen and (max-width: 420px){
     .home-text {
