@@ -28,8 +28,8 @@
 
                     <!-- Add-to-cart button -->
                     <div class="col-md-4 col-sm-4 col-4 m-auto">
-                        <button title="cart" type="button" class="btn btn-rounded cart-button" @click="onClick">
-                            <i class="fa fa-shopping-cart menu_item"></i>
+                        <button title="cart" type="button" class="btn btn-rounded cart-button" @click="addToCart">
+                            <i class="fa fa-shopping-cart"></i>
                         </button>
                     </div>
                 </div>
@@ -61,20 +61,14 @@ export default ({
         item_price: {   //price should contain both the value and unit
             type: Number, 
         },
-        callback: {
-            type: Function,
-            default: function() {
-                alert("This function has not been implemented.")
-            }
-        },
         item_tag: {
             type: String, 
             default: "Unknown"
-        }
+        },
     },
     methods: {
-        onClick: function(){
-            this.callback(this.callback)
+        addToCart: function(){
+            this.emitter.emit('addToCart', this)
         }
     },
 })
