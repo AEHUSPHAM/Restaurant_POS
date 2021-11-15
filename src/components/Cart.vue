@@ -14,11 +14,12 @@
             v-bind:in_cart="in_cart[index]"
             v-bind:price="cart_item.item_price"
         />
-        <div :class="{ 'cart-footer-open': active, 'cart-footer-close': !active }">
-            <p style="float: left; font-size: 20px;"><b>Total:</b></p>
-            <button class="payment-button">PAYMENT</button>
-        </div>
+        
 
+    </div>
+    <div :class="{ 'cart-footer-open': active, 'cart-footer-close': !active }">
+        <p style="float: left; font-size: 20px;"><b>Total:</b></p>
+        <button class="payment-button">PAYMENT</button>
     </div>
 </template>
 
@@ -87,7 +88,7 @@ export default {
     margin-bottom: 50px;
 }
 .cart-close {
-    height: 100%;
+    height: 85%;
     width: 0;
     position: fixed;
     z-index: 1;
@@ -115,20 +116,21 @@ export default {
     display: none;
 }
 .cart-footer-close {
-    width: 500px;
+    width: 0;
     height: 15%;
     position: fixed;
     bottom: 0;
-    z-index: 2;
+    right: 0;
+    z-index: 1;
     background: #ffffff;
-    padding: 10px;
 }
 .cart-footer-open {
     width: 500px;
     height: 15%;
     position: fixed;
     bottom: 0;
-    z-index: 2;
+    right: 0;
+    z-index: 1;
     background: #ffffff;
     padding: 10px;
     box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
@@ -136,18 +138,17 @@ export default {
     -moz-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
 }
 .payment-button {
-    width: 400px;
-    bottom: 0;
-    position: fixed;
-    z-index: 3;
-    margin-left: -225px;
-    margin-bottom: 20px;
-    color: #FFFFFF;
-    background-color: red;
-    border-radius:.45rem;
-    border: none;
-    height: 50px;
     font-weight: 700;
     font-size: 20px;
+    color: #FFFFFF;
+    background-color: red;
+    border: 1px solid #dbd2d2;
+    border-radius: 10px;
+    margin-left: 2.5%;
+    margin-bottom: 15px;
+    padding-top: 2%;
+    width: 95%;
+    height: 70px;
+    float: left;
 }
 </style>
