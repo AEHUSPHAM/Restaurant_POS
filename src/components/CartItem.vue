@@ -7,27 +7,19 @@
             </div>
             <div class="col-md-9 col-sm-9 col-9 w-100">
                 <div class="row" style="margin-bottom: 6px;">
-                    <div class="col-md-12 col-sm-12 col-12">
-                        <b>
-                            <p style="float: left; color: #FF0000; margin-right: 5px;"> {{id}}.</p>
-                            <p style="float: left">{{text}}</p>
+                    <div class="col-md-12 col-sm-12 col-12 w-100">
+                        <b style="overflow: visible;">
+                            <p class="item-index">{{id}}.</p>
+                            <p class="item-name">{{text}}</p>
                         </b>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2 col-sm-2 col-2">
+                    <div class="col-md-12 col-sm-12 col-12 w-100">
                         <button class="minus" @click="decreaseCartQuantity"><i class="fa fa-minus"></i></button>
-                    </div>
-                    <div class="col-md-2 col-sm-2 col-2">
-                        <p>{{in_cart}}</p>
-                    </div>
-                    <div class="col-md-2 col-sm-2 col-2">
+                        <p class="minus" style="border: none;">{{in_cart}}</p>
                         <button class="plus" @click="increaseCartQuantity"><i class="fa fa-plus"></i></button>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-6">
-                        <div style="color: #ff0000; float: right">
-                            <b><p>{{price.toLocaleString('en-VN', {style: 'currency',currency: 'VND', minimumFractionDigits: 0})}}</p></b>
-                        </div>
+                        <b><p style="color: #ff0000; display: flex; float: right">{{price.toLocaleString('en-VN', {style: 'currency',currency: 'VND', minimumFractionDigits: 0})}}</p></b>
                     </div>
                 </div>
             </div>
@@ -81,13 +73,20 @@ export default {
 <style scoped>
 img {
     float: left;
-    margin-top: 1%;
     width: 23%;
+    height: 80px;
     border-radius: 10px;
     margin-right: 3%;
 
 }
-
+.item-index {
+    float: left;
+    color: #FF0000;
+    margin-right: 5px;
+}
+.item-name {
+    float: left
+}
 .minus {
     float: left;
     display: flex;
@@ -138,4 +137,8 @@ img {
     width: 95%;
     height: 100px;
 }
+
+
+
+
 </style>

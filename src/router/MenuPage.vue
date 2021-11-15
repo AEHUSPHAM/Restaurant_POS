@@ -34,7 +34,6 @@
 import FilterMenu from '@/components/FilterMenu.vue'
 import Menu from '@/components/Menu.vue'
 import Cart from '@/components/Cart.vue'
-
 import store from '@/store.js'
 
 

@@ -78,9 +78,9 @@ export default {
             }
         })
         this.emitter.on('closeCartItem', index => {
-            this.cart.splice(index, 1);
             this.total_item -= this.in_cart[index];
             this.total_money -= this.cart[index].item_price * this.in_cart[index];
+            this.cart.splice(index, 1);
             this.in_cart.splice(index, 1);
             this.name.splice(index, 1);
         })
@@ -106,7 +106,7 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     height: 85%;
-    width: 500px;
+    width: 30%;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -126,7 +126,7 @@ export default {
     display: none;
 }
 .cart-footer-open {
-    width: 500px;
+    width: 30%;
     height: 15%;
     position: fixed;
     bottom: 0;
@@ -151,4 +151,5 @@ export default {
     height: 70px;
     justify-content: center;
 }
+
 </style>
