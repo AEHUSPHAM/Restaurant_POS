@@ -43,6 +43,9 @@
 export default ({
     name: 'MenuItem',
     props: {
+        item_id: {
+            type: String,
+        },
         img_src: {
             type: String,
             default: ""
