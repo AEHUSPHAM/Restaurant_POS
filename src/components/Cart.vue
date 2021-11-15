@@ -12,7 +12,7 @@
                 v-bind:img_alt="cart_item.img_alt"
                 v-bind:id="index + 1"
                 v-bind:text="cart_item.item_name"
-                v-bind:in_cart="in_cart[index]"
+                v-bind:in_cart="cart_item.in_cart"
                 v-bind:price="cart_item.item_price"
             />
         </div>
@@ -42,47 +42,52 @@ export default {
     data() {
         return {
             cart: [],
-            name: [],
-            in_cart: [],
+            ids: [],
             total_item: 0,
             total_money: 0,
         }
     },
     created() {
         this.emitter.on('addToCart', item_added => {
-            var temp = {img_src: item_added.img_src, img_alt: item_added.img_alt, item_name: item_added.item_name, item_price: item_added.item_price};
-            var temp2 = this.name.indexOf(item_added.item_name);
+            var temp = {
+                item_id: item_added.item_id,
+                img_src: item_added.img_src,
+                img_alt: item_added.img_alt,
+                item_name: item_added.item_name,
+                item_price: item_added.item_price,
+                item_tag: item_added.item_tag,
+                in_cart: 1
+            };
+            var temp2 = this.ids.indexOf(item_added.item_id);
             if(temp2 === -1)
             {
                 this.cart.push(temp);
-                this.in_cart.push(1);
-                this.name.push(item_added.item_name);
+                this.ids.push(item_added.item_id);
             }
             else
             {   
-                this.in_cart[temp2] += 1;
+                this.cart[temp2].in_cart += 1;
             }
             this.total_item += 1;
-            this.total_money += item_added.item_price
+            this.total_money += item_added.item_price;
         })
         this.emitter.on('increaseCartQuantity', index => {
-            this.in_cart[index] += 1;
+            this.cart[index].in_cart += 1;
             this.total_item += 1;
             this.total_money += this.cart[index].item_price
         })
         this.emitter.on('decreaseCartQuantity', index => {
-            if(this.in_cart[index] > 0) {
-                this.in_cart[index] -= 1;
+            if(this.cart[index].in_cart > 0) {
+                this.cart[index].in_cart -= 1;
                 this.total_item -= 1;
                 this.total_money -= this.cart[index].item_price
             }
         })
         this.emitter.on('closeCartItem', index => {
-            this.total_item -= this.in_cart[index];
-            this.total_money -= this.cart[index].item_price * this.in_cart[index];
+            this.total_item -= this.cart[index].in_cart;
+            this.total_money -= this.cart[index].item_price * this.cart[index].in_cart;
             this.cart.splice(index, 1);
-            this.in_cart.splice(index, 1);
-            this.name.splice(index, 1);
+            this.ids.splice(index, 1);
         })
     }
 
