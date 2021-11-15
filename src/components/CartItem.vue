@@ -1,17 +1,17 @@
 <template>
-
     <div class='cart-item'>
+        <button class="close" @click="closeCartItem"><i class="fa fa-close"></i></button>
         <img v-bind:src="img_src" v-bind:alt="img_alt">
         <b style="margin-top: 20px;">
-            <p style="float: left; color: #FF0000;"> {{id}}.</p>
-            <p style="float: left">   {{text}}</p>
+            <p style="float: left; color: #FF0000; margin-right: 5px;"> {{id}}.</p>
+            <p style="float: left">{{text}}</p>
         </b>
         <br>
         <br>
         <div style="float: left; display: flex;">
-            <button class="minus"><i class="fa fa-minus"></i></button>
+            <button class="minus" @click="decreaseCartQuantity"><i class="fa fa-minus"></i></button>
             <p>{{in_cart}}</p>
-            <button class="plus"><i class="fa fa-plus"></i></button>
+            <button class="plus" @click="increaseCartQuantity"><i class="fa fa-plus"></i></button>
         </div>
         <div class="price">
             <b><p>{{price}}</p></b>
@@ -48,6 +48,17 @@ export default {
             default: "Unknown"
         },
     },
+    methods: {
+        increaseCartQuantity: function(){
+            this.emitter.emit('increaseCartQuantity', this.id - 1);
+        },
+        decreaseCartQuantity: function(){
+            this.emitter.emit('decreaseCartQuantity', this.id - 1);
+        },
+        closeCartItem: function(){
+            this.emitter.emit('closeCartItem', this.id - 1);
+        }
+    },
 }
 </script>
 
@@ -69,7 +80,7 @@ img {
     color: #000000;
     background-color: #ffffff;
     border: 1px solid #000000;
-    border-radius:.45rem!important;
+    border-radius:.45rem;
     height: 30px;
     width: 30px;
     justify-content: center;
@@ -84,13 +95,28 @@ img {
     color: #ff0000;
     background-color: #ffffff;
     border: 1px solid #ff0000;
-    border-radius:.45rem!important;
+    border-radius:.45rem;
     height: 30px;
     width: 30px;
     justify-content: center;
     align-items: center;
     margin-top:-3px;
     margin-left: 25px; 
+}
+
+.close {
+    float: right;
+    display: flex;
+    color: #808080;
+    background-color: #ffffff;
+    border: 1px solid #808080;
+    border-radius:50%;
+    height: 30px;
+    width: 30px;
+    justify-content: center;
+    align-items: center;
+    margin-top: -25px;
+    margin-right: -10px;
 }
 
 .price {
@@ -102,7 +128,7 @@ img {
     border: 1px solid #dbd2d2;
     border-radius: 10px;
     margin-left: 2.5%;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     padding-top: 2%;
     width: 95%;
     height: 100px;

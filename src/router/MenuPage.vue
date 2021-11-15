@@ -1,6 +1,6 @@
 <template>
     <Cart v-bind:active = 'cart_active'/>
-    <div>
+    <div :class="{ 'menu-reduce': cart_active }">
         <nav class="navbar-wrapper navbar navbar-light bg-white">
             <div class="container">
                 <a class="navbar-brand" href="#">
@@ -112,6 +112,9 @@ export default {
     float: left;
     font-weight: bold;
     font-size: 25px;
+}
+.menu-reduce {
+    margin-right: 500px;
 }
 @media only screen and (max-width: 420px){
     .home-text {

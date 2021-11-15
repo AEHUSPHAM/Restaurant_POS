@@ -1,19 +1,24 @@
 <template>
     <div :class="{ 'cart-open': active, 'cart-close': !active }">
-        <div style="color: #FF0000; padding: 10px;">
+        <div class="cart-header">
             <i class="fa fa-shopping-cart" style="float: left; font-size: 32px; margin-right: 20px"></i>
             <p style="float: left; font-size: 25px;"><b>Your cart ({{ total }})</b></p>
         </div>
         <CartItem 
             v-for="(cart_item,index) in cart"
+            v-bind:key="index"
             v-bind:img_src="cart_item.img_src"
             v-bind:img_alt="cart_item.img_alt"
-            v-bind:key="index"
             v-bind:id="index + 1"
             v-bind:text="cart_item.item_name"
             v-bind:in_cart="in_cart[index]"
             v-bind:price="cart_item.item_price"
         />
+        <div :class="{ 'cart-footer-open': active, 'cart-footer-close': !active }">
+            <p style="float: left; font-size: 20px;"><b>Total:</b></p>
+            <button class="payment-button">PAYMENT</button>
+        </div>
+
     </div>
 </template>
 
@@ -33,23 +38,42 @@ export default {
     data() {
         return {
             cart: [],
+            name: [],
             in_cart: [],
             total: 0
         }
     },
-    created (){
+    created() {
         this.emitter.on('addToCart', item_added => {
-            var temp = this.cart.indexOf(item_added); 
-            if(temp === -1)
+            var temp = {img_src: item_added.img_src, img_alt: item_added.img_alt, item_name: item_added.item_name, item_price: item_added.item_price};
+            var temp2 = this.name.indexOf(item_added.item_name);
+            if(temp2 === -1)
             {
-                this.cart.push(item_added);
+                this.cart.push(temp);
                 this.in_cart.push(1);
+                this.name.push(item_added.item_name);
             }
             else
             {   
-                this.in_cart[temp] += 1;
+                this.in_cart[temp2] += 1;
             }
             this.total += 1;
+        })
+        this.emitter.on('increaseCartQuantity', index => {
+            this.in_cart[index] += 1;
+            this.total += 1;
+        })
+        this.emitter.on('decreaseCartQuantity', index => {
+            if(this.in_cart[index] > 0) {
+                this.in_cart[index] -= 1;
+                this.total -= 1;
+            }
+        })
+        this.emitter.on('closeCartItem', index => {
+            this.cart.splice(index, 1);
+            this.total -= this.in_cart[index];
+            this.in_cart.splice(index, 1);
+            this.name.splice(index, 1);
         })
     }
 
@@ -57,6 +81,11 @@ export default {
 </script>
 
 <style scoped>
+.cart-header {
+    color: #FF0000;
+    padding: 10px;
+    margin-bottom: 50px;
+}
 .cart-close {
     height: 100%;
     width: 0;
@@ -64,14 +93,11 @@ export default {
     z-index: 1;
     top: 0;
     right: 0;
-    background-color: #FFFFFF;
     overflow-x: hidden;
-    transition: 0.5s;
     padding-top: 20px;
-
 }
 .cart-open {
-    height: 100%;
+    height: 85%;
     width: 500px;
     position: fixed;
     z-index: 1;
@@ -79,9 +105,49 @@ export default {
     right: 0;
     background-color: #FFFFFF;
     overflow-x: hidden;
-    transition: 0.5s;
     box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
     -webkit-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
     -moz-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.cart-open::-webkit-scrollbar {
+    display: none;
+}
+.cart-footer-close {
+    width: 500px;
+    height: 15%;
+    position: fixed;
+    bottom: 0;
+    z-index: 2;
+    background: #ffffff;
+    padding: 10px;
+}
+.cart-footer-open {
+    width: 500px;
+    height: 15%;
+    position: fixed;
+    bottom: 0;
+    z-index: 2;
+    background: #ffffff;
+    padding: 10px;
+    box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
+    -webkit-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
+    -moz-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
+}
+.payment-button {
+    width: 400px;
+    bottom: 0;
+    position: fixed;
+    z-index: 3;
+    margin-left: -225px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    background-color: red;
+    border-radius:.45rem;
+    border: none;
+    height: 50px;
+    font-weight: 700;
+    font-size: 20px;
 }
 </style>
