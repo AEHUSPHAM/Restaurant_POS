@@ -73,7 +73,7 @@ export default ({
         addToCart: function(){
             this.emitter.emit('addToCart', this)
         }
-    },
+    }
 })
 </script>
 

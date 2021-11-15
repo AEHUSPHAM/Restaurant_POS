@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 
 
+//The VueX store object used for MenuPage
 export default createStore({
     state: {
         menu_items: null,

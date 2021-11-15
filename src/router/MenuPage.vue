@@ -34,7 +34,7 @@
 import FilterMenu from '@/components/FilterMenu.vue'
 import Menu from '@/components/Menu.vue'
 import Cart from '@/components/Cart.vue'
-import store from '@/store.js'
+import menu_store from '@/stores/menu_store.js'
 
 
 export default {
@@ -47,9 +47,9 @@ export default {
     data() {
         return {
             active_tag: "All dishes",
-            display_list: store.getters.getMenu().value,
-            menu_items: store.getters.getMenu().value,
-            tag_list: store.getters.getTags().value,
+            display_list: menu_store.getters.getMenu().value,
+            menu_items: menu_store.getters.getMenu().value,
+            tag_list: menu_store.getters.getTags().value,
             cart_active: false,
         }
     },

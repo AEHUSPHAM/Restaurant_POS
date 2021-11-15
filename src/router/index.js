@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MenuPage from '@/router/MenuPage.vue'
 import HomePage from '@/router/HomePage.vue'
-import store from '@/store.js';
+import menu_store from '@/stores/menu_store.js';
 import { fetchMenu, fetchTags } from '@/mixins/menu.js';
 
 
@@ -33,8 +33,8 @@ router.beforeEach((to, from, next) => {
         const tags = fetchTags()
 
         Promise.allSettled([menu, tags]).then((values) => {
-            store.commit("setMenu", values[0])
-            store.commit("setTags", values[1])
+            menu_store.commit("setMenu", values[0])
+            menu_store.commit("setTags", values[1])
             next()
         })
     }else{

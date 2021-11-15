@@ -16,7 +16,6 @@
                         <FilterItem
                             v-for = "(item,index) in items"
                             v-bind:key="index"
-                            v-bind:item_id="item.id"
                             v-bind:item_index="index"
                             v-bind:img_src="item.img_src"
                             v-bind:img_alt="item.img_alt"
