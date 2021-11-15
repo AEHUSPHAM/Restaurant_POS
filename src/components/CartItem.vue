@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-md-6 col-sm-6 col-6">
                         <div style="color: #ff0000; float: right">
-                            <b><p>{{price}}</p></b>
+                            <b><p>{{price.toLocaleString('en-VN', {style: 'currency',currency: 'VND', minimumFractionDigits: 0})}}</p></b>
                         </div>
                     </div>
                 </div>

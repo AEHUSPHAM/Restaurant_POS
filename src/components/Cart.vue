@@ -20,7 +20,7 @@
     <div :class="{ 'cart-footer-open': active, 'cart-footer-close': !active }">
         <div class="row">
             <div class="col-md-2 col-sm-2 col-2"><p style="font-size: 20px;"><b>Total: </b></p></div>
-            <div class="col-md-10 col-sm-10 col-10"><p style="float: right; color: #FF0000; font-size: 20px; margin: 2px;"><b>VND {{ total_money }}</b></p></div>
+            <div class="col-md-10 col-sm-10 col-10"><p style="float: right; color: #FF0000; font-size: 20px; margin: 2px;"><b>{{total_money.toLocaleString('en-VN', {style: 'currency',currency: 'VND', minimumFractionDigits: 0})}}</b></p></div>
         </div>
         <div class="row" style="justify-content: center;"><button class="payment-button col-md-12 col-sm-12 col-12">PAYMENT</button></div>
     </div>
