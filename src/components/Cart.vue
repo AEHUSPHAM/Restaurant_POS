@@ -2,24 +2,27 @@
     <div :class="{ 'cart-open': active, 'cart-close': !active }">
         <div class="cart-header">
             <i class="fa fa-shopping-cart" style="float: left; font-size: 32px; margin-right: 20px"></i>
-            <p style="float: left; font-size: 25px;"><b>Your cart ({{ total }})</b></p>
+            <p style="float: left; font-size: 25px;"><b>Your cart ({{ total_item }})</b></p>
         </div>
-        <CartItem 
-            v-for="(cart_item,index) in cart"
-            v-bind:key="index"
-            v-bind:img_src="cart_item.img_src"
-            v-bind:img_alt="cart_item.img_alt"
-            v-bind:id="index + 1"
-            v-bind:text="cart_item.item_name"
-            v-bind:in_cart="in_cart[index]"
-            v-bind:price="cart_item.item_price"
-        />
-        
-
+        <div style="margin-top:90px">
+            <CartItem 
+                v-for="(cart_item,index) in cart"
+                v-bind:key="index"
+                v-bind:img_src="cart_item.img_src"
+                v-bind:img_alt="cart_item.img_alt"
+                v-bind:id="index + 1"
+                v-bind:text="cart_item.item_name"
+                v-bind:in_cart="in_cart[index]"
+                v-bind:price="cart_item.item_price"
+            />
+        </div>
     </div>
     <div :class="{ 'cart-footer-open': active, 'cart-footer-close': !active }">
-        <p style="float: left; font-size: 20px;"><b>Total:</b></p>
-        <button class="payment-button">PAYMENT</button>
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-2"><p style="font-size: 20px;"><b>Total: </b></p></div>
+            <div class="col-md-10 col-sm-10 col-10"><p style="float: right; color: #FF0000; font-size: 20px; margin: 2px;"><b>VND {{ total_money }}</b></p></div>
+        </div>
+        <div class="row" style="justify-content: center;"><button class="payment-button col-md-12 col-sm-12 col-12">PAYMENT</button></div>
     </div>
 </template>
 
@@ -41,7 +44,8 @@ export default {
             cart: [],
             name: [],
             in_cart: [],
-            total: 0
+            total_item: 0,
+            total_money: 0,
         }
     },
     created() {
@@ -58,21 +62,25 @@ export default {
             {   
                 this.in_cart[temp2] += 1;
             }
-            this.total += 1;
+            this.total_item += 1;
+            this.total_money += item_added.item_price
         })
         this.emitter.on('increaseCartQuantity', index => {
             this.in_cart[index] += 1;
-            this.total += 1;
+            this.total_item += 1;
+            this.total_money += this.cart[index].item_price
         })
         this.emitter.on('decreaseCartQuantity', index => {
             if(this.in_cart[index] > 0) {
                 this.in_cart[index] -= 1;
-                this.total -= 1;
+                this.total_item -= 1;
+                this.total_money -= this.cart[index].item_price
             }
         })
         this.emitter.on('closeCartItem', index => {
             this.cart.splice(index, 1);
-            this.total -= this.in_cart[index];
+            this.total_item -= this.in_cart[index];
+            this.total_money -= this.cart[index].item_price * this.in_cart[index];
             this.in_cart.splice(index, 1);
             this.name.splice(index, 1);
         })
@@ -83,21 +91,20 @@ export default {
 
 <style scoped>
 .cart-header {
+    width: 100%;
     color: #FF0000;
     padding: 10px;
-    margin-bottom: 50px;
+    position: fixed;
+    background-color: #FFFFFF;
+    overflow: hidden;
+    top: 0;
 }
 .cart-close {
-    height: 85%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
+    display: none;
 }
 .cart-open {
+    padding-left: 10px;
+    padding-right: 10px;
     height: 85%;
     width: 500px;
     position: fixed;
@@ -116,13 +123,7 @@ export default {
     display: none;
 }
 .cart-footer-close {
-    width: 0;
-    height: 15%;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    z-index: 1;
-    background: #ffffff;
+    display: none;
 }
 .cart-footer-open {
     width: 500px;
@@ -144,11 +145,10 @@ export default {
     background-color: red;
     border: 1px solid #dbd2d2;
     border-radius: 10px;
-    margin-left: 2.5%;
     margin-bottom: 15px;
     padding-top: 2%;
     width: 95%;
     height: 70px;
-    float: left;
+    justify-content: center;
 }
 </style>

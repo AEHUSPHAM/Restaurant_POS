@@ -1,5 +1,6 @@
 <template>
     <Cart v-bind:active = 'cart_active'/>
+    <button @click="cart_active = !cart_active">Cart</button>
     <div :class="{ 'menu-reduce': cart_active }">
         <nav class="navbar-wrapper navbar navbar-light bg-white">
             <div class="container">
@@ -9,7 +10,6 @@
                 </a>
             </div>
         </nav>
-        <button @click="cart_active = !cart_active">Cart</button>
         <div class="body-wrapper container">
             <div class="row">
                 <FilterMenu
@@ -50,7 +50,8 @@ export default {
             active_tag: "All dishes",
             display_list: store.getters.getMenu().value,
             menu_items: store.getters.getMenu().value,
-            tag_list: store.getters.getTags().value
+            tag_list: store.getters.getTags().value,
+            cart_active: false,
         }
     },
     methods: {

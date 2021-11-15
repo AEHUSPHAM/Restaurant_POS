@@ -1,20 +1,36 @@
 <template>
-    <div class='cart-item'>
-        <button class="close" @click="closeCartItem"><i class="fa fa-close"></i></button>
-        <img v-bind:src="img_src" v-bind:alt="img_alt">
-        <b style="margin-top: 20px;">
-            <p style="float: left; color: #FF0000; margin-right: 5px;"> {{id}}.</p>
-            <p style="float: left">{{text}}</p>
-        </b>
-        <br>
-        <br>
-        <div style="float: left; display: flex;">
-            <button class="minus" @click="decreaseCartQuantity"><i class="fa fa-minus"></i></button>
-            <p>{{in_cart}}</p>
-            <button class="plus" @click="increaseCartQuantity"><i class="fa fa-plus"></i></button>
-        </div>
-        <div class="price">
-            <b><p>{{price}}</p></b>
+    <div class="row">
+        <div class='cart-item'>
+            <button class="close" @click="closeCartItem"><i class="fa fa-close"></i></button>
+            <div class="col-md-3 col-sm-3 col-3 w-100">
+                <img v-bind:src="img_src" v-bind:alt="img_alt">
+            </div>
+            <div class="col-md-9 col-sm-9 col-9 w-100">
+                <div class="row" style="margin-bottom: 6px;">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <b>
+                            <p style="float: left; color: #FF0000; margin-right: 5px;"> {{id}}.</p>
+                            <p style="float: left">{{text}}</p>
+                        </b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-sm-2 col-2">
+                        <button class="minus" @click="decreaseCartQuantity"><i class="fa fa-minus"></i></button>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-2">
+                        <p>{{in_cart}}</p>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-2">
+                        <button class="plus" @click="increaseCartQuantity"><i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-6">
+                        <div style="color: #ff0000; float: right">
+                            <b><p>{{price}}</p></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -44,8 +60,8 @@ export default {
             default: 1
         },
         price: {
-            type: String, 
-            default: "Unknown"
+            type: Number,
+            default: 0
         },
     },
     methods: {
@@ -65,10 +81,8 @@ export default {
 <style scoped>
 img {
     float: left;
-    margin-left: 3%;
     margin-top: 1%;
-    height: 80%;
-    width: 20%;
+    width: 23%;
     border-radius: 10px;
     margin-right: 3%;
 
@@ -85,8 +99,6 @@ img {
     width: 30px;
     justify-content: center;
     align-items: center;
-    margin-top:-3px;
-    margin-right: 25px; 
 }
 
 .plus {
@@ -100,8 +112,6 @@ img {
     width: 30px;
     justify-content: center;
     align-items: center;
-    margin-top:-3px;
-    margin-left: 25px; 
 }
 
 .close {
@@ -115,15 +125,10 @@ img {
     width: 30px;
     justify-content: center;
     align-items: center;
-    margin-top: -25px;
-    margin-right: -10px;
+    margin-top: -19px;
+    margin-right: -18px;
 }
 
-.price {
-    color: #ff0000;
-    float: right;
-    margin-right: 2%
-}
 .cart-item {
     border: 1px solid #dbd2d2;
     border-radius: 10px;
@@ -132,6 +137,5 @@ img {
     padding-top: 2%;
     width: 95%;
     height: 100px;
-    float: left;
 }
 </style>
