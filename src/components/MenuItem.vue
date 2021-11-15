@@ -21,7 +21,9 @@
                 <div class="row">
                     <!-- Menu Item price -->
                     <div class="col-md-8 col-sm-8 col-8 m-auto">
-                        <div class="menu-item-price">{{item_price}}</div>
+                        <div class="menu-item-price">
+                            {{item_price.toLocaleString('en-VN', {style: 'currency',currency: 'VND', minimumFractionDigits: 0})}}
+                        </div>
                     </div>
 
                     <!-- Add-to-cart button -->
@@ -51,15 +53,13 @@ export default ({
         },
         item_index: {
             type: Number,
-
         },
         item_name: {
             type: String,
             default: "Unnamed"
         },
         item_price: {   //price should contain both the value and unit
-            type: String, 
-            default: "Unknown"
+            type: Number, 
         },
         callback: {
             type: Function,

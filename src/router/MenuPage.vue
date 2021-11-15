@@ -31,7 +31,7 @@
 import FilterMenu from '@/components/FilterMenu.vue'
 import Menu from '@/components/Menu.vue'
 
-import {menuItems, tagList} from '@/Data.js'
+import store from '@/store.js'
 
 
 export default {
@@ -43,9 +43,9 @@ export default {
     data() {
         return {
             active_tag: "All dishes",
-            display_list: menuItems().slice(),
-            menu_items: menuItems().slice(),
-            tag_list: tagList().slice()
+            display_list: store.getters.getMenu().value,
+            menu_items: store.getters.getMenu().value,
+            tag_list: store.getters.getTags().value
         }
     },
     methods: {
@@ -55,9 +55,8 @@ export default {
             }else{
                 this.display_list = Array()
 
-                for (let i=0; i<this.menu_items.length; i++){
-                    let item = this.menu_items[i]
-                    if (item.tag == tag){
+                for (const item of this.menu_items){
+                    if (item.item_tag == tag){
                         this.display_list.push(item)
                     }
                 }
