@@ -156,6 +156,7 @@ export default {
     margin-right: 20px;
 }
 .header-icon-small {
+    float: left;
     font-size: 16px;
     margin-right: 10px;
 }
@@ -167,7 +168,7 @@ export default {
     font-size: 22px;
 }
 .header-text-small {
-    float: center;
+    float: left;
     font-size: 18px;
 }
 .header-text-ssmall {
