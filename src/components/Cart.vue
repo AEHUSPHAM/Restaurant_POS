@@ -75,9 +75,13 @@ export default {
             {
                 //the item is not added to the cart
                 var tmp = {
-                    item_price = item_added.item_price,
-                    item_name = item_added.item_name,
-                    item_id = item_added.id
+                    item_id: item_added.item_id,
+                    img_src: item_added.img_src,
+                    img_alt: item_added.img_alt,
+                    item_name: item_added.item_name,
+                    item_price: item_added.item_price,
+                    item_tag: item_added.item_tag,
+                    in_cart: 1
                 };
                 tmp.in_cart = 0;
                 menu_store.commit('addToCart', tmp);
