@@ -22,7 +22,7 @@
                     <!-- Menu Item price -->
                     <div class="col-md-8 col-sm-8 col-8 m-auto">
                         <div class="menu-item-price">
-                            {{item_price.toLocaleString('en-VN', {style: 'currency',currency: 'VND', minimumFractionDigits: 0})}}
+                            {{formatMoney(item_price)}}
                         </div>
                     </div>
 
@@ -40,6 +40,9 @@
 
 
 <script>
+import { formatMoney } from '@/mixins/menu.js'
+
+
 export default ({
     name: 'MenuItem',
     props: {
@@ -72,8 +75,9 @@ export default ({
     methods: {
         addToCart: function(){
             this.emitter.emit('addToCart', this)
-        }
-    }
+        },
+        formatMoney,
+    },
 })
 </script>
 

@@ -38,3 +38,7 @@ export async function fetchTags(){
 
     return items
 }
+
+export function formatMoney(amount) {
+    return amount.toLocaleString('en-VN', {style: 'currency',currency: 'VND', minimumFractionDigits: 0})
+}

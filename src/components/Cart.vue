@@ -1,7 +1,9 @@
 <template>
     <div :class="{ 'cart-open': active && (window.width > 1000), 'cart-open-small': active && (window.width <= 1000) ,'cart-close': !active }">
         <div :class="{ 'cart-header': (window.width > 1000), 'cart-header-small': (window.width <= 1000) }">
-            <i class="fa fa-shopping-cart" :class="{'header-icon': (window.width > 1000), 'header-icon-small': (window.width <= 1000 && window.width > 576), 'header-icon-ssmall': (window.width <= 575)}"></i>
+            <i  class="fa fa-shopping-cart"
+                :class="{'header-icon': (window.width > 1000), 'header-icon-small': (window.width <= 1000 && window.width > 576), 'header-icon-ssmall': (window.width <= 575)}">
+            </i>
             <p :class="{'header-text': (window.width > 1000), 'header-text-small': (window.width <= 1000 && window.width > 576), 'header-text-ssmall': (window.width <= 575)}">
                 <b>Your cart ({{ total_item }})</b>
             </p>
@@ -33,7 +35,10 @@
             </div>
         </div>
         <div class="row" style="justify-content: center;">
-            <button class="col-md-12 col-sm-12 col-12" :class="{'payment-button': (window.width > 1000), 'payment-button-small': (window.width <= 1000 && window.width > 450), 'payment-button-ssmall': (window.width <= 450)}">
+            <button 
+                class="col-md-12 col-sm-12 col-12" 
+                :class="{'payment-button': (window.width > 1000), 'payment-button-small': (window.width <= 1000 && window.width > 450), 'payment-button-ssmall': (window.width <= 450)}"
+            >
                 PAYMENT
             </button>
         </div>
@@ -42,6 +47,7 @@
 
 <script>
 import CartItem from '@/components/CartItem.vue'
+
 import menu_store from '@/stores/menu_store.js'
 
 
@@ -107,6 +113,9 @@ export default {
             this.total_item -= menu_store.state.cart[index].in_cart;
             menu_store.commit("removeFromCart", index);
             this.ids.splice(index, 1);
+        })
+        this.emitter.on('editItem', index => {
+            this.modal_item_index = index
         })
         window.addEventListener('resize', this.handleResize);
         this.handleResize();

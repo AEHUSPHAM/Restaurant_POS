@@ -6,7 +6,7 @@
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content rounded">
                             <div class="modal-header rounded">
-                                <h5 class="modal-title">Modal title</h5>
+                                <h5 class="modal-title">ADD TO CART</h5>
                                 <button type="button" class="close rounded-circle" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true" @click="show_modal = false">&times;</span>
                                 </button>
@@ -16,8 +16,8 @@
                                     <div class=" row">
                                         <div class="col-md-4 col-sm-4 col-4">
                                             <img 
-                                                src="https://th.bing.com/th/id/R.9c003039b4ba1661cc1afe37c0495092?rik=uM1cwdIuYX9U4w&pid=ImgRaw&r=0"
-                                                alt=""
+                                                v-bind:src="item.img_src"
+                                                v-bind:alt="item.img_alt"
                                                 class="ratio ratio-1x1 rounded"
                                             >
                                         </div>
@@ -26,11 +26,11 @@
                                                 <div class="item-info row">
                                                     <div class="item-name col-md-6 col-sm-6 col-6">
                                                         <h6>Item Name</h6>
-                                                        <span>Cheese Cake</span>
+                                                        <span>{{item.item_name}}</span>
                                                     </div>
                                                     <div class="item-price col-md-6 col-sm-6 col-6">
-                                                        <h6>Item Price</h6>
-                                                        <h5>20000</h5>
+                                                        <h6>Unit Price</h6>
+                                                        <h5>{{formatMoney(item.item_price)}}</h5>
                                                     </div>
                                                 </div>
                                                 <div class="item-quantity row">
@@ -45,7 +45,7 @@
                                                                 </button>
                                                             </div>
                                                             <div class="quantity-number col-md-4 col-sm-4 col-4 m-auto p-0">
-                                                                1
+                                                                {{item.in_cart}}
                                                             </div>
                                                             <div class="col-md-4 col-sm-4 col-4 m-auto p-0">
                                                                 <button type="button" class="incre-btn btn rounded">
@@ -80,7 +80,7 @@
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-8 col-sm-8 col-8 offset-md-4 offset-sm-4 offset-4">
-                                            <button type="button" class="btn rounded" @click="show_modal = false">
+                                            <button type="button" class="btn rounded" @click="exitEditItem">
                                                 <i class="fa fa-shopping-cart"></i> &nbsp;30000
                                             </button>
                                         </div>
@@ -93,20 +93,37 @@
             </div>
         </transition>
     </div>
-    <button @click="show_modal = true">Click</button>
 </template>
 
 
 <script>
+import menu_store from '@/stores/menu_store.js'
+import { formatMoney } from '@/mixins/menu.js'
+
 export default {
     name: 'DetailModal',
     data() {
         return {
-            show_modal: false
+            show_modal: false,
+            item: null
         };
+    },
+    methods: {
+        exitEditItem () {
+            this.show_modal = false
+
+        },
+        formatMoney,
+    },
+    created () {
+        this.emitter.on('editItem', index => {
+            this.show_modal = true
+            this.item = menu_store.state.cart[index]
+        })
     }
 }
 </script>
+
 
 <style scoped>
 .rounded {

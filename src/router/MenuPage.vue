@@ -26,8 +26,8 @@
                 <Menu v-bind:items = 'display_list'/>
             </div>
         </div>
-        <DetailModal/>
     </div>
+    <DetailModal/>
 </template>
 
 
