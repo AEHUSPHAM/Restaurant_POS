@@ -1,7 +1,7 @@
 <template>
     <Cart v-bind:active = 'cart_active'/>
     <button @click="cart_active = !cart_active">Cart</button>
-    <div :class="{ 'menu-reduce': cart_active }">
+    <div :class="{ 'menu-reduce-right': cart_active && (window.width > 1000), 'menu-reduce-bottom': cart_active && (window.width <= 1000)}">
         <nav class="navbar-wrapper navbar navbar-light bg-white">
             <div class="container">
                 <a class="navbar-brand" href="#">
@@ -55,7 +55,15 @@ export default {
             menu_items: menu_store.getters.getMenu().value,
             tag_list: menu_store.getters.getTags().value,
             cart_active: false,
+            window: {
+                width: 0,
+                height: 0
+            }
         }
+    },
+    created() {
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
     },
     methods: {
         updateMenuByCate: function(tag){
@@ -72,6 +80,10 @@ export default {
             }
 
             this.active_tag = tag
+        },
+        handleResize() {
+            this.window.width = window.innerWidth;
+            this.window.height = window.innerHeight;
         }
     }
 }
@@ -115,8 +127,31 @@ export default {
     font-weight: bold;
     font-size: 25px;
 }
-.menu-reduce {
+.menu-reduce-right {
     margin-right: 30%;
+}
+.menu-reduce-bottom {
+    margin-bottom: 280px;
+}
+@media only screen and (max-width: 420px){
+    .home-text {
+        font-size: 15px;
+        position: relative;
+        bottom: 1px;
+    }
+    .home-button {
+        height: 29px;
+        width: 29px;
+        border-radius:.58rem!important;
+    }
+    .home-icon {
+        font-size: 21px;
+    }
+    .title {
+        font-size: 17px;
+        position:relative;
+        top:5px;
+    }
 }
 @media only screen and (min-width: 421px) and (max-width: 575px){
     .home-text {

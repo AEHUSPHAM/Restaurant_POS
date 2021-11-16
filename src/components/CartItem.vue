@@ -8,9 +8,8 @@
             <div class="col-md-9 col-sm-9 col-9 w-100">
                 <div class="row" style="margin-bottom: 6px;">
                     <div class="col-md-12 col-sm-12 col-12 w-100">
-                        <b style="overflow: visible;">
-                            <p class="item-index">{{id}}.</p>
-                            <p class="item-name">{{text}}</p>
+                        <b class="item-lable">
+                            <p class="item-name">{{id}}.{{text}}</p>
                         </b>
                     </div>
                 </div>
@@ -19,7 +18,7 @@
                         <button class="minus" @click="decreaseCartQuantity"><i class="fa fa-minus"></i></button>
                         <p class="minus" style="border: none;">{{in_cart}}</p>
                         <button class="plus" @click="increaseCartQuantity"><i class="fa fa-plus"></i></button>
-                        <b><p style="color: #ff0000; display: flex; float: right">{{price.toLocaleString('en-VN', {style: 'currency',currency: 'VND', minimumFractionDigits: 0})}}</p></b>
+                        <b><p class="price">{{price.toLocaleString('en-VN', {style: 'currency',currency: 'VND', minimumFractionDigits: 0})}}</p></b>
                     </div>
                 </div>
             </div>
@@ -56,6 +55,18 @@ export default {
             default: 0
         },
     },
+    data() {
+        return {
+            window: {
+                width: 0,
+                height: 0
+            }
+        }
+    },
+    created() {
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
+    },
     methods: {
         increaseCartQuantity: function(){
             this.emitter.emit('increaseCartQuantity', this.id - 1);
@@ -65,6 +76,10 @@ export default {
         },
         closeCartItem: function(){
             this.emitter.emit('closeCartItem', this.id - 1);
+        },
+        handleResize() {
+            this.window.width = window.innerWidth;
+            this.window.height = window.innerHeight;
         }
     },
 }
@@ -79,14 +94,14 @@ img {
     margin-right: 3%;
 
 }
-.item-index {
-    float: left;
-    color: #FF0000;
-    margin-right: 5px;
-}
+
 .item-name {
-    float: left
+    float: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
+
 .minus {
     float: left;
     display: flex;
@@ -124,21 +139,82 @@ img {
     width: 30px;
     justify-content: center;
     align-items: center;
-    margin-top: -19px;
+    margin-top: -25px;
     margin-right: -18px;
 }
 
 .cart-item {
     border: 1px solid #dbd2d2;
     border-radius: 10px;
-    margin-left: 2.5%;
+    margin-left: 5%;
     margin-bottom: 15px;
-    padding-top: 2%;
-    width: 95%;
-    height: 100px;
+    padding-top: 14px;
+    width: 90%;
+    height: 110px;
 }
 
+.price {
+    color: #ff0000;
+    display: flex;
+    float: right;
+}
 
+.item-lable {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 60%;
+}
 
+@media only screen and (max-width: 1000px ){
+    .item-name {
+        font-size: 11px;
+    }
+    .cart-item {
+        padding-top: 20px;
+    }
+    img {
+        height: 65px;
+    }
+    .minus {
+        border-radius:.30rem;
+        height: 20px;
+        width: 20px;
+    }
+    .plus {
+        border-radius:.30rem;
+        height: 20px;
+        width: 20px;
+    }
+    .price {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 350px){
+    .item-name {
+        font-size: 11px;
+    }
+    .cart-item {
+        height: 80px;
+        padding-top: 7px;
+    }
+    img {
+        height: 65px;
+    }
+    .minus {
+        border-radius:.25rem;
+        height: 15px;
+        width: 15px;
+    }
+    .plus {
+        border-radius:.25rem;
+        height: 15px;
+        width: 15px;
+    }
+    .price {
+        font-size: 12px;
+    }
+}
 
 </style>
