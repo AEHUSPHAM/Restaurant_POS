@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class='cart-item'>
-            <button class="close" @click="closeCartItem"><i class="fa fa-close"></i></button>
+            <button class="close" @click="removeFromCart"><i class="fa fa-close"></i></button>
             <div class="col-md-3 col-sm-3 col-3 w-100">
                 <img v-bind:src="img_src" v-bind:alt="img_alt">
             </div>
@@ -74,8 +74,8 @@ export default {
         decreaseCartQuantity: function(){
             this.emitter.emit('decreaseCartQuantity', this.id - 1);
         },
-        closeCartItem: function(){
-            this.emitter.emit('closeCartItem', this.id - 1);
+        removeFromCart: function(){
+            this.emitter.emit('removeFromCart', this.id - 1);
         },
         handleResize() {
             this.window.width = window.innerWidth;
