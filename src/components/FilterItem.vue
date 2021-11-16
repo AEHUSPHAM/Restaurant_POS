@@ -93,9 +93,7 @@ export default({
     }
     .filter-item-image {
         height: 95%;
-        width: auto;
-        margin-top: auto;
-        margin-bottom: auto;
+        width: 100%;
     }
     .rounded {
         border-radius:.80rem!important;
