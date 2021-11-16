@@ -111,11 +111,19 @@ export default({
         }
     }
     @media only screen and (min-width: 576px) and (max-width: 767px){
+        .filter-item-image-wrapper {
+            width: 85%;
+            height: 80%;
+        }
         .filter-item-name {
             font-size: 55%;
         }
     }
     @media only screen and (min-width: 768px) and (max-width: 991px){
+        .filter-item-image-wrapper {
+            width: 85%;
+            height: 80%;
+        }
         .filter-item-name {
             font-size: 55%;
         }

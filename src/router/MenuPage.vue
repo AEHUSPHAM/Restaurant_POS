@@ -26,6 +26,7 @@
                 <Menu v-bind:items = 'display_list'/>
             </div>
         </div>
+        <DetailModal/>
     </div>
 </template>
 
@@ -34,6 +35,8 @@
 import FilterMenu from '@/components/FilterMenu.vue'
 import Menu from '@/components/Menu.vue'
 import Cart from '@/components/Cart.vue'
+import DetailModal from '@/components/DetailModal.vue'
+
 import menu_store from '@/stores/menu_store.js'
 
 
@@ -42,7 +45,8 @@ export default {
     components: {
         FilterMenu,
         Menu,
-        Cart
+        Cart,
+        DetailModal
     },
     data() {
         return {
@@ -113,26 +117,6 @@ export default {
 }
 .menu-reduce {
     margin-right: 30%;
-}
-@media only screen and (max-width: 420px){
-    .home-text {
-        font-size: 15px;
-        position: relative;
-        bottom: 1px;
-    }
-    .home-button {
-        height: 29px;
-        width: 29px;
-        border-radius:.58rem!important;
-    }
-    .home-icon {
-        font-size: 21px;
-    }
-    .title {
-        font-size: 17px;
-        position:relative;
-        top:5px;
-    }
 }
 @media only screen and (min-width: 421px) and (max-width: 575px){
     .home-text {
