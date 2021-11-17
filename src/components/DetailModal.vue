@@ -40,7 +40,11 @@
                                                     <div class="quantity-btn-group col-md-6 col-sm-6 col-6 m-auto">
                                                         <div class="row">
                                                             <div class="col-md-4 col-sm-4 col-4 m-auto p-0">
-                                                                <button type="button" class="decre-btn btn rounded">
+                                                                <button 
+                                                                    type="button"
+                                                                    class="decre-btn btn rounded"
+                                                                    @click="decreaseItemQuantity"
+                                                                >
                                                                     <i class="fa fa-minus"></i>
                                                                 </button>
                                                             </div>
@@ -48,7 +52,11 @@
                                                                 {{item.in_cart}}
                                                             </div>
                                                             <div class="col-md-4 col-sm-4 col-4 m-auto p-0">
-                                                                <button type="button" class="incre-btn btn rounded">
+                                                                <button 
+                                                                    type="button" 
+                                                                    class="incre-btn btn rounded"
+                                                                    @click="increaseItemQuantity"
+                                                                >
                                                                     <i class="fa fa-plus"></i>
                                                                 </button>
                                                             </div>
@@ -57,17 +65,32 @@
                                                 </div>
                                                 <div class="item-toppings row">
                                                     <div class="row">
-                                                        <h6>Toppings (<span>0</span>)</h6>
+                                                        <h6>Toppings (<span style="color:#ff0909">
+                                                                {{item.selected_toppings.length}}
+                                                            </span>)
+                                                        </h6>
                                                     </div>
 
-                                                    <div class="topping-checkbox row">
+                                                    <div 
+                                                        class="topping-checkbox row"
+                                                        v-for="(topping_price, topping_name) in item.toppings"
+                                                        v-bind:key="topping_name"
+                                                    >
                                                         <div class="col-md-6 col-sm-6 col-6 m-auto">
                                                             <label>
-                                                                <input type="checkbox"> Boba
+                                                                <input
+                                                                    type="checkbox"
+                                                                    v-bind:value="topping_name"
+                                                                    v-bind:checked="checked[topping_name]"
+                                                                    v-on:click="toggleTopping($event.target.value)"
+                                                                >
+                                                                <span>&nbsp;{{topping_name}}</span>
                                                             </label>
                                                         </div>
                                                         <div class="col-md-6 col-sm-6 col-6 m-auto">
-                                                            <span>Vnd 50000</span>
+                                                            <span class="topping-price">
+                                                                {{topping_price? formatMoney(topping_price): 'Free'}}
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -80,8 +103,8 @@
                                 <div class="container p-0">
                                     <div class="row">
                                         <div class="col-md-8 col-sm-8 col-8 offset-md-4 offset-sm-4 offset-4">
-                                            <button type="button" class="btn rounded" @click="exitEditItem">
-                                                <i class="fa fa-shopping-cart"></i> &nbsp;30000
+                                            <button type="button" class="btn rounded" @click="show_modal = false">
+                                                <i class="fa fa-shopping-cart"></i> &nbsp;{{menu_store.getters.getTotalMoney()}}
                                             </button>
                                         </div>
                                     </div>
@@ -104,21 +127,40 @@ export default {
     name: 'DetailModal',
     data() {
         return {
+            menu_store: menu_store,
             show_modal: false,
-            item: null
+            item_index: 0,  //index of this item in the cart
+            item: null,
+            checked: {},    //array to keep track of topping checkboxes
         };
     },
     methods: {
-        exitEditItem () {
+        saveEdit () {
             this.show_modal = false
-
+        },
+        decreaseItemQuantity () {
+            this.emitter.emit('decreaseCartQuantity', this.item_index);
+        },
+        increaseItemQuantity () {
+            this.emitter.emit('increaseCartQuantity', this.item_index);
+        },
+        toggleTopping(topping_name) {
+            menu_store.commit("toggleTopping", {
+                item_index: this.item_index,
+                topping_name: topping_name
+            })
         },
         formatMoney,
     },
     created () {
         this.emitter.on('editItem', index => {
             this.show_modal = true
+            this.item_index = index
             this.item = menu_store.state.cart[index]
+            //determine if a topping is selected
+            Object.keys(this.item.toppings).forEach((key) => {
+                this.checked[key] = (this.item.selected_toppings.indexOf(key) !== -1)
+            })
         })
     }
 }
@@ -260,16 +302,12 @@ export default {
     margin-bottom: 5%;
 }
 
-.item-toppings span {
-    color: #ff0909;
-}
-
 .item-toppings .row:first-of-type {
     padding-right: 0;
 }
 
-input[type='checkbox']{
-    margin-top: 20%;
+.topping-checkbox [type='checkbox']{
+    margin-top: 10%;
     margin-bottom: 10%;
 }
 
@@ -277,7 +315,11 @@ input[type='checkbox']{
     float: left;
 }
 
-.topping-checkbox span {
+.topping-checkbox label span {
+    margin: auto;
+}
+
+.topping-checkbox .topping-price {
     color: #ff0909;
     font-weight: bold;
     margin-top: 8%;
@@ -302,9 +344,11 @@ input[type='checkbox']{
 @media only screen and (min-width: 421px) and (max-width: 575px) {
     .modal-footer .btn,
     .modal-content h6,
-    .topping-checkbox label,
     .quantity-btn-group .quantity-number {
         font-size: 14px;
+    }
+    .topping-checkbox label span {
+        font-size: 11px;
     }
     .modal-content h5 {
         font-size: 18px;
@@ -319,9 +363,11 @@ input[type='checkbox']{
 @media only screen and (min-width: 576px) and (max-width: 767px) {
     .modal-footer .btn,
     .modal-content h6,
-    .topping-checkbox label,
     .quantity-btn-group .quantity-number {
         font-size: 16px;
+    }
+    .topping-checkbox label span {
+        font-size: 13px;
     }
     .modal-content h5 {
         font-size: 20px;
@@ -336,9 +382,11 @@ input[type='checkbox']{
 @media only screen and (min-width: 768px) and (max-width: 991px){
     .modal-footer .btn,
     .modal-content h6,
-    .topping-checkbox label,
     .quantity-btn-group .quantity-number {
         font-size: 16px;
+    }
+    .topping-checkbox label span {
+        font-size: 15px;
     }
     .modal-content h5 {
         font-size: 20px;
@@ -353,9 +401,11 @@ input[type='checkbox']{
 @media only screen and (min-width: 992px) and (max-width: 1199px){
     .modal-footer .btn,
     .modal-content h6,
-    .topping-checkbox label,
     .quantity-btn-group .quantity-number {
         font-size: 20px;
+    }
+    .topping-checkbox label span {
+        font-size: 17px;
     }
     .modal-content h5 {
         font-size: 24px;

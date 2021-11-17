@@ -17,9 +17,7 @@
                             v-for = "(item,index) in items"
                             v-bind:key="index"
                             v-bind:item_index="index"
-                            v-bind:img_src="item.img_src"
-                            v-bind:img_alt="item.img_alt"
-                            v-bind:tag="item.tag"
+                            v-bind:item="item"
                             v-bind:is_active="states[index]"
                             @updateActiveItem="updateActiveItem($event)"   
                         />

@@ -5,19 +5,15 @@
                 :class="{'header-icon': (window.width > 1000), 'header-icon-small': (window.width <= 1000 && window.width > 576), 'header-icon-ssmall': (window.width <= 575)}">
             </i>
             <p :class="{'header-text': (window.width > 1000), 'header-text-small': (window.width <= 1000 && window.width > 576), 'header-text-ssmall': (window.width <= 575)}">
-                <b>Your cart ({{ total_item }})</b>
+                <b>Your cart ({{ menu_store.state.total_amount }})</b>
             </p>
         </div>
         <div :class="{ 'cart-item-container': (window.width > 1000), 'cart-item-container-small': (window.width <= 1000) }">
             <CartItem 
-                v-for="(cart_item,index) in menu_store.state.cart"
+                v-for="(item,index) in menu_store.state.cart"
                 v-bind:key="index"
-                v-bind:img_src="cart_item.img_src"
-                v-bind:img_alt="cart_item.img_alt"
-                v-bind:id="index + 1"
-                v-bind:text="cart_item.item_name"
-                v-bind:in_cart="cart_item.in_cart"
-                v-bind:price="cart_item.item_price"
+                v-bind:item_index="index + 1"
+                v-bind:item="item"
             />
         </div>
     </div>
@@ -64,8 +60,6 @@ export default {
     data() {
         return {
             menu_store: menu_store,
-            ids: [],
-            total_item: 0,
             window: {
                 width: 0,
                 height: 0
@@ -75,47 +69,33 @@ export default {
     created() {
         //add a new item to cart
         this.emitter.on('addToCart', item_added => {
-            var item_index = this.ids.indexOf(item_added.item_id);
+            //the item is not added to the cart
+            var new_item = {
+                id: item_added.id,
+                img_src: item_added.img_src,
+                img_alt: item_added.img_alt,
+                item_name: item_added.item_name,
+                item_price: item_added.item_price,
+                item_tag: item_added.item_tag,
+                toppings: item_added.toppings,
+                selected_toppings: [],
+                in_cart: 1
+            };
 
-            if (item_index === -1)
-            {
-                //the item is not added to the cart
-                var tmp = {
-                    item_id: item_added.item_id,
-                    img_src: item_added.img_src,
-                    img_alt: item_added.img_alt,
-                    item_name: item_added.item_name,
-                    item_price: item_added.item_price,
-                    item_tag: item_added.item_tag,
-                    in_cart: 1
-                };
-                tmp.in_cart = 0;
-                menu_store.commit('addToCart', tmp);
-                this.ids.push(item_added.item_id);
-            }
-            
-            menu_store.commit("increaseItemQuantity", this.ids.length - 1);
-            this.total_item += 1;
+            menu_store.commit('addToCart', new_item);
         })
         //increase the quantity of an item in cart
         this.emitter.on('increaseCartQuantity', index => {
             menu_store.commit("increaseItemQuantity", index);
-            this.total_item += 1;
         })
         this.emitter.on('decreaseCartQuantity', index => {
             if(menu_store.state.cart[index].in_cart > 1) {
                 menu_store.commit("decreaseItemQuantity", index);
-                this.total_item -= 1;
             }
         })
         //remove an item from cart
         this.emitter.on('removeFromCart', index => {
-            this.total_item -= menu_store.state.cart[index].in_cart;
             menu_store.commit("removeFromCart", index);
-            this.ids.splice(index, 1);
-        })
-        this.emitter.on('editItem', index => {
-            this.modal_item_index = index
         })
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
@@ -125,7 +105,7 @@ export default {
             this.window.width = window.innerWidth;
             this.window.height = window.innerHeight;
         }
-    }
+    },
 }
 </script>
 

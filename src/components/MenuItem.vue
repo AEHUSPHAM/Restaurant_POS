@@ -3,7 +3,7 @@
         <!-- Image of menu item -->
         <div class="menu-item container rounded shadow p-0">
             <div class="menu-item-image-wrapper row ratio ratio-4x3">
-                <img v-bind:src="img_src" v-bind:alt="img_alt" class="menu-item-image img-fluid">
+                <img v-bind:src="item.img_src" v-bind:alt="item.img_alt" class="menu-item-image img-fluid">
             </div>
 
 
@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-12">
                         <div class="menu-item-name">
-                            <span class="menu-item-index">{{item_index + ". "}}</span>{{item_name}}
+                            <span class="menu-item-index">{{item_index + ". "}}</span>{{item.item_name}}
                         </div>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                     <!-- Menu Item price -->
                     <div class="col-md-8 col-sm-8 col-8 m-auto">
                         <div class="menu-item-price">
-                            {{formatMoney(item_price)}}
+                            {{formatMoney(item.item_price)}}
                         </div>
                     </div>
 
@@ -46,35 +46,16 @@ import { formatMoney } from '@/mixins/menu.js'
 export default ({
     name: 'MenuItem',
     props: {
-        item_id: {
-            type: String,
-        },
-        img_src: {
-            type: String,
-            default: ""
-        },
-        img_alt: {
-            type: String,
-            default: ""
-        },
         item_index: {
             type: Number,
         },
-        item_name: {
-            type: String,
-            default: "Unnamed"
-        },
-        item_price: {   //price should contain both the value and unit
-            type: Number, 
-        },
-        item_tag: {
-            type: String, 
-            default: "Unknown"
+        item: {
+            type: Object,
         },
     },
     methods: {
         addToCart: function(){
-            this.emitter.emit('addToCart', this)
+            this.emitter.emit('addToCart', this.item)
         },
         formatMoney,
     },

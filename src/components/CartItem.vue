@@ -5,13 +5,13 @@
                 <i class="fa fa-close"></i>
             </button>
             <div class="col-md-3 col-sm-3 col-3 w-100">
-                <img v-bind:src="img_src" v-bind:alt="img_alt">
+                <img v-bind:src="item.img_src" v-bind:alt="item.img_alt">
             </div>
             <div class="col-md-9 col-sm-9 col-9 w-100">
                 <div class="row" style="margin-bottom: 6px;">
                     <div class="item-label col-md-12 col-sm-12 col-12 p-0">
                         <p class="item-name">
-                            {{id}}. {{text}}
+                            {{item_index}}. {{item.item_name}}
                         </p>
                         <button type="button" class="edit" @click="editItem">
                             <i class="fa fa-edit"></i>
@@ -24,7 +24,7 @@
                             <i class="fa fa-minus"></i>
                         </button>
                         <p class="quantity">
-                            {{in_cart}}
+                            {{item.in_cart}}
                         </p>
                         <button class="plus" @click="increaseCartQuantity">
                             <i class="fa fa-plus"></i>
@@ -32,7 +32,7 @@
                         
                         <b>
                             <p class="price">
-                                {{formatMoney(price)}}
+                                {{formatMoney(item.item_price)}}
                             </p>
                         </b>
                     </div>
@@ -49,30 +49,12 @@ import { formatMoney } from '@/mixins/menu.js'
 export default {
     name: 'CartItem',
     props: {
-        text: {
-            type: String,
-            default: ""
-        },
-        id: {
+        item_index: {
             type: Number,
-            default: -1
         },
-        img_src: {
-            type: String,
-            default: ""
-        },
-        img_alt: {
-            type: String,
-            default: ""
-        },
-        in_cart: {
-            type: Number,
-            default: 1
-        },
-        price: {
-            type: Number,
-            default: 0
-        },
+        item: {
+            type: Object,
+        }
     },
     data() {
         return {
@@ -88,16 +70,16 @@ export default {
     },
     methods: {
         increaseCartQuantity: function(){
-            this.emitter.emit('increaseCartQuantity', this.id -1);
+            this.emitter.emit('increaseCartQuantity', this.item_index -1);
         },
         decreaseCartQuantity: function(){
-            this.emitter.emit('decreaseCartQuantity', this.id - 1);
+            this.emitter.emit('decreaseCartQuantity', this.item_index - 1);
         },
         removeFromCart: function(){
-            this.emitter.emit('removeFromCart', this.id - 1);
+            this.emitter.emit('removeFromCart', this.item_index - 1);
         },
         editItem() {
-            this.emitter.emit('editItem', this.id - 1)
+            this.emitter.emit('editItem', this.item_index - 1)
         },
         handleResize() {
             this.window.width = window.innerWidth;

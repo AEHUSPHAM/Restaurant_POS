@@ -7,13 +7,13 @@
         >
             <div class="filter-item-image-wrapper row ratio ratio-4x3 mb-1 mt-2">
                 <div class=" col-md-12 col-sm-12 col-12">
-                    <img v-bind:src = "img_src" v-bind:alt="img_alt" class="filter-item-image img-fluid">
+                    <img v-bind:src="item.img_src" v-bind:alt="item.img_alt" class="filter-item-image img-fluid">
                 </div>
             </div>
 
             <div class="filter-item-name row">
                 <div class=" col-md-12 col-sm-12 col-12">
-                    {{tag}}
+                    {{item.tag}}
                 </div>
             </div>
         </div>
@@ -27,27 +27,15 @@ export default({
     name: 'FilterItem',
     props: {
         item_index: {
-            type: Number
+            type: Number,
         },
-        img_src : {
-            type: String,
-            default: ""
-        },
-        img_alt: {
-            type: String,
-            default: ""
-        },
-        tag: {
-            type: String,
-            default: ""
+        item: {
+            type: Object,
         },
         is_active: {
             type: Boolean,
-            default: false
+            default: false,
         },
-        callback: {
-            type: Function
-        }
     },
     methods: {
         onClick: function(){
