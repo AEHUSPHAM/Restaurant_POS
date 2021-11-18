@@ -1,5 +1,7 @@
 <template>
-    <div class="filter-item-wrapper col-md-2 col-sm-3 col-6 p-auto">        
+    <div class="filter-item-wrapper p-auto"
+        v-bind:class="column_type"
+    >        
         <div
             v-bind:class="is_active ? 'filter-item-active': 'filter-item'"
             class="container rounded"
@@ -25,6 +27,11 @@
 <script>
 export default({
     name: 'FilterItem',
+    data() {
+        return {
+            column_type: "col-lg-2 col-md-2 col-sm-3 col-6",
+        }
+    },
     props: {
         item_index: {
             type: Number,
@@ -41,6 +48,15 @@ export default({
         onClick: function(){
             this.$emit('updateActiveItem', this.item_index);
         }
+    },
+    created() {
+        this.emitter.on("openCart", () => {
+            this.column_type = "col-lg-3 col-md-3 col-sm-3 col-6"
+        })
+        this.emitter.on("closeCart", () => {
+            this.column_type = "col-lg-2 col-md-2 col-sm-3 col-6"
+        })
+
     }
 })
 </script>

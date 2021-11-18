@@ -1,17 +1,40 @@
 <template>
-    <div :class="{ 'cart-open': active && (window.width > 1000), 'cart-open-small': active && (window.width <= 1000) ,'cart-close': !active }">
-        <div :class="{ 'cart-header': (window.width > 1000), 'cart-header-small': (window.width <= 1000) }">
+    <div :class="{
+        'cart-open': active && (window.width > 767),
+        'cart-open-small': active && (window.width <= 767)
+        ,'cart-close': !active
+        }"
+    >
+        <div :class="{
+            'cart-header': (window.width > 767),
+            'cart-header-small': (window.width <= 767)
+            }"
+        >
             <i  class="fa fa-shopping-cart"
-                :class="{'header-icon': (window.width > 1000), 'header-icon-small': (window.width <= 1000 && window.width > 576), 'header-icon-ssmall': (window.width <= 575)}">
+                :class="{
+                    'header-icon': (window.width > 767),
+                    'header-icon-small': (window.width <= 767 && window.width > 576),
+                    'header-icon-ssmall': (window.width <= 575)
+                }"
+            >
             </i>
-            <p :class="{'header-text': (window.width > 1000), 'header-text-small': (window.width <= 1000 && window.width > 576), 'header-text-ssmall': (window.width <= 575)}">
+            <p :class="{
+                'header-text': (window.width > 767),
+                'header-text-small': (window.width <= 767 && window.width > 576),
+                'header-text-ssmall': (window.width <= 575)
+                }"
+            >
                 <b>Your cart ({{ menu_store.state.total_amount }})</b>
             </p>
             <button class="close-cart" @click="closeCart">
                 <i class="fa fa-close"></i>
             </button>
         </div>
-        <div :class="{ 'cart-item-container': (window.width > 1000), 'cart-item-container-small': (window.width <= 1000) }">
+        <div :class="{
+            'cart-item-container': (window.width > 767),
+            'cart-item-container-small': (window.width <= 767)
+            }"
+        >
             <CartItem 
                 v-for="(item,index) in menu_store.state.cart"
                 v-bind:key="index"
@@ -20,15 +43,30 @@
             />
         </div>
     </div>
-    <div :class="{ 'cart-footer-open': active && (window.width > 1000), 'cart-footer-open-small': active && (window.width <= 1000), 'cart-footer-close': !active }">
+    <div :class="{
+        'cart-footer-open': active && (window.width > 767),
+        'cart-footer-open-small': active && (window.width <= 767),
+        'cart-footer-close': !active
+        }"
+    >
         <div class="row">
             <div class="col-md-2 col-sm-2 col-12">
-                <p :class="{'total-word': (window.width > 1000), 'total-word-small': (window.width <= 1000 && window.width > 576), 'total-word-ssmall': (window.width <= 575)}">
+                <p :class="{
+                    'total-word': (window.width > 767),
+                    'total-word-small': (window.width <= 767 && window.width > 576),
+                    'total-word-ssmall': (window.width <= 575)
+                    }"
+                >
                     <b>Total: </b>
                 </p>
             </div>
             <div class="col-md-10 col-sm-10 col-12">
-                <p :class="{'total-price': (window.width > 1000), 'total-price-small': (window.width <= 1000 && window.width > 576), 'total-price-ssmall': (window.width <= 575)}">
+                <p :class="{
+                    'total-price': (window.width > 767),
+                    'total-price-small': (window.width <= 767 && window.width > 576),
+                    'total-price-ssmall': (window.width <= 575)
+                    }
+                ">
                     <b>{{menu_store.getters.getTotalMoney()}}</b>
                 </p>
             </div>
@@ -36,7 +74,11 @@
         <div class="row" style="justify-content: center;">
             <button 
                 class="col-md-12 col-sm-12 col-12" 
-                :class="{'payment-button': (window.width > 1000), 'payment-button-small': (window.width <= 1000 && window.width > 450), 'payment-button-ssmall': (window.width <= 450)}"
+                :class="{
+                    'payment-button': (window.width > 767),
+                    'payment-button-small': (window.width <= 767 && window.width > 450),
+                    'payment-button-ssmall': (window.width <= 450)
+                }"
             >
                 PAYMENT
             </button>
@@ -109,7 +151,7 @@ export default {
             this.window.height = window.innerHeight;
         },
         closeCart() {
-            this.emitter.emit("closeCart", false);
+            this.emitter.emit("closeCart");
         }
     },
 }
@@ -312,7 +354,7 @@ export default {
     font-size: 15px;
     margin: 2px;
 }
-@media only screen and (max-width: 1000px){
+@media only screen and (max-width: 767px){
     .close-cart {
         right: 0;
         font-size: inherit

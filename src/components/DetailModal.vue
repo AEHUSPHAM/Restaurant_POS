@@ -76,7 +76,7 @@
                                                         v-for="(topping_price, topping_name) in item.toppings"
                                                         v-bind:key="topping_name"
                                                     >
-                                                        <div class="col-md-6 col-sm-6 col-6 m-auto">
+                                                        <div class="col-md-8 col-sm-8 col-8 m-auto">
                                                             <label>
                                                                 <input
                                                                     type="checkbox"
@@ -87,7 +87,7 @@
                                                                 <span>&nbsp;{{topping_name}}</span>
                                                             </label>
                                                         </div>
-                                                        <div class="col-md-6 col-sm-6 col-6 m-auto">
+                                                        <div class="col-md-4 col-sm-4 col-4 m-auto">
                                                             <span class="topping-price">
                                                                 {{topping_price? formatMoney(topping_price): 'Free'}}
                                                             </span>
@@ -339,6 +339,25 @@ export default {
     background: #ff0909;
     color: #ffffff;
     padding: 2%;
+}
+
+@media only screen and (max-width: 420px) {
+    .modal-footer .btn,
+    .modal-content h6,
+    .quantity-btn-group .quantity-number {
+        font-size: 12px;
+    }
+    .topping-checkbox label span {
+        font-size: 9px;
+    }
+    .modal-content h5 {
+        font-size: 14px;
+    }
+    .modal-content span,
+    .quantity-btn-group .incre-btn,
+    .quantity-btn-group .decre-btn {
+        font-size: 10px;
+    }
 }
 
 @media only screen and (min-width: 421px) and (max-width: 575px) {

@@ -1,16 +1,16 @@
 <template>
     <Cart v-bind:active = 'cart_active'/>
-    <button @click="cart_active = true">
+    <button @click="openCart">
         <i class="fa fa-shopping-cart" style="font-size: 20px;">Your Cart</i>
     </button>
-    <div :class="{ 'menu-reduce-right': cart_active && (window.width > 1000), 'menu-reduce-bottom': cart_active && (window.width <= 1000)}">
-        <nav class="navbar-wrapper navbar navbar-light bg-white fixed-top" :class="{ 'navbar-reduce-right': cart_active && (window.width > 1000)}">
+    <div :class="{ 'menu-reduce-right': cart_active && (window.width > 767), 'menu-reduce-bottom': cart_active && (window.width <= 767)}">
+        <nav class="navbar-wrapper navbar navbar-light bg-white fixed-top" :class="{ 'navbar-reduce-right': cart_active && (window.width > 767)}">
             <div class="container">
                 <a class="navbar-brand" href="#">
                     <button type="button" class="home-button"><i class="fa fa-home home-icon"></i></button>
                     <span class="home-text">Back to home</span>
                 </a>
-                <a class="navbar-brand" @click="cart_active = true" style="cursor: pointer;">
+                <a class="navbar-brand" @click="openCart" style="cursor: pointer;">
                     <button type="button" class="home-button" ><i class="fa fa-shopping-cart" style="font-size: 20px;"></i></button>
                     <span class="home-text" >Your cart</span>
                 </a>
@@ -73,8 +73,8 @@ export default {
         this.handleResize();
     },
     mounted() {
-        this.emitter.on("closeCart", close => {
-            this.cart_active = close;
+        this.emitter.on("closeCart", () => {
+            this.cart_active = false;
         })
     },
     methods: {
@@ -97,6 +97,10 @@ export default {
             this.window.width = window.innerWidth;
             this.window.height = window.innerHeight;
         },
+        openCart() {
+            this.cart_active = true
+            this.emitter.emit("openCart")
+        }
     }
 }
 </script>

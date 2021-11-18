@@ -1,5 +1,7 @@
 <template>
-    <div class=" menu-item-wrapper col-md-3 col-sm-4 col-6 mb-5">
+    <div class=" menu-item-wrapper mb-5"
+        v-bind:class="column_type"
+    >
         <!-- Image of menu item -->
         <div class="menu-item container rounded shadow p-0">
             <div class="menu-item-image-wrapper row ratio ratio-4x3">
@@ -45,6 +47,11 @@ import { formatMoney } from '@/mixins/menu.js'
 
 export default ({
     name: 'MenuItem',
+    data () {
+        return {
+            column_type: "col-lg-3 col-md-3 col-sm-4 col-6",
+        }
+    },
     props: {
         item_index: {
             type: Number,
@@ -59,6 +66,14 @@ export default ({
         },
         formatMoney,
     },
+    created () {
+        this.emitter.on("openCart", () => {
+            this.column_type = "col-lg-4 col-md-4 col-sm-4 col-6"
+        })
+        this.emitter.on("closeCart", () => {
+            this.column_type = "col-lg-3 col-md-3 col-sm-4 col-6"
+        })
+    }
 })
 </script>
 
