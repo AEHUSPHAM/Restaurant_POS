@@ -24,9 +24,9 @@
                 'header-text-ssmall': (window.width <= 575)
                 }"
             >
-                <b>Your cart ({{ menu_store.state.total_amount }})</b>
+                <b>Your cart ({{ total_amount }})</b>
             </p>
-            <button class="close-cart" @click="closeCart">
+            <button class="close-cart" @click="toggleCart">
                 <i class="fa fa-close"></i>
             </button>
         </div>
@@ -36,7 +36,7 @@
             }"
         >
             <CartItem 
-                v-for="(item,index) in menu_store.state.cart"
+                v-for="(item,index) in cart"
                 v-bind:key="index"
                 v-bind:item_index="index + 1"
                 v-bind:item="item"
@@ -67,7 +67,7 @@
                     'total-price-ssmall': (window.width <= 575)
                     }
                 ">
-                    <b>{{menu_store.getters.getTotalMoney()}}</b>
+                    <b>{{ total_money }}</b>
                 </p>
             </div>
         </div>
@@ -88,7 +88,6 @@
 
 <script>
 import CartItem from '@/components/CartItem.vue'
-
 import menu_store from '@/stores/menu_store.js'
 
 
@@ -104,7 +103,6 @@ export default {
     },
     data() {
         return {
-            menu_store: menu_store,
             window: {
                 width: 0,
                 height: 0
@@ -150,10 +148,21 @@ export default {
             this.window.width = window.innerWidth;
             this.window.height = window.innerHeight;
         },
-        closeCart() {
-            this.emitter.emit("closeCart");
+        toggleCart() {
+            menu_store.commit("toggleCart")
         }
     },
+    computed: {
+        cart: () => {
+            return menu_store.state.cart
+        },
+        total_money: () => {
+            return menu_store.getters.getTotalMoney()
+        },
+        total_amount: () => {
+            return menu_store.state.total_amount
+        }
+    }
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
-    <div class="filter-item-wrapper p-auto"
-        v-bind:class="column_type"
+    <div class="filter-item-wrapper col-sm-3 col-6 p-auto"
+        v-bind:class="cart_active?'col-lg-3 col-md-3':'col-lg-2 col-md-2'"
     >        
         <div
             v-bind:class="is_active ? 'filter-item-active': 'filter-item'"
@@ -25,13 +25,10 @@
 
 
 <script>
+import menu_store from '@/stores/menu_store.js'
+
 export default({
     name: 'FilterItem',
-    data() {
-        return {
-            column_type: "col-lg-2 col-md-2 col-sm-3 col-6",
-        }
-    },
     props: {
         item_index: {
             type: Number,
@@ -49,14 +46,10 @@ export default({
             this.$emit('updateActiveItem', this.item_index);
         }
     },
-    created() {
-        this.emitter.on("openCart", () => {
-            this.column_type = "col-lg-3 col-md-3 col-sm-3 col-6"
-        })
-        this.emitter.on("closeCart", () => {
-            this.column_type = "col-lg-2 col-md-2 col-sm-3 col-6"
-        })
-
+    computed: {
+        cart_active: () => {
+            return menu_store.state.cart_active
+        } 
     }
 })
 </script>

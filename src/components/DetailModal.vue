@@ -18,7 +18,7 @@
                                             <img 
                                                 v-bind:src="item.img_src"
                                                 v-bind:alt="item.img_alt"
-                                                class="ratio ratio-1x1 rounded"
+                                                class="rounded"
                                             >
                                         </div>
                                         <div class="col-md-8 col-sm-8 col-8">
@@ -104,7 +104,7 @@
                                     <div class="row">
                                         <div class="col-md-8 col-sm-8 col-8 offset-md-4 offset-sm-4 offset-4">
                                             <button type="button" class="btn rounded" @click="show_modal = false">
-                                                <i class="fa fa-shopping-cart"></i> &nbsp;{{menu_store.getters.getTotalMoney()}}
+                                                <i class="fa fa-shopping-cart"></i> &nbsp;{{total_money}}
                                             </button>
                                         </div>
                                     </div>
@@ -127,7 +127,6 @@ export default {
     name: 'DetailModal',
     data() {
         return {
-            menu_store: menu_store,
             show_modal: false,
             item_index: 0,  //index of this item in the cart
             item: null,
@@ -151,6 +150,11 @@ export default {
             })
         },
         formatMoney,
+    },
+    computed: {
+        total_money: () => {
+            return menu_store.getters.getTotalMoney()
+        }
     },
     created () {
         this.emitter.on('editItem', index => {
@@ -226,7 +230,7 @@ export default {
 }
 
 .modal-body img {
-    width: 70%;
+    width: 100%;
     height: auto;
     border: solid 1px #e2e0e0;
 }

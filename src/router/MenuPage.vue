@@ -1,17 +1,27 @@
 <template>
     <Cart v-bind:active = 'cart_active'/>
-    <button @click="openCart">
+    <button @click="toggleCart">
         <i class="fa fa-shopping-cart" style="font-size: 20px;">Your Cart</i>
     </button>
-    <div :class="{ 'menu-reduce-right': cart_active && (window.width > 767), 'menu-reduce-bottom': cart_active && (window.width <= 767)}">
-        <nav class="navbar-wrapper navbar navbar-light bg-white fixed-top" :class="{ 'navbar-reduce-right': cart_active && (window.width > 767)}">
+    <div :class="{
+        'menu-reduce-right': cart_active && (window.width > 767),
+        'menu-reduce-bottom': cart_active && (window.width <= 767)
+        }"
+    >
+        <nav class="navbar-wrapper navbar navbar-light bg-white fixed-top" 
+            :class="{
+                'navbar-reduce-right': cart_active && (window.width > 767)
+                }"
+            >
             <div class="container">
                 <a class="navbar-brand" href="#">
                     <button type="button" class="home-button"><i class="fa fa-home home-icon"></i></button>
                     <span class="home-text">Back to home</span>
                 </a>
-                <a class="navbar-brand" @click="openCart" style="cursor: pointer;">
-                    <button type="button" class="home-button" ><i class="fa fa-shopping-cart" style="font-size: 20px;"></i></button>
+                <a class="navbar-brand" @click="toggleCart" style="cursor: pointer;">
+                    <button type="button" class="home-button" >
+                        <i class="fa fa-shopping-cart" style="font-size: 20px;"></i>
+                    </button>
                     <span class="home-text" >Your cart</span>
                 </a>
             </div>
@@ -61,7 +71,6 @@ export default {
             display_list: menu_store.getters.getMenu().value,
             menu_items: menu_store.getters.getMenu().value,
             tag_list: menu_store.getters.getTags().value,
-            cart_active: false,
             window: {
                 width: 0,
                 height: 0
@@ -71,11 +80,6 @@ export default {
     created() {
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
-    },
-    mounted() {
-        this.emitter.on("closeCart", () => {
-            this.cart_active = false;
-        })
     },
     methods: {
         updateMenuByCate: function(tag){
@@ -97,9 +101,13 @@ export default {
             this.window.width = window.innerWidth;
             this.window.height = window.innerHeight;
         },
-        openCart() {
-            this.cart_active = true
-            this.emitter.emit("openCart")
+        toggleCart() {
+            menu_store.commit("toggleCart")
+        }
+    },
+    computed: {
+        cart_active: () => {
+            return menu_store.state.cart_active
         }
     }
 }

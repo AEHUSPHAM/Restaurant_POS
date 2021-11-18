@@ -1,6 +1,6 @@
 <template>
-    <div class=" menu-item-wrapper mb-5"
-        v-bind:class="column_type"
+    <div class=" menu-item-wrapper col-sm-4 col-6 mb-5"
+        v-bind:class="cart_active? 'col-lg-4 col-md-4': 'col-lg-3 col-md-3'"
     >
         <!-- Image of menu item -->
         <div class="menu-item container rounded shadow p-0">
@@ -43,15 +43,10 @@
 
 <script>
 import { formatMoney } from '@/mixins/menu.js'
-
+import menu_store from '@/stores/menu_store.js'
 
 export default ({
     name: 'MenuItem',
-    data () {
-        return {
-            column_type: "col-lg-3 col-md-3 col-sm-4 col-6",
-        }
-    },
     props: {
         item_index: {
             type: Number,
@@ -66,13 +61,10 @@ export default ({
         },
         formatMoney,
     },
-    created () {
-        this.emitter.on("openCart", () => {
-            this.column_type = "col-lg-4 col-md-4 col-sm-4 col-6"
-        })
-        this.emitter.on("closeCart", () => {
-            this.column_type = "col-lg-3 col-md-3 col-sm-4 col-6"
-        })
+    computed: {
+        cart_active: () => {
+            return menu_store.state.cart_active
+        }
     }
 })
 </script>
@@ -200,7 +192,7 @@ export default ({
             font-size: 75%;
         }
         .menu-item-price {
-            font-size: 70%;
+            font-size: 75%;
         }
         .cart-button {
             max-height: 28px;

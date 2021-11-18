@@ -10,7 +10,8 @@ export default createStore({
         ids: [],
         cart: [],    //array of selected items
         total_amount: 0,    //amount of items (an item can be ordered many times)
-        total_money: 0
+        total_money: 0,
+        cart_active: false
     },
     //changes made to the store state should be committed to ensure reactivity
     mutations: {
@@ -71,6 +72,9 @@ export default createStore({
                 state.total_money -= topping_price
             }
         },
+        toggleCart(state) {
+            state.cart_active = !state.cart_active
+        }
     },
     getters: {
         getMenu: (state) => () => {
