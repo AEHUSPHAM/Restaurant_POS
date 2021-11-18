@@ -1,14 +1,21 @@
 <template>
     <Cart v-bind:active = 'cart_active'/>
-    <button @click="cart_active = !cart_active">Cart</button>
+    <button @click="cart_active = true">
+        <i class="fa fa-shopping-cart" style="font-size: 20px;">Your Cart</i>
+    </button>
     <div :class="{ 'menu-reduce-right': cart_active && (window.width > 1000), 'menu-reduce-bottom': cart_active && (window.width <= 1000)}">
-        <nav class="navbar-wrapper navbar navbar-light bg-white">
+        <nav class="navbar-wrapper navbar navbar-light bg-white fixed-top" :class="{ 'navbar-reduce-right': cart_active && (window.width > 1000)}">
             <div class="container">
                 <a class="navbar-brand" href="#">
                     <button type="button" class="home-button"><i class="fa fa-home home-icon"></i></button>
                     <span class="home-text">Back to home</span>
                 </a>
+                <a class="navbar-brand" @click="cart_active = true" style="cursor: pointer;">
+                    <button type="button" class="home-button" ><i class="fa fa-shopping-cart" style="font-size: 20px;"></i></button>
+                    <span class="home-text" >Your cart</span>
+                </a>
             </div>
+            
         </nav>
         <div class="body-wrapper container">
             <div class="row">
@@ -65,6 +72,11 @@ export default {
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
     },
+    mounted() {
+        this.emitter.on("closeCart", close => {
+            this.cart_active = close;
+        })
+    },
     methods: {
         updateMenuByCate: function(tag){
             if (tag == "All Dishes"){
@@ -84,7 +96,7 @@ export default {
         handleResize() {
             this.window.width = window.innerWidth;
             this.window.height = window.innerHeight;
-        }
+        },
     }
 }
 </script>
@@ -109,9 +121,11 @@ export default {
     align-items: center;
     float: left;
 }
+
 .body-wrapper {
     padding-left: 5%;
     padding-right: 5%;
+    margin-top: 70px;
 }
 .title-wrapper {
     margin-left: 1%;
@@ -127,11 +141,17 @@ export default {
     font-weight: bold;
     font-size: 25px;
 }
+
 .menu-reduce-right {
     margin-right: 30%;
 }
 .menu-reduce-bottom {
     margin-bottom: 280px;
+}
+.navbar-reduce-right {
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-right: 30%;
 }
 @media only screen and (max-width: 420px){
     .home-text {
@@ -152,6 +172,7 @@ export default {
         position:relative;
         top:5px;
     }
+    
 }
 @media only screen and (min-width: 421px) and (max-width: 575px){
     .home-text {

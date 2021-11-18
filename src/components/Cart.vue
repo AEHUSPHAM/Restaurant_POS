@@ -7,6 +7,9 @@
             <p :class="{'header-text': (window.width > 1000), 'header-text-small': (window.width <= 1000 && window.width > 576), 'header-text-ssmall': (window.width <= 575)}">
                 <b>Your cart ({{ menu_store.state.total_amount }})</b>
             </p>
+            <button class="close-cart" @click="closeCart">
+                <i class="fa fa-close"></i>
+            </button>
         </div>
         <div :class="{ 'cart-item-container': (window.width > 1000), 'cart-item-container-small': (window.width <= 1000) }">
             <CartItem 
@@ -104,12 +107,28 @@ export default {
         handleResize() {
             this.window.width = window.innerWidth;
             this.window.height = window.innerHeight;
+        },
+        closeCart() {
+            this.emitter.emit("closeCart", false);
         }
     },
 }
 </script>
 
 <style scoped>
+.close-cart {
+    right: 20px;
+    position: fixed;
+    color: #808080;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px
+}
 .cart-header {
     width: 100%;
     color: #FF0000;
@@ -123,7 +142,7 @@ export default {
     width: calc(30% + 1px);
     color: #FF0000;
     padding-top: 20px;
-    padding-right: 10px;
+    padding-right: 25px;
     position: fixed;
     background-color: #FFFFFF;
     overflow: hidden;
@@ -161,7 +180,7 @@ export default {
     font-size: 18px;
 }
 .header-text-ssmall {
-    float: center;
+    float: left;
     font-size: 14px;
 }
 .cart-open {
@@ -170,7 +189,7 @@ export default {
     height: calc(100% - 150px);
     width: 30%;
     position: fixed;
-    z-index: 1;
+    z-index: 1031;
     top: 0;
     right: 0;
     background-color: #FFFFFF;
@@ -292,5 +311,11 @@ export default {
     color: #FF0000;
     font-size: 15px;
     margin: 2px;
+}
+@media only screen and (max-width: 1000px){
+    .close-cart {
+        right: 0;
+        font-size: inherit
+    }
 }
 </style>

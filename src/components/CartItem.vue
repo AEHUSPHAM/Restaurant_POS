@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class='cart-item'>
-            <button class="close" @click="removeFromCart">
+            <button class="close-item" @click="removeFromCart">
                 <i class="fa fa-close"></i>
             </button>
             <div class="col-md-3 col-sm-3 col-3 w-100">
@@ -145,7 +145,7 @@ img {
     padding-bottom: auto;
 }
 
-.close {
+.close-item {
     float: right;
     display: flex;
     color: #808080;
