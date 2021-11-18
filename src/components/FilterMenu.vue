@@ -80,10 +80,9 @@ export default({
             this.current_view -= 1
             var scroll_bar = document.getElementById("scrollable-filter-menu")
             scroll_bar.scrollLeft = scroll_width * this.current_view
-
             
             //check if we can still scroll left and right
-            var max_offset = 0.5*scroll_width
+            var max_offset = 0.5 * scroll_width
             this.is_left_scrollable = (scroll_bar.scrollLeft >= max_offset)
             this.is_right_scrollable = ((scroll_bar.scrollWidth-scroll_bar.clientWidth-scroll_bar.scrollLeft) >=max_offset)
         },
@@ -97,7 +96,7 @@ export default({
             scroll_bar.scrollLeft = scroll_width * this.current_view
             
             //check if we can still scroll left and right
-            var max_offset = 0.5*scroll_width
+            var max_offset = 0.5 * scroll_width
             this.is_left_scrollable = (scroll_bar.scrollLeft >= max_offset)
             this.is_right_scrollable = ((scroll_bar.scrollWidth-scroll_bar.clientWidth-scroll_bar.scrollLeft) >= max_offset)
         },
@@ -110,7 +109,7 @@ export default({
             scroll_bar.scrollLeft = scroll_width * this.current_view
 
             //check if we can still scroll left and right
-            var max_offset = 0.5*scroll_width
+            var max_offset = 0.5 * scroll_width
             this.is_left_scrollable = (scroll_bar.scrollLeft >= max_offset)
             this.is_right_scrollable = ((scroll_bar.scrollWidth-scroll_bar.clientWidth-scroll_bar.scrollLeft) >= max_offset)
         }

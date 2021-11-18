@@ -2,12 +2,14 @@ import { initializeApp } from 'firebase/app'
 import { getDocs, collection, getFirestore } from 'firebase/firestore'
 import { getDownloadURL, ref, getStorage } from 'firebase/storage'
 import { firebase_config } from '@/firebase_config'
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 
 initializeApp(firebase_config)
 
 const db = getFirestore()
 const storage = getStorage()
+const functions = getFunctions()
 
 
 export async function fetchMenu(){
@@ -41,4 +43,10 @@ export async function fetchTags(){
 
 export function formatMoney(amount) {
     return amount.toLocaleString('en-VN', {style: 'currency',currency: 'VND', minimumFractionDigits: 0})
+}
+
+export async function sendOrder(order) {
+    //sends the order to backend to record and returns the confirmation from the server
+    const callable = httpsCallable(functions, 'recordOrder')
+    return callable(order)
 }

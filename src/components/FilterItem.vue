@@ -50,7 +50,7 @@ export default({
         cart_active: () => {
             return menu_store.state.cart_active
         } 
-    }
+    },
 })
 </script>
 

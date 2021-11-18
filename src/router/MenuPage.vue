@@ -45,6 +45,7 @@
         </div>
     </div>
     <DetailModal/>
+    <LoadingModal v-bind:show_modal="show_loading"/>
 </template>
 
 
@@ -53,6 +54,7 @@ import FilterMenu from '@/components/FilterMenu.vue'
 import Menu from '@/components/Menu.vue'
 import Cart from '@/components/Cart.vue'
 import DetailModal from '@/components/DetailModal.vue'
+import LoadingModal from '@/components/LoadingModal.vue'
 
 import menu_store from '@/stores/menu_store.js'
 
@@ -63,7 +65,8 @@ export default {
         FilterMenu,
         Menu,
         Cart,
-        DetailModal
+        DetailModal,
+        LoadingModal
     },
     data() {
         return {
@@ -108,6 +111,9 @@ export default {
     computed: {
         cart_active: () => {
             return menu_store.state.cart_active
+        },
+        show_loading: () => {
+            return menu_store.state.show_loading
         }
     }
 }

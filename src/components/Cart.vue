@@ -79,6 +79,7 @@
                     'payment-button-small': (window.width <= 767 && window.width > 450),
                     'payment-button-ssmall': (window.width <= 450)
                 }"
+                @click="sendOrder"
             >
                 PAYMENT
             </button>
@@ -89,6 +90,7 @@
 <script>
 import CartItem from '@/components/CartItem.vue'
 import menu_store from '@/stores/menu_store.js'
+import { sendOrder } from '@/mixins/menu.js'
 
 
 export default {
@@ -122,6 +124,7 @@ export default {
                 item_tag: item_added.item_tag,
                 toppings: item_added.toppings,
                 selected_toppings: [],
+                total_price: item_added.item_price, //price with toppings included
                 in_cart: 1
             };
 
@@ -150,6 +153,14 @@ export default {
         },
         toggleCart() {
             menu_store.commit("toggleCart")
+        },
+        sendOrder() {
+            menu_store.commit("startLoading")
+            const order = menu_store.getters.getOrder()
+            sendOrder(order).then((response) => {
+                console.log(response)
+                menu_store.commit("endLoading")
+            })
         }
     },
     computed: {
