@@ -119,7 +119,7 @@ export default {
 .close-cart {
     right: 20px;
     position: fixed;
-    color: #808080;
+    color: #FF0000;
     background-color: #ffffff;
     border: none;
     border-radius: 50%;
