@@ -104,7 +104,7 @@
                                     <div class="row">
                                         <div class="col-md-8 col-sm-8 col-8 offset-md-4 offset-sm-4 offset-4">
                                             <button type="button" class="btn rounded" @click="show_modal = false">
-                                                <i class="fa fa-shopping-cart"></i> &nbsp;{{total_money}}
+                                                <i class="fa fa-shopping-cart"></i> &nbsp;{{ formatMoney(item.in_cart * item.total_price) }}
                                             </button>
                                         </div>
                                     </div>
@@ -159,11 +159,6 @@ export default {
             })
         },
         formatMoney,
-    },
-    computed: {
-        total_money: () => {
-            return menu_store.getters.getTotalMoney()
-        }
     },
     created () {
         this.emitter.on('editItem', this.editItemHandler)

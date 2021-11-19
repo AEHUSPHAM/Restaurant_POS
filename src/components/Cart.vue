@@ -138,9 +138,16 @@ export default {
         sendOrder() {
             menu_store.commit("startLoading")
             const order = menu_store.getters.getOrder()
+
             sendOrder(order).then((response) => {
-                console.log(response)
+                const data = response.data
                 menu_store.commit("endLoading")
+                //display the order confirmed by server
+                if (data.status === 'success'){
+                    this.emitter.emit("confirmOrder", data)
+                }else{
+                    console.log("Error sending the order: ", data.message)
+                }
             })
         },
         addToCartHandler(item_added) {

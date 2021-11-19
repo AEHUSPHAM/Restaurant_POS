@@ -1,7 +1,8 @@
 const functions = require("firebase-functions");
 const admin = require('firebase-admin');
-admin.initializeApp();
 
+
+admin.initializeApp();
 
 
 exports.recordOrder = functions.https.onCall(async (data, context) => {
@@ -46,9 +47,10 @@ exports.recordOrder = functions.https.onCall(async (data, context) => {
             full_cart.push({
                 id: item.id,
                 item_name: recorded_item.item_name,
-                img_src: recorded_item.img_src,
+                img_path: recorded_item.img_path,
                 img_alt: recorded_item.item_name,
                 item_price: recorded_item.item_price,
+                total_price: total_price,
                 toppings: recorded_item.toppings,
                 selected_toppings: item.selected_toppings,
                 in_cart: item.in_cart,

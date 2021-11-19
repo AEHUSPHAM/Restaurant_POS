@@ -88,7 +88,7 @@ export default createStore({
         endLoading(state) {
             //stop showing loading modal
             state.show_loading = false
-        }
+        },
     },
     getters: {
         getMenu: (state) => () => {
@@ -100,6 +100,9 @@ export default createStore({
         getTotalMoney: (state) => () => {
             //return the total amount of money in form of VND
             return formatMoney(state.total_money)
+        },
+        getItemTotal: (state) => (item_index) => {
+            return formatMoney(state.cart[item_index].total_price * state.cart[item_index].in_cart)
         },
         getOrder: (state) => () => {
             const cart = []
@@ -113,6 +116,6 @@ export default createStore({
             return {
                 cart: cart
             }
-        }
+        },
     }
 })

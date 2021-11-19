@@ -50,6 +50,7 @@
     <LoadingModal 
         v-bind:show_modal="show_loading"
     />
+    <ConfirmModal/>
 </template>
 
 
@@ -59,6 +60,7 @@ import Menu from '@/components/Menu.vue'
 import Cart from '@/components/Cart.vue'
 import DetailModal from '@/components/DetailModal.vue'
 import LoadingModal from '@/components/LoadingModal.vue'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 
 import menu_store from '@/stores/menu_store.js'
 
@@ -70,7 +72,8 @@ export default {
         Menu,
         Cart,
         DetailModal,
-        LoadingModal
+        LoadingModal,
+        ConfirmModal,
     },
     data() {
         return {
