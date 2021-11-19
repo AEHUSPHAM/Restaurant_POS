@@ -20,13 +20,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-12 w-100">
-                        <button class="minus" @click="decreaseCartQuantity">
+                        <button class="minus" @click="decreaseItemQuantity">
                             <i class="fa fa-minus"></i>
                         </button>
                         <p class="quantity">
                             {{item.in_cart}}
                         </p>
-                        <button class="plus" @click="increaseCartQuantity">
+                        <button class="plus" @click="increaseItemQuantity">
                             <i class="fa fa-plus"></i>
                         </button>
                         
@@ -69,11 +69,11 @@ export default {
         this.handleResize();
     },
     methods: {
-        increaseCartQuantity: function(){
-            this.emitter.emit('increaseCartQuantity', this.item_index -1);
+        increaseItemQuantity: function(){
+            this.emitter.emit('increaseItemQuantity', this.item_index -1);
         },
-        decreaseCartQuantity: function(){
-            this.emitter.emit('decreaseCartQuantity', this.item_index - 1);
+        decreaseItemQuantity: function(){
+            this.emitter.emit('decreaseItemQuantity', this.item_index - 1);
         },
         removeFromCart: function(){
             this.emitter.emit('removeFromCart', this.item_index - 1);
@@ -87,6 +87,9 @@ export default {
         },
         formatMoney
     },
+    unmounted () {
+        window.removeEventListener('resize', this.handleResize)
+    }
 }
 </script>
 

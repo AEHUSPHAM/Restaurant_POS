@@ -14,10 +14,12 @@
                 }"
             >
             <div class="container">
-                <a class="navbar-brand" href="#">
-                    <button type="button" class="home-button"><i class="fa fa-home home-icon"></i></button>
+                <router-link class="navbar-brand" to="/home">
+                    <button type="button" class="home-button">
+                        <i class="fa fa-home home-icon"></i>
+                    </button>
                     <span class="home-text">Back to home</span>
-                </a>
+                </router-link>
                 <a class="navbar-brand" @click="toggleCart" style="cursor: pointer;">
                     <button type="button" class="home-button" >
                         <i class="fa fa-shopping-cart" style="font-size: 20px;"></i>
@@ -45,7 +47,9 @@
         </div>
     </div>
     <DetailModal/>
-    <LoadingModal v-bind:show_modal="show_loading"/>
+    <LoadingModal 
+        v-bind:show_modal="show_loading"
+    />
 </template>
 
 
@@ -84,6 +88,9 @@ export default {
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
     },
+    unmounted () {
+        window.removeEventListener('resize', this.handleResize);
+    },
     methods: {
         updateMenuByCate: function(tag){
             if (tag == "All Dishes"){
@@ -97,7 +104,6 @@ export default {
                     }
                 }
             }
-
             this.active_tag = tag
         },
         handleResize() {

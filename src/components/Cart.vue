@@ -113,37 +113,18 @@ export default {
     },
     created() {
         //add a new item to cart
-        this.emitter.on('addToCart', item_added => {
-            //the item is not added to the cart
-            var new_item = {
-                id: item_added.id,
-                img_src: item_added.img_src,
-                img_alt: item_added.img_alt,
-                item_name: item_added.item_name,
-                item_price: item_added.item_price,
-                item_tag: item_added.item_tag,
-                toppings: item_added.toppings,
-                selected_toppings: [],
-                total_price: item_added.item_price, //price with toppings included
-                in_cart: 1
-            };
-
-            menu_store.commit('addToCart', new_item);
-        })
+        this.emitter.on('addToCart', this.addToCartHandler)
         //increase the quantity of an item in cart
-        this.emitter.on('increaseCartQuantity', index => {
-            menu_store.commit("increaseItemQuantity", index);
-        })
-        this.emitter.on('decreaseCartQuantity', index => {
-            if(menu_store.state.cart[index].in_cart > 1) {
-                menu_store.commit("decreaseItemQuantity", index);
-            }
-        })
+        this.emitter.on('increaseItemQuantity', this.increaseItemQuantityHandler)
+        //decrease the quantity of an item in cart
+        this.emitter.on('decreaseItemQuantity', this.decreaseItemQuantityHandler)
         //remove an item from cart
-        this.emitter.on('removeFromCart', index => {
-            menu_store.commit("removeFromCart", index);
-        })
+        this.emitter.on('removeFromCart', this.removeFromCartHandler)
+
+        //handle resize event
         window.addEventListener('resize', this.handleResize);
+
+        //adjust the cart on start up
         this.handleResize();
     },
     methods: {
@@ -161,6 +142,34 @@ export default {
                 console.log(response)
                 menu_store.commit("endLoading")
             })
+        },
+        addToCartHandler(item_added) {
+            //event handler od addToCart
+            var new_item = {
+                id: item_added.id,
+                img_src: item_added.img_src,
+                img_alt: item_added.img_alt,
+                item_name: item_added.item_name,
+                item_price: item_added.item_price,
+                item_tag: item_added.item_tag,
+                toppings: item_added.toppings,
+                selected_toppings: [],
+                total_price: item_added.item_price, //price with toppings included
+                in_cart: 1
+            };
+
+            menu_store.commit('addToCart', new_item);
+        },
+        increaseItemQuantityHandler(index) {
+            menu_store.commit("increaseItemQuantity", index);
+        },
+        decreaseItemQuantityHandler(index) {
+            if (menu_store.state.cart[index].in_cart > 1) {
+                menu_store.commit("decreaseItemQuantity", index);
+            }
+        },
+        removeFromCartHandler(index) {
+            menu_store.commit("removeFromCart", index);
         }
     },
     computed: {
@@ -173,6 +182,16 @@ export default {
         total_amount: () => {
             return menu_store.state.total_amount
         }
+    },
+    unmounted () {
+        //remove all event listerners when the component is unmounted
+        this.emitter.off('addToCart', this.addToCartHandler)
+        this.emitter.off('increaseItemQuantity', this.increaseItemQuantityHandler)
+        this.emitter.off('decreaseItemQuantity', this.decreaseItemQuantityHandler)
+        this.emitter.off('removeFromCart', this.removeFromCartHandler)
+
+        //remove the resize event listerner
+        window.removeEventListener('resize', this.handleResize)
     }
 }
 </script>

@@ -30,7 +30,6 @@ export default createStore({
         },  
         addToCart(state, new_item) {
             const item_index = state.ids.indexOf(new_item.id)
-
             if (item_index === -1){
                 //item has not been added
                 state.cart.push(new_item)
