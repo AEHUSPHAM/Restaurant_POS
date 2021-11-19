@@ -14,13 +14,13 @@
                             </div>
 
                             <!-- body -->
-                            <div 
-                                class="modal-body"
-                                v-for="(item, index) in order.cart"
-                                v-bind:key="index"
-                                v-bind:item="item"
-                            >
-                                <div class="container m-0 p-0">
+                            <div class="modal-body p-0 m-0">
+                                <div
+                                    class="item-wrapper container rounded"
+                                    v-for="(item, index) in order.cart"
+                                    v-bind:key="index"
+                                    v-bind:item="item"
+                                >
                                     <div class=" row">
                                         <!-- menu item photo -->
                                         <div class="col-md-4 col-sm-4 col-4">
@@ -59,9 +59,9 @@
 
                                                     <div 
                                                         class="topping-checkbox row"
+                                                        style="padding-right:0;"
                                                         v-for="(topping_name, index) in item.selected_toppings"
                                                         v-bind:key="index"
-                                                        v-bind:toppings="item.toppings"
                                                     >
                                                         <div class="col-md-8 col-sm-8 col-8 m-auto">
                                                             <span>
@@ -70,10 +70,35 @@
                                                         </div>
                                                         <div class="col-md-4 col-sm-4 col-4 m-auto">
                                                             <span class="topping-price">
-                                                                {{ topping_price? formatMoney(topping_price): 'Free' }}
+                                                                {{ item.toppings[topping_name]? formatMoney(item.toppings[topping_name]): 'Free' }}
                                                             </span>
                                                         </div>
                                                     </div>
+                                                </div>
+
+
+                                                 <div class="item-quantity row">
+                                                    <div class="col-md-6 col-sm-6 col-6">
+                                                        <h6>Quantity</h6>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-6">
+                                                        <h5>&times; {{ item.in_cart }}</h5>
+                                                    </div>
+                                                </div>
+        
+                                                
+                                                <div class="item-total row">
+                                                    <div class="col-md-8 col-sm-8 col-8 m-auto">
+                                                        <h5 style="float:left;">
+                                                            Item total
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-4 col-4 m-auto">
+                                                        <h5 style="float:right;">
+                                                            {{ formatMoney(item.in_cart * item.total_price) }}
+                                                        </h5>
+                                                    </div>
+                                            
                                                 </div>
 
                                             </div>
@@ -87,10 +112,22 @@
                             <!-- footer -->
                             <div class="modal-footer">
                                 <div class="container p-0">
+                                    <div class="total-cost row">
+                                        <div class="col-md-6 col-sm-6 col-6">
+                                            <h4 style="float:left;">
+                                                <i class="fa fa-money"></i>&nbsp;&nbsp;Total cost
+                                            </h4>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-6">
+                                            <h4 style="float:right;">
+                                                {{ formatMoney(order.total_money) }}
+                                            </h4>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-12 m-auto">
                                             <button type="button" class="btn rounded" @click="show_modal = false">
-                                                <i class="fa fa-money"></i> &nbsp;{{ formatMoney(order.total_money) }}
+                                                CONFIRM
                                             </button>
                                         </div>
                                     </div>
@@ -122,7 +159,6 @@ export default {
     },
     methods: {
         confirmOrderHandler: function(order) {
-            console.log(order.cart)
             this.order = order
             this.show_modal = true
         },
@@ -167,6 +203,7 @@ export default {
     margin-right: auto;
 }
 
+
 .modal-header {
     background-color: #F3F0EC;
     padding-top: 2%;
@@ -179,17 +216,25 @@ export default {
     border: none;
 }
 
-.modal-header .close span {
-    font-size: 100%;
-}
-
 .modal-header h5 {
     font-weight: bold;
     color: #505050;
 }
 
 .modal-body {
-    margin-right: 3%;
+    height: 60vh;
+    overflow-y: auto;
+}
+
+.item-wrapper {
+    width: 94%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    padding: 4% 3% 4% 3%;
+    background-color: #fffcf2;
+    border: solid 1px #acaaaa;   
 }
 
 .modal-body h6 {
@@ -250,6 +295,11 @@ export default {
     padding-right: 0;
 }
 
+.topping-checkbox {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
 .topping-checkbox span {
     float: left;
     margin: auto;
@@ -258,7 +308,8 @@ export default {
 .topping-checkbox .topping-price {
     color: #ff0909;
     font-weight: bold;
-    margin-top: 8%;
+    margin-top: auto;
+    margin-bottom: auto;
     float: right;
 }
 
@@ -266,8 +317,49 @@ export default {
     padding-right: 0;
 }
 
+.item-quantity {
+    padding-top: 3%;
+    padding-bottom: 3%;
+    margin-bottom: 5%;
+    border-bottom: solid 1px #e2e0e0;
+}
+
+.item-quantity h6 {
+    float: left;
+    padding-top: auto;
+    padding-bottom: auto;
+    height: 100%;
+}
+
+.item-quantity h5 {
+    float: right;
+    padding-top: auto;
+    padding-bottom: auto;
+    height: 100%;
+    font-weight: bold;
+    color: #ff0909;
+}
+
 .modal-footer {
     border-top: none;
+}
+
+.item-total h5 {
+    color: #ff0909;
+    font-weight: bold;
+}
+
+.total-cost {
+    color: #ff0909;
+    padding: 3%;
+}
+
+.total-cost h4 {
+    font-weight: bold;
+}
+
+.modal-footer {
+    border-top: solid 3px #e2e0e0;
 }
 
 .modal-footer .btn {
@@ -278,82 +370,128 @@ export default {
 }
 
 @media only screen and (max-width: 420px) {
-    .modal-footer .btn,
     .modal-content h6 {
         font-size: 12px;
     }
     .topping-checkbox label span {
         font-size: 9px;
     }
+    .modal-header .close span,
+    .modal-footer .btn,
+    .item-total h5,
     .modal-content h5 {
         font-size: 14px;
     }
     .modal-content span{
         font-size: 10px;
     }
+    .total-cost h4 {
+        font-size: 16px;
+    }
 }
 
 @media only screen and (min-width: 421px) and (max-width: 575px) {
-    .modal-footer .btn,
     .modal-content h6 {
         font-size: 14px;
     }
     .topping-checkbox label span {
         font-size: 11px;
     }
+    .modal-header .close span,
+    .modal-footer .btn,
+    .item-total h5,
     .modal-content h5 {
         font-size: 18px;
     }
     .modal-content span {
         font-size: 12px;
     }
+    .total-cost h4 {
+        font-size: 20px;
+    }
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
-    .modal-footer .btn,
     .modal-content {
         font-size: 16px;
     }
     .topping-checkbox label span {
         font-size: 13px;
     }
+    .modal-header .close span,
+    .modal-footer .btn,
+    .item-total h5,
     .modal-content h5 {
         font-size: 20px;
     }
     .modal-content span{
         font-size: 14px;
     }
+    .total-cost h4 {
+        font-size: 22px;
+    }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px){
-    .modal-footer .btn,
     .modal-content h6 {
         font-size: 16px;
     }
     .topping-checkbox label span {
         font-size: 15px;
     }
+    .modal-header .close span,
+    .modal-footer .btn,
+    .item-total h5,
     .modal-content h5 {
         font-size: 20px;
     }
     .modal-content span{
         font-size: 14px;
     }
+    .total-cost h4 {
+        font-size: 22px;
+    }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px){
-    .modal-footer .btn,
-    .modal-content {
+    .modal-content h6 {
         font-size: 20px;
     }
     .topping-checkbox label span {
         font-size: 17px;
     }
+    .modal-header .close span,
+    .modal-footer .btn,
+    .item-total h5,
     .modal-content h5 {
         font-size: 24px;
     }
     .modal-content span{
         font-size: 18px;
+    }
+    .total-cost h4 {
+        font-size: 26px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .modal-content h6 {
+        font-size: 22px;
+    }
+    .topping-checkbox label span {
+        font-size: 19px;
+    }
+    .modal-header .close span,
+    .modal-footer .btn,
+    .item-total h5,
+    .modal-content h5 {
+        font-size: 24px;
+    }
+    .modal-content span{
+        font-size: 20px;
+    }
+    .total-cost h4 {
+        font-size: 26px;
     }
 }
 </style>

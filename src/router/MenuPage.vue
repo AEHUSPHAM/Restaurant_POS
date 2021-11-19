@@ -1,8 +1,5 @@
 <template>
     <Cart v-bind:active = 'cart_active'/>
-    <button @click="toggleCart">
-        <i class="fa fa-shopping-cart" style="font-size: 20px;">Your Cart</i>
-    </button>
     <div :class="{
         'menu-reduce-right': cart_active && (window.width > 767),
         'menu-reduce-bottom': cart_active && (window.width <= 767)
@@ -15,20 +12,42 @@
             >
             <div class="container">
                 <router-link class="navbar-brand" to="/home">
-                    <button type="button" class="home-button">
-                        <i class="fa fa-home home-icon"></i>
-                    </button>
-                    <span class="home-text">Back to home</span>
+                    <div class="home-button-wrapper">
+                        <button 
+                            type="button" 
+                            class="home-button"
+                            style="color:#ffffff;background-color:#2c3a57;"    
+                        >
+                            <i class="fa fa-home home-icon"></i>
+                        </button>
+                    </div>
+                    <div class="home-text-wrapper" style="margin-left:15%;">
+                        <span class="home-text">Home</span>
+                    </div>
                 </router-link>
-                <a class="navbar-brand" @click="toggleCart" style="cursor: pointer;">
-                    <button type="button" class="home-button" >
-                        <i class="fa fa-shopping-cart" style="font-size: 20px;"></i>
-                    </button>
-                    <span class="home-text" >Your cart</span>
+                <a 
+                    class="navbar-brand" 
+                    @click="toggleCart"
+                    style="margin-left:auto;"
+                    v-if="(!cart_active) || (window.width <= 767)"
+                >
+                    <div class="home-text-wrapper" style="margin-right:15%;">
+                        <span class="home-text" style="color:#ff0909;">Your Cart</span>
+                    </div>
+                    <div class="home-button-wrapper">
+                        <button 
+                            type="button"
+                            class="home-button"
+                            style="color:#ffffff;background-color:#ff0909;border-color:#ff0909"
+                        > 
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
                 </a>
             </div>
-            
         </nav>
+
+
         <div class="body-wrapper container">
             <div class="row">
                 <FilterMenu
@@ -130,29 +149,20 @@ export default {
 
 
 <style scoped>
+.body-wrapper {
+    padding-top: 70px;
+}
 .navbar-wrapper span {
     font-weight: bold;
     color: #2c3a57;
 }
-.home-button {
-    height: 100%;
-    width: auto;
-    margin-right: 15%;
-    color: #ffffff;
-    font-size: 150%;
-    background: #2c3a57;
-    border: none;
-    border-radius:.70rem!important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    float: left;
+.home-button-wrapper, .home-text-wrapper {
+    display: inline-block;
 }
-
-.body-wrapper {
-    padding-left: 5%;
-    padding-right: 5%;
-    margin-top: 70px;
+.home-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .title-wrapper {
     margin-left: 1%;
@@ -168,7 +178,6 @@ export default {
     font-weight: bold;
     font-size: 25px;
 }
-
 .menu-reduce-right {
     margin-right: 30%;
 }
