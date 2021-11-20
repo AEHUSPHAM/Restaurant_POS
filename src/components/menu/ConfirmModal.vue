@@ -187,7 +187,7 @@ export default {
                     order_store.commit('addOrder', this.order)
 
                     //prompt user to payment page
-                    this.$router.push('/payment/' + this.order.order_id + '/')
+                    this.$router.push('/payment/' + this.order.order_id)
                 }else{
                     console.log('Error confirming the order: ', data.message)
                 }

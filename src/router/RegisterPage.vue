@@ -84,15 +84,6 @@ const register = () => {
 .signup{
     margin-left: 10px;
 }
-.bodyy{
-//background-image:    !important; min-height: 50vh;
-    display: flex;
-    font-weight: 800;
-    background: hsla(0, 0%, 15%, 0.50);
-//z-index: -1;
-//opacity: 0.2;
-}
-
 .big-boss{
     background-size: cover;
     background-position: center;

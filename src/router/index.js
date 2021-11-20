@@ -23,19 +23,19 @@ const router = createRouter({
             component: MenuPage
         },
         {
-            path: '/payment/:order_id/',
+            path: '/payment/:order_id',
             name: 'Payment',
             meta: {title: 'Payment'},
             component: PaymentPage
         },
         {
-            path: 'login/',
+            path: '/login',
             name: 'Login',
             meta: {title: 'Login'},
             component: LoginPage
         },
         {
-            path: 'register/',
+            path: '/register',
             name: 'Register',
             meta: {title: 'Register'},
             component: RegisterPage

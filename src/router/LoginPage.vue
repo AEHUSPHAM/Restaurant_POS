@@ -14,8 +14,8 @@
                     <label>Password</label>
                     <input type="password" class="form-control" v-model="password" autocomplete="on"/>
                 </div>
-                <button type="button" class=" btn btn-lg btn-block log" @click="loginProcess">Log In</button>
-                <button type="button" class="signup btn btn-lg btn-block log" @click="registerRedirect">Register</button>
+                <button type="button" class=" btn btn-lg btn-block log" @click="login">Log In</button>
+                <button type="button" class="signup btn btn-lg btn-block log" @click="register">Register</button>
 
             </form>
         </div>
@@ -32,6 +32,9 @@ export default {
             password: ""
         }
     },
+    method:{
+
+    }
 }
 </script>
 
@@ -40,17 +43,24 @@ import { ref } from 'vue'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from 'vue-router' // import router
 
-
 const email = ref('')
 const password = ref('')
 const router = useRouter()// get a reference to our vue router
 const auth = getAuth();
-const register = () => {
+
+const register = ()=>{
     router.push('/register');
 }
 // eslint-disable-next-line no-unused-vars
 const login = () => {
-    
+    signInWithEmailAndPassword(auth, email.value, password.value) // need .value because ref()
+    .then((data) => {
+        console.log('Successfully login');
+        router.push('/menu') // redirect to the feed
+    })
+    .catch(error => {
+        alert(error.message);
+    });
 }
 </script>
 
