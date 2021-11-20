@@ -1,23 +1,29 @@
 <template>
     <nav class="navbar-light bg-white">
-        <div class="container-fluid py-3 px-4">
+        <div class="container py-3 px-4">
             <div class="row">
                 <!-- Back button -->
                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-4 text-start">
-                    <router-link class="navbar-brand" to="/home">
+                    <a 
+                        class="navbar-brand" 
+                        @click="$router.go(-1)"
+                    >
                         <button type="button" class="home-button"><i class="fa fa-arrow-left home-icon"></i></button>
-                        <span class="home-text bold-text ps-1">Back</span>
-                    </router-link>
+                    </a>
                 </div>
+
                 <!-- PAYMENT text -->
                 <div class="col-lg-8 col-xl-8 col-md-6 col-sm-4 col-4">
                     <span class="home-text bold-text title">PAYMENT</span>
                 </div>
-                <!-- Home -> Payment -->
-                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-4 text-center">
-                    <span class="home-text gray-text">Home </span>
-                    <span class="home-text gray-text py-1"> . </span>
-                    <span class="home-text bold-text">Payment </span>
+
+                <!-- Home button -->
+                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-4 text-end">
+                    <router-link class="navbar-brand" to="/home">
+                        <button type="button" class="home-button" style="float: right;">
+                            <i class="fa fa-home home-icon"></i>
+                        </button>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -29,9 +35,12 @@
         <div class="row">
             <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9 text-start">
                 <p class="home-text bold-text"> Your order </p>
-                <p class="home-text"> 
-                    {{ order.cart.length }} items (view details) 
-                </p>
+                <a 
+                    class="home-text view-order-link"
+                    @click="showOrder"
+                > 
+                    {{ order.cart.length }} items (view order) 
+                </a>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
                 <p class='bold-text home-text'> {{ formatMoney(order.total_money) }} </p>
@@ -118,45 +127,124 @@
 
         <!-- Row 5: Confirm payment button -->
         <div class="row mt-3 mx-2 align-items-center">
-            <button type="button" class = "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 confirm-button" @click="confirmPayment">
-                <p class='home-text bold-text'>
+            <button 
+                type="button" 
+                class = "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 confirm-button"
+                @click="confirmPayment"
+            >
+                <span class='home-text bold-text'>
                 PAY {{ formatMoney(order.total_money) }}
-                </p>
+                </span>
             </button>
         </div>
         <!-- Row 6: Cancel payment button -->
         <div class="row mt-4 mx-2 align-items-center">
-            <button type="button" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 home-text bold-text cancel-button" @click="cancelPayment" >
-                <p class='home-text bold-text'>
+            <button 
+                type="button" 
+                class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 home-text bold-text cancel-button"
+                @click="cancelPayment"
+            >
+                <span class='home-text bold-text'>
                     Cancel Payment
-                </p>
+                </span>
             </button>
         </div>
     </div>
+
+    <OrderModal v-bind:order="order"/>
+    <LoadingModal/>
+    <LeaveConfirmModal/>
 </template>
 
 
-
 <script>
+import OrderModal from '@/components/payment/OrderModal.vue'
+import LoadingModal from '@/components/LoadingModal.vue'
+import LeaveConfirmModal from '@/components/payment/LeaveConfirmModal.vue'
 import order_store from '@/stores/order_store.js'
 import { formatMoney } from '@/mixins/menu.js'
+import { confirmPayment, cancelPayment } from '@/mixins/order.js'
+
 
 export default {
     name: 'PaymentPage',
+    components: {
+        OrderModal,
+        LoadingModal,
+        LeaveConfirmModal
+    },
     data () {
         return {
             order: order_store.getters.getOrder(this.$route.params.order_id),
+            resolved: false,    //is true if the user chooses to confirm or cancel payment
+            deferreds: null,
+            leave: null,
         }
     },
     methods: {
         confirmPayment: function() {
-            console.log("Payment confirmed");
-            alert("Payment successfully.");
+            //send confimration to back-end
+            this.emitter.emit("startLoading")
+            
+            confirmPayment(this.order.order_id).then((response) => {
+                this.emitter.emit("endLoading")
+                const data = response.data
+
+                if (data.status === 'success'){
+                    //the payment succeeded => display info modal
+                    console.log("Payment succeeded.")
+                    this.resolved = true
+                }else{
+                    console.log("Error confirming payment: ", data.message)
+                }
+            })
         },
         cancelPayment: function() {
-            this.$router.push('/menu')
+            this.emitter.emit("startLoading")
+
+            cancelPayment(this.order.order_id).then((response) => {
+                this.emitter.emit("endLoading")
+                const data = response.data
+
+                if (data.status === 'success'){
+                    //order is cancelled successfully
+                    order_store.commit("removeOrder", this.order.order_id)
+                    console.log("Cancellation succeeded")
+                    this.$router.push('/menu')
+                    this.resolved = true 
+                }else{
+                    console.log("Error cancelling the order: ", data.message)
+                }
+            })
+        },
+        showOrder: function() {
+            this.emitter.emit("showOrder")
+        },
+        confirmLeaveHandler: function(option) {
+            this.deferreds.resolve(option)
         },
         formatMoney,
+    },
+    created () {
+        var deferreds = []
+        this.leave = new Promise(function(resolve, reject) {
+            deferreds = {resolve: resolve, reject: reject}
+        })
+        this.deferreds = deferreds
+        this.emitter.on("confirmLeave", this.confirmLeaveHandler)
+    },
+    unmounted () {
+        this.emitter.off("confirmLeave", this.confirmLeaveHandler)
+    },
+    beforeRouteUpdate(to, from, next) {
+        //check if the order id is valid before proceeding
+        const order_id = to.params.order_id
+
+        if (order_store.getters.isValidOrder(order_id)){
+            next()
+        }else{
+            next('/home')
+        }
     },
     beforeRouteEnter(to, from, next) {
         //check if the order id is valid before proceeding
@@ -168,6 +256,42 @@ export default {
             next('/home')
         }
     },
+    beforeRouteLeave(to, from, next) {
+        if (this.resolved){
+            next()
+        }else{
+            //warn user if they want to leave when order is not resolved
+            this.emitter.emit("showLeaveConfirm")
+
+            this.leave.then((option) => {
+                if (option){
+                    //cancel the order and leave this page
+                    this.emitter.emit("startLoading")
+                    cancelPayment(this.order.order_id).then((response) => {
+                        this.emitter.emit("endLoading")
+                        const data = response.data
+
+                        if (data.status === 'success'){
+                            //order is cancelled successfully
+                            order_store.commit("removeOrder", this.order.order_id)
+                            console.log("Cancellation succeeded")
+                        }else{
+                            console.log("Error cancelling the order: ", data.message)
+                        }
+                    })
+                    next()
+                }else{
+                    //continue to stay at this page
+                    var deferreds = []
+                    this.leave = new Promise(function(resolve, reject) {
+                        deferreds = {resolve: resolve, reject: reject}
+                    })
+                    this.deferreds = deferreds
+                    next(false)
+                }
+            })
+        }
+    }
 }
 </script>
 
@@ -175,6 +299,13 @@ export default {
 .title {
     font-weight: bold;
     font-size: 20px;
+}
+.view-order-link {
+    color: #4ed185;
+    text-decoration: none;
+}
+.view-order-link:hover {
+    text-decoration: underline;
 }
 .payment-input {
    border: none; 
@@ -191,14 +322,14 @@ export default {
     color: none;
     border: none;
 }
-
 .question-button i {
     float: right;
 }
 .confirm-button {
+    padding-bottom: 2%;
     height: 50px;
     border: none;
-    background:#2ECC71 ;
+    background:#2ECC71;
 }
 .bold-text {
     font-weight: bold;

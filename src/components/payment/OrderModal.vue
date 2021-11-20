@@ -7,9 +7,9 @@
                         <div class="modal-content rounded">
                             <!-- hedaer -->
                             <div class="modal-header rounded">
-                                <h5 class="modal-title">CONFIRM ORDER</h5>
+                                <h5 class="modal-title">YOUR ORDER</h5>
                                 <button type="button" class="close rounded-circle" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true" @click="show_modal = false">&times;</span>
+                                    <span aria-hidden="true" @click="show_modal=false">&times;</span>
                                 </button>
                             </div>
 
@@ -124,17 +124,6 @@
                                             </h4>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-12 m-auto">
-                                            <button 
-                                                type="button"
-                                                class="btn rounded"
-                                                @click="sendOrderConfirm"
-                                            >
-                                                CONFIRM
-                                            </button>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 
@@ -150,57 +139,33 @@
 
 
 <script>
-import { formatMoney, getDownloadUrl, sendOrderConfirm } from '@/mixins/menu.js'
-import menu_store from '@/stores/menu_store.js'
-import order_store from '@/stores/order_store.js'
+import { formatMoney } from '@/mixins/menu.js'
 
 
 export default {
-    name: 'ConfirmModal',
+    name: 'OrderModal',
     data () {
         return {
             show_modal: false,
-            order: null,
         }
     },
-    methods: {
-        askConfirmOrderHandler: function(order) {
-            this.order = order
-            this.order.cart.forEach((item) => {
-                item.img_src = getDownloadUrl(item.img_path)
-            })
-            this.show_modal = true
+    props: {
+        order: {
+            type: Object,
         },
-        sendOrderConfirm: function() {
-            this.emitter.emit("startLoading")
-    
-            sendOrderConfirm(this.order.order_id).then((response) => {
-                this.emitter.emit("endLoading")
-                this.show_modal = false
-                const data = response.data
-
-                if (data.status === 'success'){
-                    //reset the cart
-                    menu_store.commit('resetCart')
-                    
-                    //add this order to list of confirmed orders
-                    order_store.commit('addOrder', this.order)
-
-                    //prompt user to payment page
-                    this.$router.push('/payment/' + this.order.order_id + '/')
-                }else{
-                    console.log('Error confirming the order: ', data.message)
-                }
-            })
+    },
+    methods: {
+        showOrderHandler: function () {
+            this.show_modal = true
         },
         formatMoney,
     },
     created () {
-        this.emitter.on('askConfirmOrder', this.askConfirmOrderHandler)
+        this.emitter.on("showOrder", this.showOrderHandler)
     },
     unmounted () {
-        this.emitter.off('askConfirmOrder', this.askConfirmOrderHandler)
-    },
+        this.emitter.off("showOrder", this.showOrderHandler)
+    }
 }
 </script>
 
@@ -388,13 +353,6 @@ export default {
     border-top: solid 3px #e2e0e0;
 }
 
-.modal-footer .btn {
-    width: 100%;
-    background: #ff0909;
-    color: #ffffff;
-    padding: 2%;
-}
-
 @media only screen and (max-width: 420px) {
     .modal-content h6 {
         font-size: 12px;
@@ -403,7 +361,6 @@ export default {
         font-size: 9px;
     }
     .modal-header .close span,
-    .modal-footer .btn,
     .item-total h5,
     .modal-content h5 {
         font-size: 14px;
@@ -424,7 +381,6 @@ export default {
         font-size: 11px;
     }
     .modal-header .close span,
-    .modal-footer .btn,
     .item-total h5,
     .modal-content h5 {
         font-size: 18px;
@@ -445,7 +401,6 @@ export default {
         font-size: 13px;
     }
     .modal-header .close span,
-    .modal-footer .btn,
     .item-total h5,
     .modal-content h5 {
         font-size: 20px;
@@ -466,7 +421,6 @@ export default {
         font-size: 15px;
     }
     .modal-header .close span,
-    .modal-footer .btn,
     .item-total h5,
     .modal-content h5 {
         font-size: 20px;
@@ -487,7 +441,6 @@ export default {
         font-size: 17px;
     }
     .modal-header .close span,
-    .modal-footer .btn,
     .item-total h5,
     .modal-content h5 {
         font-size: 24px;
@@ -508,7 +461,6 @@ export default {
         font-size: 19px;
     }
     .modal-header .close span,
-    .modal-footer .btn,
     .item-total h5,
     .modal-content h5 {
         font-size: 24px;

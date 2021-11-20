@@ -9,10 +9,14 @@ export default createStore({
         addOrder(state, order){
             state.confirmed_orders[order.order_id] = order 
         },
+        removeOrder(state, order_id){
+            if (state.confirmed_orders[order_id] !== undefined){
+                delete state.confirmed_orders[order_id]
+            }
+        }
     },
     getters: {
         getOrder: (state) => (order_id) => {
-            console.log(state.confirmed_orders)
             return state.confirmed_orders[order_id]
         },
         isValidOrder: (state) => (order_id) => {

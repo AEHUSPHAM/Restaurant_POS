@@ -110,3 +110,69 @@ exports.confirmOrder = functions.https.onCall(async (data, context) => {
         }
     }    
 })
+
+
+exports.confirmPayment = functions.https.onCall(async (data, context) => {
+    try{
+        const order_id = data.order_id
+        const db = admin.firestore()
+        const order = await db.collection("orders").doc(order_id).get()
+        const order_data = order.data()
+
+        if (order_data.status !== 'unpaid'){
+            return {
+                status: 'error',
+                message: 'The order is not in unpaid state'
+            }
+        }
+
+        //update the status of the order
+        db.collection("orders").doc(order_id).update({
+            status: 'paid'
+        })
+
+        return {
+            status: 'success'
+        }
+
+    }catch(error){
+        return {
+            status: 'error',
+            message: error.message
+        }
+    }
+})
+
+
+
+exports.cancelPayment = functions.https.onCall(async (data, context) => {
+    try{
+        const order_id = data.order_id
+        const db = admin.firestore()
+        const order = await db.collection("orders").doc(order_id).get()
+        const order_data = order.data()
+
+        if (order_data.status !== 'unpaid'){
+            return {
+                status: 'error',
+                message: 'The order is not in unpaid state'
+            }
+        }
+
+        //update the status of the order
+        db.collection("orders").doc(order_id).update({
+            status: 'cancelled'
+        })
+
+        return {
+            status: 'success'
+        }
+
+    }catch(error){
+        return {
+            status: 'error',
+            message: error.message
+        }
+    }
+})
+

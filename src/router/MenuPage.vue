@@ -142,7 +142,6 @@ export default {
     beforeRouteEnter(to, from, next) {
         //make sure that the data is fetched before this page is created
         if (menu_store.state.menu_items === null || menu_store.state.taglist === null){
-            console.log("woosh")
             Promise.allSettled([fetchMenu(), fetchTags()]).then((values) => {
                 menu_store.commit('setMenu', values[0])
                 menu_store.commit('setTags', values[1])
