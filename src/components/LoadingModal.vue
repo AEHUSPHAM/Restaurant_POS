@@ -6,7 +6,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content rounded">
                             <div class="modal-body">
-                               <img v-bind:src="require('@/assets/loading.gif')">
+                               <img v-bind:src="require('@/assets/misc/loading.gif')">
                             </div>
                         </div>
                     </div>
