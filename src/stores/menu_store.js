@@ -17,9 +17,10 @@ export default createStore({
     mutations: {
         resetCart (state) {
             state.ids = []
-            state.cart = []
-            state.total_amount = 0
+            state.cart = []    //array of selected items
+            state.total_amount = 0    //amount of items (an item can be ordered many times)
             state.total_money = 0
+            state.cart_active = false
         },
         setMenu (state, menu_items) {
             state.menu_items = menu_items

@@ -78,6 +78,7 @@ import Cart from '@/components/menu/Cart.vue'
 import DetailModal from '@/components/menu/DetailModal.vue'
 import ConfirmModal from '@/components/menu/ConfirmModal.vue'
 import LoadingModal from '@/components/LoadingModal.vue'
+import { fetchMenu, fetchTags } from '@/mixins/menu.js'
 import menu_store from '@/stores/menu_store.js'
 
 
@@ -102,13 +103,6 @@ export default {
                 height: 0
             }
         }
-    },
-    created() {
-        window.addEventListener('resize', this.handleResize);
-        this.handleResize();
-    },
-    unmounted () {
-        window.removeEventListener('resize', this.handleResize);
     },
     methods: {
         updateMenuByCate: function(tag){
@@ -137,7 +131,27 @@ export default {
         cart_active: () => {
             return menu_store.state.cart_active
         },
-    }
+    },
+    created() {
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
+    },
+    unmounted () {
+        window.removeEventListener('resize', this.handleResize);
+    },
+    beforeRouteEnter(to, from, next) {
+        //make sure that the data is fetched before this page is created
+        if (menu_store.state.menu_items === null || menu_store.state.taglist === null){
+            console.log("woosh")
+            Promise.allSettled([fetchMenu(), fetchTags()]).then((values) => {
+                menu_store.commit('setMenu', values[0])
+                menu_store.commit('setTags', values[1])
+                next()
+            })
+        }else{
+            next()
+        }
+    } 
 }
 </script>
 

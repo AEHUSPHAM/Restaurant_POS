@@ -25,7 +25,7 @@
                                         <!-- menu item photo -->
                                         <div class="col-md-4 col-sm-4 col-4">
                                             <img 
-                                                v-bind:src="getDownloadUrl(item.img_path)"
+                                                v-bind:src="item.img_src"
                                                 v-bind:alt="item.img_alt"
                                                 class="rounded"
                                             >
@@ -151,6 +151,8 @@
 
 <script>
 import { formatMoney, getDownloadUrl, sendOrderConfirm } from '@/mixins/menu.js'
+import menu_store from '@/stores/menu_store.js'
+import order_store from '@/stores/order_store.js'
 
 
 export default {
@@ -164,6 +166,9 @@ export default {
     methods: {
         askConfirmOrderHandler: function(order) {
             this.order = order
+            this.order.cart.forEach((item) => {
+                item.img_src = getDownloadUrl(item.img_path)
+            })
             this.show_modal = true
         },
         sendOrderConfirm: function() {
@@ -175,15 +180,20 @@ export default {
                 const data = response.data
 
                 if (data.status === 'success'){
+                    //reset the cart
+                    menu_store.commit('resetCart')
+                    
+                    //add this order to list of confirmed orders
+                    order_store.commit('addOrder', this.order)
+
                     //prompt user to payment page
-                    console.log("Confirm succeeded")
+                    this.$router.push('/payment/' + this.order.order_id + '/')
                 }else{
                     console.log('Error confirming the order: ', data.message)
                 }
             })
         },
         formatMoney,
-        getDownloadUrl,
     },
     created () {
         this.emitter.on('askConfirmOrder', this.askConfirmOrderHandler)

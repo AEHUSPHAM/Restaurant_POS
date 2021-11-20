@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MenuPage from '@/router/MenuPage.vue'
 import HomePage from '@/router/HomePage.vue'
-import menu_store from '@/stores/menu_store.js';
-import { fetchMenu, fetchTags } from '@/mixins/menu.js';
+import PaymentPage from '@/router/PaymentPage.vue'
 
 
 const router = createRouter({
@@ -20,27 +19,15 @@ const router = createRouter({
             name: 'Menu',
             meta: {title: 'Menu'},
             component: MenuPage
+        },
+        {
+            path: '/payment/:order_id/',
+            name: 'Payment',
+            meta: {title: 'Payment'},
+            component: PaymentPage
         }
     ]
 });
-
-
-//navigation guard
-router.beforeEach((to, from, next) => {
-    //fetch the data before entering the Menu page
-    if (to.name === "Menu"){
-        const menu = fetchMenu()
-        const tags = fetchTags()
-
-        Promise.allSettled([menu, tags]).then((values) => {
-            menu_store.commit("setMenu", values[0])
-            menu_store.commit("setTags", values[1])
-            next()
-        })
-    }else{
-        next()
-    }
-})
 
 
 export default router;
