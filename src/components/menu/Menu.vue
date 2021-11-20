@@ -13,7 +13,7 @@
 
 
 <script>
-import MenuItem from '@/components/MenuItem.vue'
+import MenuItem from '@/components/menu/MenuItem.vue'
 
 export default ({
     name: 'Menu',

@@ -72,13 +72,12 @@
 
 
 <script>
-import FilterMenu from '@/components/FilterMenu.vue'
-import Menu from '@/components/Menu.vue'
-import Cart from '@/components/Cart.vue'
-import DetailModal from '@/components/DetailModal.vue'
+import FilterMenu from '@/components/menu/FilterMenu.vue'
+import Menu from '@/components/menu/Menu.vue'
+import Cart from '@/components/menu/Cart.vue'
+import DetailModal from '@/components/menu/DetailModal.vue'
+import ConfirmModal from '@/components/menu/ConfirmModal.vue'
 import LoadingModal from '@/components/LoadingModal.vue'
-import ConfirmModal from '@/components/ConfirmModal.vue'
-
 import menu_store from '@/stores/menu_store.js'
 
 

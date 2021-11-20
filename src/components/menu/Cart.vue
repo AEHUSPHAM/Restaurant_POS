@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import CartItem from '@/components/CartItem.vue'
+import CartItem from '@/components/menu/CartItem.vue'
 import menu_store from '@/stores/menu_store.js'
 import { placeOrder } from '@/mixins/menu.js'
 

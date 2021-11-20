@@ -40,7 +40,7 @@
 
 
 <script>
-import FilterItem from '@/components/FilterItem.vue'
+import FilterItem from '@/components/menu/FilterItem.vue'
 
 export default({
     name: 'FilterMenu',
