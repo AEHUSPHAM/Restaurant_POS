@@ -18,14 +18,28 @@
 
 
 <script>
-
-
 export default {
     name: 'LoadingModal',
-    props: {
-        show_modal: {
-            type: Boolean,
+    data() {
+        return {
+            show_modal: false
+        }
+    },
+    methods: {
+        startLoadingHandler: function() {
+            this.show_modal = true
         },
+        endLoadingHandler: function() {
+            this.show_modal = false
+        }
+    },
+    created () {
+        this.emitter.on("startLoading", this.startLoadingHandler)
+        this.emitter.on("endLoading", this.endLoadingHandler)
+    },
+    unmounted () {
+        this.emitter.off("startLoading", this.startLoadingHandler)
+        this.emitter.off("endLoading", this.endLoadingHandler)
     }
 }
 </script>
@@ -34,7 +48,7 @@ export default {
 <style scoped>
 .modal-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 9000;
   top: 0;
   left: 0;
   width: 100%;

@@ -79,7 +79,7 @@
                     'payment-button-small': (window.width <= 767 && window.width > 450),
                     'payment-button-ssmall': (window.width <= 450)
                 }"
-                @click="sendOrder"
+                @click="placeOrder"
             >
                 PAYMENT
             </button>
@@ -90,7 +90,7 @@
 <script>
 import CartItem from '@/components/CartItem.vue'
 import menu_store from '@/stores/menu_store.js'
-import { sendOrder } from '@/mixins/menu.js'
+import { placeOrder } from '@/mixins/menu.js'
 
 
 export default {
@@ -135,19 +135,21 @@ export default {
         toggleCart() {
             menu_store.commit("toggleCart")
         },
-        sendOrder() {
-            menu_store.commit("startLoading")
+        placeOrder() {
+            this.emitter.emit("startLoading")
             const order = menu_store.getters.getOrder()
 
-            sendOrder(order).then((response) => {
+            placeOrder(order).then((response) => {
+                this.emitter.emit("endLoading")
                 const data = response.data
-                menu_store.commit("endLoading")
-                //display the order confirmed by server
+                
                 if (data.status === 'success'){
-                    this.emitter.emit("confirmOrder", data)
+                    //display the order confirmed by server
+                    this.emitter.emit("askConfirmOrder", data)
                 }else{
                     console.log("Error sending the order: ", data.message)
                 }
+
             })
         },
         addToCartHandler(item_added) {
@@ -277,7 +279,7 @@ export default {
     height: calc(100% - 150px);
     width: 30%;
     position: fixed;
-    z-index: 1031;
+    z-index: 1000;
     top: 0;
     right: 0;
     background-color: #FFFFFF;

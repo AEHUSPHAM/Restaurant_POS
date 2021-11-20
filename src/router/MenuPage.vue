@@ -66,9 +66,7 @@
         </div>
     </div>
     <DetailModal/>
-    <LoadingModal 
-        v-bind:show_modal="show_loading"
-    />
+    <LoadingModal/>
     <ConfirmModal/>
 </template>
 
@@ -140,9 +138,6 @@ export default {
         cart_active: () => {
             return menu_store.state.cart_active
         },
-        show_loading: () => {
-            return menu_store.state.show_loading
-        }
     }
 }
 </script>

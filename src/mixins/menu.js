@@ -49,8 +49,14 @@ export function getDownloadUrl(img_path){
 }
 
 
-export async function sendOrder(order) {
+export async function placeOrder(order) {
     //sends the order to backend to record and returns the confirmation from the server
     const callable = httpsCallable(functions, 'recordOrder')
     return callable(order)
+}
+
+export async function sendOrderConfirm(order_id) {
+    //sends the order confirmation
+    const callable = httpsCallable(functions, 'confirmOrder')
+    return callable({order_id: order_id})
 }

@@ -126,7 +126,11 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-12 m-auto">
-                                            <button type="button" class="btn rounded" @click="show_modal = false">
+                                            <button 
+                                                type="button"
+                                                class="btn rounded"
+                                                @click="sendOrderConfirm"
+                                            >
                                                 CONFIRM
                                             </button>
                                         </div>
@@ -146,7 +150,7 @@
 
 
 <script>
-import { formatMoney, getDownloadUrl } from '@/mixins/menu.js'
+import { formatMoney, getDownloadUrl, sendOrderConfirm } from '@/mixins/menu.js'
 
 
 export default {
@@ -158,18 +162,34 @@ export default {
         }
     },
     methods: {
-        confirmOrderHandler: function(order) {
+        askConfirmOrderHandler: function(order) {
             this.order = order
             this.show_modal = true
+        },
+        sendOrderConfirm: function() {
+            this.emitter.emit("startLoading")
+    
+            sendOrderConfirm(this.order.order_id).then((response) => {
+                this.emitter.emit("endLoading")
+                this.show_modal = false
+                const data = response.data
+
+                if (data.status === 'success'){
+                    //prompt user to payment page
+                    console.log("Confirm succeeded")
+                }else{
+                    console.log('Error confirming the order: ', data.message)
+                }
+            })
         },
         formatMoney,
         getDownloadUrl,
     },
     created () {
-        this.emitter.on('confirmOrder', this.confirmOrderHandler)
+        this.emitter.on('askConfirmOrder', this.askConfirmOrderHandler)
     },
     unmounted () {
-        this.emitter.off('confirmOrder', this.confirmOrderHandler)
+        this.emitter.off('askConfirmOrder', this.askConfirmOrderHandler)
     },
 }
 </script>
@@ -182,7 +202,7 @@ export default {
 
 .modal-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 2000;
   top: 0;
   left: 0;
   width: 100%;

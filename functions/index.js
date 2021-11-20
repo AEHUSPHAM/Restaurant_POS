@@ -6,8 +6,8 @@ admin.initializeApp();
 
 
 exports.recordOrder = functions.https.onCall(async (data, context) => {
+    //function to process the order when user places an order
     //TODO: verify the user's credentials
-    
     try {
         const db = admin.firestore()
         const cart = data.cart
@@ -60,7 +60,8 @@ exports.recordOrder = functions.https.onCall(async (data, context) => {
         //save the order
         const write_result = await db.collection("orders").add({
             cart: cart,
-            total_money: total_money
+            total_money: total_money,
+            status: 'pending'   //the status of the order
         })
 
         return {
@@ -75,5 +76,37 @@ exports.recordOrder = functions.https.onCall(async (data, context) => {
             message: error.message
         }
     }
-    
 });
+
+
+
+exports.confirmOrder = functions.https.onCall(async (data, context) => {
+    //function to process when user confirms the order
+    try {
+        const order_id = data.order_id
+        const db = admin.firestore()
+
+        const order = await db.collection("orders").doc(order_id).get()
+        const order_data = order.data()
+        
+        if (order_data.status !== 'pending'){
+            return {
+                status: 'error',
+                message: 'The order is not in pending state.'
+            }
+        }
+
+        await db.collection("orders").doc(order_id).update({
+            status: 'unpaid'
+        })
+
+        return {
+            status: 'success'
+        }
+    }catch(error){
+        return {
+            status: 'error',
+            message: error.message
+        }
+    }    
+})

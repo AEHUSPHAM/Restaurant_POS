@@ -12,7 +12,6 @@ export default createStore({
         total_amount: 0,    //amount of items (an item can be ordered many times)
         total_money: 0,
         cart_active: false,
-        show_loading: false,
     },
     //changes made to the store state should be committed to ensure reactivity
     mutations: {
@@ -80,14 +79,6 @@ export default createStore({
         },
         toggleCart(state) {
             state.cart_active = !state.cart_active
-        },
-        startLoading(state) {
-            //display the loading modal
-            state.show_loading = true
-        },
-        endLoading(state) {
-            //stop showing loading modal
-            state.show_loading = false
         },
     },
     getters: {
