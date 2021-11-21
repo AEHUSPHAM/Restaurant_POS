@@ -9,6 +9,13 @@ exports.recordOrder = functions.https.onCall(async (data, context) => {
     //function to process the order when user places an order
     //TODO: verify the user's credentials
     try {
+        if (!context.auth){
+            return {
+                status: 'error',
+                message: 'User is not logged in'
+            }
+        }
+
         const db = admin.firestore()
         const cart = data.cart
         const full_cart = []
@@ -59,6 +66,7 @@ exports.recordOrder = functions.https.onCall(async (data, context) => {
 
         //save the order
         const write_result = await db.collection("orders").add({
+            uid: context.auth.uid,
             cart: cart,
             total_money: total_money,
             status: 'pending'   //the status of the order
@@ -83,6 +91,13 @@ exports.recordOrder = functions.https.onCall(async (data, context) => {
 exports.confirmOrder = functions.https.onCall(async (data, context) => {
     //function to process when user confirms the order
     try {
+        if (!context.auth){
+            return {
+                status: 'error',
+                message: 'User is not logged in'
+            }
+        }
+
         const order_id = data.order_id
         const db = admin.firestore()
 
@@ -93,6 +108,13 @@ exports.confirmOrder = functions.https.onCall(async (data, context) => {
             return {
                 status: 'error',
                 message: 'The order is not in pending state.'
+            }
+        }
+
+        if (order_data.uid !== context.auth.uid){
+            return {
+                status: 'error',
+                message: 'This order is not owned by current user.'
             }
         }
 
@@ -114,6 +136,13 @@ exports.confirmOrder = functions.https.onCall(async (data, context) => {
 
 exports.confirmPayment = functions.https.onCall(async (data, context) => {
     try{
+        if (!context.auth){
+            return {
+                status: 'error',
+                message: 'User is not logged in'
+            }
+        }
+
         const order_id = data.order_id
         const db = admin.firestore()
         const order = await db.collection("orders").doc(order_id).get()
@@ -123,6 +152,13 @@ exports.confirmPayment = functions.https.onCall(async (data, context) => {
             return {
                 status: 'error',
                 message: 'The order is not in unpaid state'
+            }
+        }
+
+        if (order_data.uid !== context.auth.uid){
+            return {
+                status: 'error',
+                message: 'This order is not owned by current user.'
             }
         }
 
@@ -147,6 +183,13 @@ exports.confirmPayment = functions.https.onCall(async (data, context) => {
 
 exports.cancelPayment = functions.https.onCall(async (data, context) => {
     try{
+        if (!context.auth){
+            return {
+                status: 'error',
+                message: 'User is not logged in'
+            }
+        }
+        
         const order_id = data.order_id
         const db = admin.firestore()
         const order = await db.collection("orders").doc(order_id).get()
@@ -156,6 +199,13 @@ exports.cancelPayment = functions.https.onCall(async (data, context) => {
             return {
                 status: 'error',
                 message: 'The order is not in unpaid state'
+            }
+        }
+
+        if (order_data.uid !== context.auth.uid){
+            return {
+                status: 'error',
+                message: 'This order is not owned by current user.'
             }
         }
 

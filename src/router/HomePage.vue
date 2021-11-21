@@ -48,9 +48,9 @@ export default {
     components: {
         Banner,
     },
-    computed: {
-        logged_in: () => {
-            return getAuth().currentUser? true: false
+    data() {
+        return {
+            logged_in: getAuth().currentUser? true: false,
         }
     },
     methods: {
@@ -59,7 +59,7 @@ export default {
 
             if (auth.currentUser){
                 signOut(auth).then(() => {
-                    this.$router.push('/home')
+                    this.logged_in = false
                 })
             }
         }
@@ -70,7 +70,7 @@ export default {
 
 <style scoped>
 @media only screen and (min-width: 320px) and (max-width: 500px){
-    #link{
+#link{
         font-size: 1.1rem;
     }
 }

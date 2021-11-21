@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { getAuth } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import MenuPage from '@/router/MenuPage.vue'
 import HomePage from '@/router/HomePage.vue'
 import PaymentPage from '@/router/PaymentPage.vue'
 import LoginPage from '@/router/LoginPage.vue'
 import RegisterPage from '@/router/RegisterPage.vue'
+
 
 
 const router = createRouter({
@@ -47,20 +48,21 @@ const router = createRouter({
 
 //redirect user if user is not logged in and attempts to access the routes that require logging in
 router.beforeEach((to, from, next) => {
-    const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-    const user = getAuth().currentUser //to check if user is logged in or not
-
-    if (requiresAuth) {
+    //make sure that the currentUser object is loaded from local storage
+    onAuthStateChanged(getAuth(), (user) => {
         if (user){
             document.title = to.meta.title
             next()
         }else{
-            next('/login')
+            if (to.meta.requiresAuth){
+                next('/login')
+            }else{
+                document.title = to.meta.title
+                next()
+            }
         }
-    } else {
-        document.title = to.meta.title
-        next()
-    }
+    })
+    
 });
 
 

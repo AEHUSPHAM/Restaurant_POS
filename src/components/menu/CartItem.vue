@@ -107,8 +107,8 @@ export default {
 <style scoped>
 img {
     float: left;
-    width: 23%;
-    height: 80px;
+    width: 25%;
+    height: 90px;
     border-radius: 10px;
     margin-right: 3%;
 }
@@ -155,7 +155,7 @@ img {
 .topping {
     height: 25px;
     margin-bottom: 9px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #808080;
 }
 
 .topping-lable {
@@ -213,7 +213,7 @@ img {
     margin-bottom: 15px;
     padding-top: 14px;
     width: 90%;
-    height: 110px;
+    height: 120px;
     padding-top: -10px;
 }
 

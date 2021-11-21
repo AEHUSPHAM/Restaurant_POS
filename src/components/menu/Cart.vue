@@ -289,9 +289,9 @@ export default {
     right: 0;
     background-color: #FFFFFF;
     overflow-x: hidden;
-    box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
-    -webkit-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
-    -moz-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
+    box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.39);
+    -webkit-box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.39);
+    -moz-box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.39);
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
@@ -306,9 +306,9 @@ export default {
     left: 0;
     background-color: #FFFFFF;
     overflow-x: hidden;
-    box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
-    -webkit-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
-    -moz-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
+    box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.39);
+    -webkit-box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.39);
+    -moz-box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.39);
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
@@ -327,9 +327,9 @@ export default {
     z-index: 1;
     background: #ffffff;
     padding: 10px;
-    box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
-    -webkit-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
-    -moz-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
+    box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.39);
+    -webkit-box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.39);
+    -moz-box-shadow: -5px 0px 5px 0px rgba(0,0,0,0.39);
 }
 .cart-footer-open-small {
     width: calc(30% + 1px);
