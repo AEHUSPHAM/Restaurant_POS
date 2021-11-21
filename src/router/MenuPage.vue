@@ -100,7 +100,7 @@ export default {
             tag_list: menu_store.getters.getTags().value,
             window: {
                 width: 0,
-                height: 0
+                height: 0,
             }
         }
     },

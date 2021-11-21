@@ -1,173 +1,417 @@
 <template>
-    <div class="big-boss">
-
-        <div class="inner-block bodyy box vertical-center" >
-            <form>
-                <h1>Sign In</h1>
-
-                <div class="form-group ">
-                    <label>Email address</label>
-                    <input type="email" class="form-control " v-model="email" />
+    <nav class="navbar-light bg-white">
+        <div class="container py-3">
+            <div class="row">
+                <!-- Back button -->
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 text-start">
+                    <a 
+                        class="navbar-brand" 
+                        @click="$router.go(-1)"
+                    >
+                        <button type="button" class="home-button">
+                            <i class="fa fa-arrow-left home-icon"></i>
+                        </button>
+                        <span class="home-text">
+                            &nbsp;&nbsp;Back
+                        </span>
+                    </a>
                 </div>
 
-                <div class="form-group pwd">
-                    <label>Password</label>
-                    <input type="password" class="form-control" v-model="password" autocomplete="on"/>
+                <!-- Home button -->
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 text-end">
+                    <span class="home-text" style="text-align:right;">
+                        Home
+                    </span>
+                    <router-link class="navbar-brand" to="/home">
+                        <button type="button" class="home-button" style="float: right;">
+                            <i class="fa fa-home home-icon"></i>
+                        </button>
+                    </router-link>
                 </div>
-                <button type="button" class=" btn btn-lg btn-block log" @click="login">Log In</button>
-                <button type="button" class="signup btn btn-lg btn-block log" @click="register">Register</button>
-
-            </form>
+            </div>
         </div>
+    </nav>
 
+    <div>
+        <div class="modal-mask"
+            :style="{
+                'background-image': 'url(' + require('@/assets/misc/login_background.jpg') + ')',
+            }"
+        >
+            <div class="modal-wrapper">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content rounded">
+                        <!-- hedaer -->
+                        <div class="modal-header">
+                            <h2>Log In</h2>
+                        </div>
+
+                        <!-- body -->
+                        <div class="modal-body">
+                            <transition name="fade">
+                                <div 
+                                    v-if="alert_message" 
+                                    class="alert"
+                                    :class="alert_type"
+                                    role="alert"
+                                >
+                                    {{ alert_message }}
+                                </div>
+                            </transition>
+
+
+                            <form>
+                                <div class="form-group ">
+                                    <label for="email">Email address</label>
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        class="form-control"
+                                        placeholder="Enter your email"
+                                        v-model="email"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input 
+                                        type="password"
+                                        id="password"
+                                        class="form-control"
+                                        placeholder="Enter your password"
+                                        v-model="password"
+                                    />
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <!-- footer -->
+                        <div class="modal-footer">
+                            <div class="container p-0">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <button 
+                                            type="button"
+                                            class="btn"
+                                            @click="loginProcess"
+                                        >
+                                            <h5>Log In</h5>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-start">
+                                        <router-link to="/register" class="register-link">
+                                            Don't have an account? Sign up
+                                        </router-link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
+
 <script>
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+
 export default {
-    name: 'LogIn',
-    data() {
+    name: 'LoginPage',
+    data () {
         return {
             email: "",
-            password: ""
+            password: "",
+            alert_message: null,
+            alert_type: null,
         }
     },
-    method:{
+    methods: {
+        loginProcess: function() {
+            const auth = getAuth()
 
-    }
+            signInWithEmailAndPassword(auth, this.email, this.password) // need .value because ref()
+            .then(() => {
+                this.$router.push('/home') // redirect to home
+            })
+            .catch((error) => {
+                this.showAlert("Error logging in: " + error.message, 'alert-danger');
+            });
+        },
+        showAlert: function(message, alert_type) {
+            this.alert_type = alert_type
+            this.alert_message = message
+
+            const sleep = new Promise(resolve => setTimeout(resolve, 2000))
+            sleep.then(() => {
+                this.alert_type = null
+                this.alert_message = null
+            })
+        },
+    },
 }
 </script>
 
-<script setup>
-import { ref } from 'vue'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from 'vue-router' // import router
-
-const email = ref('')
-const password = ref('')
-const router = useRouter()// get a reference to our vue router
-const auth = getAuth();
-
-const register = ()=>{
-    router.push('/register');
-}
-// eslint-disable-next-line no-unused-vars
-const login = () => {
-    signInWithEmailAndPassword(auth, email.value, password.value) // need .value because ref()
-    .then((data) => {
-        console.log('Successfully login');
-        router.push('/menu') // redirect to the feed
-    })
-    .catch(error => {
-        alert(error.message);
-    });
-}
-</script>
 
 
 <style scoped>
-.big-boss{
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.rounded {
+    border-radius: 0.8em!important;
+}
+
+.modal-mask {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url("https://p4.wallpaperbetter.com/wallpaper/375/903/748/dessert-4k-download-wallpaper-preview.jpg");
-    min-height: 100vh;
-    display: flex;
-    font-weight: 800;
-
+    background-blend-mode: darken;
+    display: table;
+    transition: opacity .3s ease;
 }
-.vertical-center {
+
+.modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.modal-content {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.home-button {
+    height: 100%;
+    width: auto;
+    margin-right: 1%;
+    color: #ffffff;
+    font-size: 150%;
+    background: #2c3a57;
+    border: none;
+    border-radius:.70rem!important;
     display: flex;
-    text-align: left;
     justify-content: center;
-    flex-direction: column;
+    align-items: center;
+    float: left;    
 }
-@media only screen and (min-width: 300px) and (max-width: 500px) {
-    .inner-block {
-        width: 300px;
-        height: 100px;
-        margin: auto;
 
-
-        box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-        padding: 40px 55px 45px 55px;
-        border-radius: 15px;
-        transition: all .3s;
-    }
-    .btn{
-        margin-top:20px;
-        background: wheat;
-        width: 100px;
-        height: 40px;
-        font-size: medium;
-    }
-    .signup{
-        width:100px
-    }
-    label{
-        font-size: smaller;
-    }
-}
-@media only screen and (min-width: 500px) and (max-width: 800px) {
-    .inner-block {
-        width: 400px;
-        height: 100px;
-        margin: auto;
-        box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-        padding: 40px 55px 45px 55px;
-        border-radius: 15px;
-        transition: all .3s;
-    }
-    .btn{
-        margin-top:20px;
-        background: wheat;
-        width: 100px;
-        height: 50px;
-    }
-    .signup{
-        width:110px;
-        margin-left: 10px;
-    }
-}
-@media only screen and (min-width: 800px)and (max-width: 2000px) {
-    .inner-block {
-        width: 450px;
-        height: 100px;
-        margin: auto;
-
-        box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-        padding: 40px 55px 45px 55px;
-        border-radius: 15px;
-        transition: all .3s;
-    }
-    .btn{
-        margin-top:20px;
-        background: wheat;
-        width: 100px;
-        height: 50px;
-    }
-    .signup{
-        margin-left: 10px;
-        width: 125px;
-    }
-}
-h1{
-    color: wheat;
-    font-weight: bold;
-}
-.btn{
-    margin-top:20px;
-    background: wheat;
-}
-.pwd{
-    margin-top: 10px
-}
-label{
-    color:wheat;
-}
-.log{
-    color: dimgrey;
+.home-text {
     font-weight: bold;
 }
 
+.modal-header {
+    margin-top: 5%;
+    padding-bottom: 0;
+}
+
+.modal-header h2 {
+    font-weight: bold;
+}
+
+.modal-body .form-group {
+    margin-top: 5%;
+}
+
+.modal-body label {
+    float: left;
+    font-weight: bold;
+    margin-bottom: 2%;
+}
+
+.modal-footer {
+    border: none;
+    margin-top: 3%;
+    margin-bottom: 8%;
+}
+
+.modal-footer button {
+    width: 100%;
+    margin-bottom: 5%;
+    background-color: #ff0909;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: .5em;
+}
+
+.modal-footer button h5 {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.register-link {
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 420px){
+    .home-text {
+        font-size: 14px;
+        position: relative;
+        bottom: 1px;
+        margin-bottom: 0%;
+    }
+    .home-button {
+        height: 29px;
+        width: 29px;
+        border-radius:.58rem!important;
+    }
+    .home-icon {
+        font-size: 20px;
+    }
+    h2 {
+        font-size: 22px;
+    }
+    label, .register-link  {
+        font-size: 12px;
+    }
+    .modal-footer button h5 {
+        font-size: 15px;
+    }
+}
+@media only screen and (min-width: 421px) and (max-width: 575px){
+    .home-text {
+        font-size: 15px;
+        position: relative;
+        top: 1px;
+        margin-bottom: 0%
+    }
+    .home-button {
+        height: 32px;
+        width: 32px;
+        border-radius:.64rem!important;
+    }
+    .home-icon {
+        font-size: 21px;
+    }
+    h2 {
+        font-size: 24px;
+    }
+    label, .register-link  {
+        font-size: 14px;
+    }
+    .modal-footer button h5 {
+        font-size: 17px;
+    }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px){
+    .home-text {
+        font-size: 15px;
+        position: relative;
+        bottom: 1px;
+        margin-bottom: 0%
+    }
+    .home-button {
+        height: 29px;
+        width: 29px;
+        border-radius:.58rem!important;
+    }
+    .home-icon {
+        font-size: 21px;
+    }
+    h2 {
+        font-size: 26px;
+    }
+    label, .register-link  {
+        font-size: 16px;
+    }
+    .modal-footer button h5 {
+        font-size: 19px;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px){
+    .home-text {
+        font-size: 15px;
+        position: relative;
+        bottom: 1px;
+        margin-bottom: 0%
+    }
+    .home-button {
+        height: 29px;
+        width: 29px;
+        border-radius:.58rem!important;
+    }
+    .home-icon {
+        font-size: 21px;
+    }
+    h2 {
+        font-size: 26px;
+    }
+    label, .register-link  {
+        font-size: 16px;
+    }
+    .modal-footer button h5 {
+        font-size: 19px;
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px){
+    .home-text {
+        font-size: 17px;
+        position: relative;
+        top: 1px;
+        margin-bottom: 0%
+    }
+    .home-button {
+        height: 32px;
+        width: 32px;
+        border-radius:.64rem!important;
+    }
+    .home-icon {
+        font-size: 23px;
+    }
+    h2 {
+        font-size: 28px;
+    }
+    label, .register-link  {
+        font-size: 16px;
+    }
+    .modal-footer button h5 {
+        font-size: 21px;
+    }
+}
+@media only screen and (min-width: 1200px){
+    .home-text {
+        font-size: 19px;
+        position: relative;
+        top: 4px;
+        margin-bottom: 0%
+    }
+    .home-button {
+        height: 35px;
+        width: 35px;
+        border-radius:.70rem!important;
+    }
+    .home-icon {
+        font-size: 25px;
+    }
+     h2 {
+        font-size: 30px;
+    }
+    label, .register-link  {
+        font-size: 18px;
+    }
+    .modal-footer button h5 {
+        font-size: 21px;
+    }
+}
 </style>

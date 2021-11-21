@@ -17,12 +17,15 @@
         <div class="collapse navbar-collapse" id="navmenu">
 
             <ul class="nav nav-pills navbar-nav ms-auto">
-            <li class="nav-item">
-                <router-link class="nav-link" to="/menu">Menu</router-link>
-            </li>
-            <li class="nav-item">
-                <router-link class="nav-link" aria-current="page" to="/login">Log In</router-link>   
-            </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/menu">Menu</router-link>
+                </li>
+                <li class="nav-item" v-if="!logged_in">
+                    <router-link class="nav-link" aria-current="page" to="/login">Log In</router-link>   
+                </li>
+                <li class="nav-item" v-if="logged_in">
+                    <a class="nav-link" aria-current="page" @click="logOut">Log Out</a>   
+                </li>
             </ul>
         </div>
         
@@ -37,12 +40,29 @@
 
 <script>
 import Banner from '@/components/home/Banner.vue'
+import { getAuth, signOut } from 'firebase/auth'
 
 
 export default {
     name: 'HomePage',
-     components: {
+    components: {
         Banner,
+    },
+    computed: {
+        logged_in: () => {
+            return getAuth().currentUser? true: false
+        }
+    },
+    methods: {
+        logOut: function(){
+            const auth = getAuth()
+
+            if (auth.currentUser){
+                signOut(auth).then(() => {
+                    this.$router.push('/home')
+                })
+            }
+        }
     }
 }
 </script>

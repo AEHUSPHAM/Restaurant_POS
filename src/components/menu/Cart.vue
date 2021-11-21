@@ -90,6 +90,7 @@
 <script>
 import CartItem from '@/components/menu/CartItem.vue'
 import menu_store from '@/stores/menu_store.js'
+import swal from 'sweetalert'
 import { placeOrder } from '@/mixins/menu.js'
 
 
@@ -147,7 +148,10 @@ export default {
                     //display the order confirmed by server
                     this.emitter.emit("askConfirmOrder", data)
                 }else{
-                    console.log("Error sending the order: ", data.message)
+                    swal({
+                        title: 'Error placing the order: ' + data.message,
+                        icon: 'error',
+                    })
                 }
 
             })

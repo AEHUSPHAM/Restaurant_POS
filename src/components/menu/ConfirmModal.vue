@@ -151,6 +151,7 @@
 
 <script>
 import { formatMoney, getDownloadUrl, sendOrderConfirm } from '@/mixins/menu.js'
+import swal from 'sweetalert'
 import menu_store from '@/stores/menu_store.js'
 import order_store from '@/stores/order_store.js'
 
@@ -189,7 +190,10 @@ export default {
                     //prompt user to payment page
                     this.$router.push('/payment/' + this.order.order_id)
                 }else{
-                    console.log('Error confirming the order: ', data.message)
+                    swal({
+                        title: "Error confirming the order: " + data.message,
+                        icon: "error",
+                    })
                 }
             })
         },

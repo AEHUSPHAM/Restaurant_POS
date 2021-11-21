@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar-light bg-white">
-        <div class="container py-3 px-4">
+        <div class="container py-3">
             <div class="row">
                 <!-- Back button -->
                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-4 text-start">
@@ -126,10 +126,10 @@
         </div>
 
         <!-- Row 5: Confirm payment button -->
-        <div class="row mt-3 mx-2 align-items-center">
+        <div class="row mt-3 mx-2 align-items-center" style="padding-top:5%;">
             <button 
                 type="button" 
-                class = "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 confirm-button"
+                class = "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 shadow-sm confirm-button"
                 @click="confirmPayment"
             >
                 <span class='home-text bold-text'>
@@ -141,7 +141,7 @@
         <div class="row mt-4 mx-2 align-items-center">
             <button 
                 type="button" 
-                class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 home-text bold-text cancel-button"
+                class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 shadow-sm home-text bold-text cancel-button"
                 @click="cancelPayment"
             >
                 <span class='home-text bold-text'>
@@ -153,15 +153,14 @@
 
     <OrderModal v-bind:order="order"/>
     <LoadingModal/>
-    <LeaveConfirmModal/>
 </template>
 
 
 <script>
 import OrderModal from '@/components/payment/OrderModal.vue'
 import LoadingModal from '@/components/LoadingModal.vue'
-import LeaveConfirmModal from '@/components/payment/LeaveConfirmModal.vue'
 import order_store from '@/stores/order_store.js'
+import swal from 'sweetalert'
 import { formatMoney } from '@/mixins/menu.js'
 import { confirmPayment, cancelPayment } from '@/mixins/order.js'
 
@@ -171,14 +170,11 @@ export default {
     components: {
         OrderModal,
         LoadingModal,
-        LeaveConfirmModal
     },
     data () {
         return {
             order: order_store.getters.getOrder(this.$route.params.order_id),
-            resolved: false,    //is true if the user chooses to confirm or cancel payment
-            deferreds: null,
-            leave: null,
+            resolved: false,
         }
     },
     methods: {
@@ -191,50 +187,62 @@ export default {
                 const data = response.data
 
                 if (data.status === 'success'){
-                    //the payment succeeded => display info modal
-                    console.log("Payment succeeded.")
-                    this.resolved = true
+                    //the payment succeeded
+                    swal({
+                        title: 'Payment confirmed successfully!',
+                        icon: 'success',
+                    }).then(() => {
+                        this.resolved = true
+                        this.$router.push('/menu')
+                    })
                 }else{
-                    console.log("Error confirming payment: ", data.message)
+                    swal({
+                        title: 'Error confirming payment: ' + data.message,
+                        icon: 'error',
+                    })
                 }
             })
         },
         cancelPayment: function() {
-            this.emitter.emit("startLoading")
+            swal({
+                title: 'Are you sure you want to cancel this order?',
+                text: 'If you click OK, this order will be discarded.',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((option) => {
+                if (option){
+                    this.emitter.emit("startLoading")
 
-            cancelPayment(this.order.order_id).then((response) => {
-                this.emitter.emit("endLoading")
-                const data = response.data
+                    cancelPayment(this.order.order_id).then((response) => {
+                        this.emitter.emit("endLoading")
+                        const data = response.data
 
-                if (data.status === 'success'){
-                    //order is cancelled successfully
-                    order_store.commit("removeOrder", this.order.order_id)
-                    console.log("Cancellation succeeded")
-                    this.$router.push('/menu')
-                    this.resolved = true 
-                }else{
-                    console.log("Error cancelling the order: ", data.message)
+                        if (data.status === 'success'){
+                            //order is cancelled successfully
+                            order_store.commit("removeOrder", this.order.order_id)
+                            swal({
+                                title: 'Order cancelled successfully!',
+                                icon: 'success'
+                            }).then(() => {
+                                this.resolved = true
+                                this.$router.push('/menu')
+                            })
+                        }else{
+                            swal({
+                                title: 'Error cancelling the order: ' + data.message,
+                                icon: 'error',
+                            })
+                        }
+                    })
                 }
             })
         },
         showOrder: function() {
             this.emitter.emit("showOrder")
         },
-        confirmLeaveHandler: function(option) {
-            this.deferreds.resolve(option)
-        },
         formatMoney,
-    },
-    created () {
-        var deferreds = []
-        this.leave = new Promise(function(resolve, reject) {
-            deferreds = {resolve: resolve, reject: reject}
-        })
-        this.deferreds = deferreds
-        this.emitter.on("confirmLeave", this.confirmLeaveHandler)
-    },
-    unmounted () {
-        this.emitter.off("confirmLeave", this.confirmLeaveHandler)
     },
     beforeRouteUpdate(to, from, next) {
         //check if the order id is valid before proceeding
@@ -257,13 +265,18 @@ export default {
         }
     },
     beforeRouteLeave(to, from, next) {
+        //warn user if they want to leave when order is not resolved
         if (this.resolved){
             next()
         }else{
-            //warn user if they want to leave when order is not resolved
-            this.emitter.emit("showLeaveConfirm")
-
-            this.leave.then((option) => {
+            swal({
+                title: 'Are you sure you want to leave?',
+                text: 'If you leave now, your order will be cancelled.',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true
+            })
+            .then((option) => {
                 if (option){
                     //cancel the order and leave this page
                     this.emitter.emit("startLoading")
@@ -274,19 +287,23 @@ export default {
                         if (data.status === 'success'){
                             //order is cancelled successfully
                             order_store.commit("removeOrder", this.order.order_id)
-                            console.log("Cancellation succeeded")
+                            swal({
+                                title: 'Order cancelled successfully!',
+                                icon: 'success'
+                            }).then(() => {
+                                next()
+                            })
                         }else{
-                            console.log("Error cancelling the order: ", data.message)
+                            swal({
+                                title: 'Error cancelling the order: ' + data.message,
+                                icon: 'error'
+                            }).then(
+                                next(false)
+                            )
                         }
                     })
-                    next()
                 }else{
-                    //continue to stay at this page
-                    var deferreds = []
-                    this.leave = new Promise(function(resolve, reject) {
-                        deferreds = {resolve: resolve, reject: reject}
-                    })
-                    this.deferreds = deferreds
+                    //continue to stay on this page
                     next(false)
                 }
             })
