@@ -8,23 +8,24 @@
                 <img v-bind:src="item.img_src" v-bind:alt="item.img_alt">
             </div>
             <div class="col-md-9 col-sm-9 col-9 w-100">
-                <div class="row" style="margin-bottom: -7px;">
+                <div class="row item">
                     <div class="item-label col-md-12 col-sm-12 col-12 p-0">
                         <p class="item-name">
                             {{item_index}}. {{item.item_name}}
                         </p>
-                        <button type="button" class="edit" @click="editItem">
-                            <i class="fa fa-edit"></i>
-                        </button>
+                        
                     </div>
                 </div>
                 
                 <div class="row">
-                    <div class="topping-money col-md-12 col-sm-12 col-12">
-                        <p style="color:#808080; float:left;">
+                    <div class="col-md-12 col-sm-12 col-12 topping">
+                        <p class="topping-lable">
                             Topping:
                         </p>
-                        <p style="float:right;">
+                        <button type="button" class="edit" @click="editItem">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <p class="topping-money">
                             {{ formatMoney(item.total_price - item.item_price) }}
                         </p>
                     </div>
@@ -122,10 +123,15 @@ img {
     font-size: 14px;
 }
 
+.item {
+    margin-bottom: -7px;
+    margin-top: -7px;
+}
+
 .topping-money {
     height: 25px;
     margin-bottom: 9px;
-    border-bottom: 1px solid #808080;
+    float: right;
 }
 
 .topping-money p {
@@ -144,6 +150,18 @@ img {
     font-size: 80%;
     color: #ff0000;
     margin-left: 2%;
+}
+
+.topping {
+    height: 25px;
+    margin-bottom: 9px;
+    border-bottom: 1px solid black;
+}
+
+.topping-lable {
+    float: left;
+    display: flex;
+    font-size: 12px; 
 }
 
 .minus, .plus, .quantity {
@@ -196,6 +214,7 @@ img {
     padding-top: 14px;
     width: 90%;
     height: 110px;
+    padding-top: -10px;
 }
 
 .price {
@@ -243,7 +262,7 @@ img {
 
 @media only screen and (max-width: 350px){
     .item-name {
-        font-size: 11px;
+        font-size: 9px;
     }
     .cart-item {
         height: 80px;
@@ -264,6 +283,30 @@ img {
     }
     .price {
         font-size: 12px;
+    }
+
+    .topping {
+        height: 18px;
+        margin-bottom: 7px;
+        border-bottom: 1px solid black;
+    }
+    .topping-lable {
+        float: left;
+        display: flex;
+        font-size: 10px; 
+    }
+    .topping-money {
+        font-size: 10px; 
+    }
+    .quantity {
+        font-size: 10px;
+        margin-top: -4px;
+    }
+    .price {
+        font-size: 10px;
+    } 
+    .item {
+        margin-top: -3px;
     }
 }
 

@@ -186,7 +186,7 @@ export default {
     font-size: 25px;
 }
 .menu-reduce-right {
-    margin-right: 38%;
+    margin-right: 35%;
 }
 .menu-reduce-bottom {
     margin-bottom: 230px;
@@ -194,7 +194,7 @@ export default {
 .navbar-reduce-right {
     padding-right: 30px;
     padding-left: 30px;
-    margin-right: 38%;
+    margin-right: 35%;
 }
 @media only screen and (max-width: 420px){
     .home-text {

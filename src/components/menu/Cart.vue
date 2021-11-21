@@ -45,7 +45,8 @@
     </div>
     <div :class="{
         'cart-footer-open': active && (window.width > 767),
-        'cart-footer-open-small': active && (window.width <= 767),
+        'cart-footer-open-small': active && (window.width <= 767 && window.width > 420),
+        'cart-footer-open-ssmall': active && (window.width <= 420),
         'cart-footer-close': !active
         }"
     >
@@ -76,8 +77,8 @@
                 class="col-md-12 col-sm-12 col-12" 
                 :class="{
                     'payment-button': (window.width > 767),
-                    'payment-button-small': (window.width <= 767 && window.width > 450),
-                    'payment-button-ssmall': (window.width <= 450)
+                    'payment-button-small': (window.width <= 767 && window.width > 575),
+                    'payment-button-ssmall': (window.width <= 575)
                 }"
                 @click="placeOrder"
             >
@@ -281,7 +282,7 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     height: calc(100% - 150px);
-    width: 38%;
+    width: 35%;
     position: fixed;
     z-index: 1000;
     top: 0;
@@ -318,7 +319,7 @@ export default {
     display: none;
 }
 .cart-footer-open {
-    width: 38%;
+    width: 35%;
     height: 150px;
     position: fixed;
     bottom: 0;
@@ -331,6 +332,17 @@ export default {
     -moz-box-shadow: -13px 0px 15px 0px rgba(0,0,0,0.39);
 }
 .cart-footer-open-small {
+    width: calc(30% + 1px);
+    height: 220px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    background: #ffffff;
+    padding: 10px;
+    padding-top: 5%;
+}
+.cart-footer-open-ssmall {
     width: calc(30% + 1px);
     height: 220px;
     position: fixed;
@@ -364,12 +376,12 @@ export default {
     margin-bottom: 15px;
     padding-top: 2%;
     width: 80%;
-    height: 50px;
+    height: 45px;
     justify-content: center;
 }
 .payment-button-ssmall {
     font-weight: 300;
-    font-size: 10px;
+    font-size: 8px;
     color: #FFFFFF;
     background-color: red;
     border: 1px solid #dbd2d2;
@@ -377,7 +389,7 @@ export default {
     margin-bottom: 15px;
     padding-top: 2%;
     width: 60%;
-    height: 50px;
+    height: 35px;
     justify-content: center;
 }
 .total-word {
