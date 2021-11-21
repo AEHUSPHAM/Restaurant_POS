@@ -44,7 +44,7 @@
             </div>
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3 text-end">
                 <p class='bold-text home-text'> {{ formatMoney(order.total_money) }} </p>
-                <p class='home-text'> inc.VAT </p>
+                <p class='home-text'> Total Cost </p>
             </div>
         </div>
 
@@ -188,6 +188,7 @@ export default {
 
                 if (data.status === 'success'){
                     //the payment succeeded
+                    order_store.commit("removeOrder", this.order.order_id)
                     swal({
                         title: 'Payment confirmed successfully!',
                         icon: 'success',

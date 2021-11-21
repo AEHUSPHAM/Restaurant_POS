@@ -113,10 +113,10 @@ export default ({
         font-size: 90%;
     }
     .menu-item-index, .menu-item-price {
-        color: #ff0000;
+        color: #ff0909;
     }
     .cart-button {
-        background: #ff0000;
+        background: #ff0909;
         float: right;
         max-width: 80%;
         display: flex;

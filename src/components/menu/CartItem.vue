@@ -135,7 +135,7 @@ img {
 }
 
 .topping-money p {
-    color: #FF0000;
+    color: #ff0909;
     font-size: 14px;
     display: flex;
     margin: 0 auto;
@@ -148,7 +148,7 @@ img {
     background: none;
     border: none;
     font-size: 80%;
-    color: #ff0000;
+    color: #ff0909;
     margin-left: 2%;
 }
 
@@ -181,8 +181,8 @@ img {
 }
 
 .plus {
-    color: #ff0000;
-    border: 1px solid #ff0000;
+    color: #ff0909;
+    border: 1px solid #ff0909;
 }
 
 .quantity {
@@ -218,7 +218,7 @@ img {
 }
 
 .price {
-    color: #ff0000;
+    color: #ff0909;
     display: flex;
     float: right;
 }

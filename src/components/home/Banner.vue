@@ -12,17 +12,13 @@
                 </div>
                 
                 <div class="container">
-                    
                     <div class="jumbotron" id="caption">
-                    
                         <h1 class="display-4">Welcome !</h1>
-                        <hr class="my-4">
-                        <p>Life is sweeter with a little cake.</p>
-                        <p class="lead">
-                            <router-link class="btn btn-primary btn-lg" to="/menu" role="button">
-                                Order now
-                            </router-link>
-                         </p>
+                        <hr>
+                        <h4>Life is sweeter with a little cake.</h4>
+                        <router-link class="btn btn-primary btn-lg shadow-sm" to="/menu" role="button">
+                            <h5>Order now</h5>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -35,15 +31,12 @@
 
                 <div class="container">
                     <div class="jumbotron" id="caption">
-                        
-                        <h1 class="display-4">Box of pleasure</h1>
-                        <hr class="my-4">
-                        <p>Sweet, Fun For The Whole Family.</p>
-                        <p class="lead">
-                            <router-link class="btn btn-primary btn-lg" to="/menu" role="button">
-                                Order now
-                            </router-link>
-                         </p>
+                        <h1>Box of pleasure</h1>
+                        <hr>
+                        <h4>Sweet, Fun For The Whole Family.</h4>
+                        <router-link class="btn btn-primary btn-lg" to="/menu" role="button">
+                            <h5>Order now</h5>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -56,13 +49,14 @@
 
                 <div class="container">
                     <div class="jumbotron" id="caption">
-                    
-                        <h1 class="display-4">Merry Christmas</h1>
-                        <p class="lead">We hope you have a wonderful holiday season with our desserts.</p>
-                        <hr class="my-4">
-                        <p class="lead">
-                            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-                         </p>
+                        <h1>Merry Christmas</h1>
+                        <hr>
+                        <h4>
+                            We hope you have a wonderful holiday season with our desserts.
+                        </h4>
+                        <router-link class="btn btn-primary btn-lg" to="/menu" role="button">
+                            <h5>Order now</h5>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -92,19 +86,21 @@ export default {
         bottom: 0;
         left: 0;
         right: 0;
-        padding-bottom: 20vh;
+        padding-bottom: 30vh;
     }
 
     h1{
-        font-size: 8vw;
         font-family: 'Dancing Script', cursive;
     }
-
-    p{
-        font-size: 2vw;
+    h4 {
+        margin-bottom: 0;
         font-family: 'Karla', sans-serif;
     }
-    
+    h5 {
+        margin-bottom: 0;
+        font-family: 'Karla', sans-serif;
+        font-weight: bold;
+    }
     .carousel-inner{
         background-color: white;
     }
@@ -118,6 +114,10 @@ export default {
         width: 100vw;
         height: 100vh;
     }
+    .btn {
+        background-color: #ff0909;
+        border-color: #ff0909;
+    }
     .dark-overlay:after {
         content:"";
         display:block;
@@ -128,10 +128,76 @@ export default {
         right:0;
         background:rgba(0,0,0,0.5);
     }
-
     img{
         width:100%;
         height:100%;
         object-fit:cover;
+    }
+    @media only screen and (max-width: 420px){
+        h1 {
+            font-size: 15vw;
+        }
+        h4 {
+            font-size: 5vw;
+        }
+        h5 {
+            font-size: 6vw;
+        }
+       
+    }
+    @media only screen and (min-width: 421px) and (max-width: 575px){
+        h1 {
+            font-size: 16vw;
+        }
+        h4 {
+            font-size: 4vw;
+        }
+        h5 {
+            font-size: 5vw;
+        }
+    }
+    @media only screen and (min-width: 576px) and (max-width: 767px){
+       h1 {
+            font-size: 15vw;
+        }
+        h4 {
+            font-size: 3vw;
+        }
+        h5 {
+            font-size: 4vw;
+        }
+    }
+    @media only screen and (min-width: 768px) and (max-width: 991px){
+       h1 {
+            font-size: 12vw;
+        }
+        h4 {
+            font-size: 2vw;
+        }
+        h5 {
+            font-size: 2.5vw;
+        }
+    }
+    @media only screen and (min-width: 992px) and (max-width: 1199px){
+       h1 {
+            font-size: 12vw;
+        }
+        h4 {
+            font-size: 2vw;
+        }
+        h5 {
+            font-size: 2.5vw;
+        }
+    }
+    @media only screen and (min-width: 1200px){
+        h1 {
+            font-size: 12vw;
+        }
+        h4 {
+            font-size: 2vw;
+        }
+        h5 {
+            font-size: 2vw;
+        }
     }
 </style>

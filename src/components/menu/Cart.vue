@@ -214,7 +214,7 @@ export default {
 .close-cart {
     right: 20px;
     position: fixed;
-    color: #FF0000;
+    color: #ff0909;
     background-color: #ffffff;
     border: none;
     border-radius: 50%;
@@ -226,7 +226,7 @@ export default {
 }
 .cart-header {
     width: 100%;
-    color: #FF0000;
+    color: #ff0909;
     padding: 10px;
     position: fixed;
     background-color: #FFFFFF;
@@ -235,7 +235,7 @@ export default {
 }
 .cart-header-small {
     width: calc(30% + 1px);
-    color: #FF0000;
+    color: #ff0909;
     padding-top: 20px;
     padding-right: 25px;
     position: fixed;
@@ -357,7 +357,7 @@ export default {
     font-weight: 700;
     font-size: 20px;
     color: #FFFFFF;
-    background-color: red;
+    background-color: #ff0909;
     border: 1px solid #dbd2d2;
     border-radius: 10px;
     margin-bottom: 15px;
@@ -370,7 +370,7 @@ export default {
     font-weight: 500;
     font-size: 16px;
     color: #FFFFFF;
-    background-color: red;
+    background-color: #ff0909;
     border: 1px solid #dbd2d2;
     border-radius: 10px;
     margin-bottom: 15px;
@@ -383,7 +383,7 @@ export default {
     font-weight: 300;
     font-size: 8px;
     color: #FFFFFF;
-    background-color: red;
+    background-color: #ff0909;
     border: 1px solid #dbd2d2;
     border-radius: 10px;
     margin-bottom: 15px;
@@ -403,18 +403,18 @@ export default {
 }
 .total-price {
     float: right;
-    color: #FF0000;
+    color: #ff0909;
     font-size: 20px;
     margin: 2px;
 }
 .total-price-small {
     float: right;
-    color: #FF0000;
+    color: #ff0909;
     font-size: 18px;
     margin: 2px;
 }
 .total-price-ssmall {
-    color: #FF0000;
+    color: #ff0909;
     font-size: 15px;
     margin: 2px;
 }

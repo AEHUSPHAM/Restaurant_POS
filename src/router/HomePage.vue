@@ -2,8 +2,9 @@
     <!-- Navigation -->
     <nav style="display: block" class="navbar navbar-expand-lg bg-dark navbar-dark" id="bar">
         <div class="container">
-            <router-link class="navbar-brand" to="/home" id="link">
-                Home Page
+            <router-link class="navbar-brand" to="/home" id="logo">
+                <img :src="require('@/assets/logo.png')">
+                <a>Home</a>
             </router-link>
             <button 
                 class="navbar-toggler" 
@@ -40,6 +41,7 @@
 
 <script>
 import Banner from '@/components/home/Banner.vue'
+import swal from 'sweetalert'
 import { getAuth, signOut } from 'firebase/auth'
 
 
@@ -58,9 +60,29 @@ export default {
             const auth = getAuth()
 
             if (auth.currentUser){
-                signOut(auth).then(() => {
-                    this.logged_in = false
+                swal({
+                    title: 'Sign out?',
+                    text: 'Are you sure you want to sign out?',
+                    buttons: true,
+                    icon: 'info',
                 })
+                .then((option) => {
+                    if (option){
+                        signOut(auth).then(() => {
+                            this.logged_in = false
+                            swal({
+                                title: 'Signed out successfully',
+                                icon: 'success',
+                            })
+                        }).catch((error) => {
+                            swal({
+                                title: 'Error signing out: ' + error,
+                                icon: 'error',
+                            })
+                        })
+                    }
+                })
+               
             }
         }
     }
@@ -69,15 +91,19 @@ export default {
 
 
 <style scoped>
-@media only screen and (min-width: 320px) and (max-width: 500px){
-#link{
-        font-size: 1.1rem;
-    }
+#logo img{
+    height: 3vw;
+    width: 3vw;
+    margin-right: 20%;
+}
+.nav-pills > li > a {
+    font-size: 1.0rem;
 }
 .nav-pills > li > a:hover {
     background-color: #5a5858 !important;
     border-radius: 5px;
     padding: 7px 20px;
+    color: #ffffff;
 }
 li{
     padding: 0 10px;
