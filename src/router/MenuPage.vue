@@ -1,51 +1,107 @@
 <template>
-    <nav class="navbar-wrapper navbar navbar-light bg-white">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <button type="button" class="home-button"><i class="fa fa-home home-icon"></i></button>
-                <span class="home-text">Back to home</span>
-            </a>
-        </div>
-    </nav>
+    <Cart v-bind:active = 'cart_active'/>
+    <div :class="{
+        'menu-reduce-right': cart_active && (window.width > 767),
+        'menu-reduce-bottom': cart_active && (window.width <= 767)
+        }"
+    >
+        <nav class="navbar-wrapper navbar navbar-light bg-white fixed-top" 
+            :class="{
+                'navbar-reduce-right': cart_active && (window.width > 767)
+                }"
+            >
+            <div class="container">
+                <router-link class="navbar-brand" to="/home">
+                    <div class="home-button-wrapper">
+                        <button 
+                            type="button" 
+                            class="home-button"
+                            style="color:#ffffff;background-color:#2c3a57;"    
+                        >
+                            <i class="fa fa-home home-icon"></i>
+                        </button>
+                    </div>
+                    <div class="home-text-wrapper" style="margin-left:15%;">
+                        <span class="home-text">Home</span>
+                    </div>
+                </router-link>
+                <a 
+                    class="navbar-brand" 
+                    @click="toggleCart"
+                    style="margin-left:auto;"
+                    v-if="(!cart_active) || (window.width <= 767)"
+                >
+                    <div class="home-text-wrapper" style="margin-right:15%;">
+                        <span class="home-text" style="color:#ff0909;">Your Cart</span>
+                    </div>
+                    <div class="home-button-wrapper">
+                        <button 
+                            type="button"
+                            class="home-button"
+                            style="color:#ffffff;background-color:#ff0909;border-color:#ff0909"
+                        > 
+                            <i class="fa fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                </a>
+            </div>
+        </nav>
 
-    <div class="body-wrapper container">
-        <div class="row">
-            <FilterMenu
-                v-bind:items = 'tag_list'
-                @updateMenuByCate="updateMenuByCate($event)"
-            />
-        </div>
-        <div class="title-wrapper row">
-            <div class="col-md-12 col-sm-12 col-12">
-                <h4 class="title">{{active_tag}}&nbsp;&nbsp;</h4><hr>
+
+        <div class="body-wrapper container">
+            <div class="row">
+                <FilterMenu
+                    v-bind:items = 'tag_list'
+                    @updateMenuByCate="updateMenuByCate($event)"
+                />
+            </div>
+            <div class="title-wrapper row">
+                <div class="col-md-12 col-sm-12 col-12">
+                    <h4 class="title">{{active_tag}}&nbsp;&nbsp;</h4><hr>
+                </div>
+            </div>
+            <div class="row">
+                <Menu v-bind:items = 'display_list'/>
             </div>
         </div>
-        <div class="row">
-            <Menu v-bind:items = 'display_list'/>
-        </div>
     </div>
+    <DetailModal/>
+    <LoadingModal/>
+    <ConfirmModal/>
 </template>
 
 
 <script>
-import FilterMenu from '@/components/FilterMenu.vue'
-import Menu from '@/components/Menu.vue'
-
-import {menuItems, tagList} from '@/Data.js'
+import FilterMenu from '@/components/menu/FilterMenu.vue'
+import Menu from '@/components/menu/Menu.vue'
+import Cart from '@/components/menu/Cart.vue'
+import DetailModal from '@/components/menu/DetailModal.vue'
+import ConfirmModal from '@/components/menu/ConfirmModal.vue'
+import LoadingModal from '@/components/LoadingModal.vue'
+import { fetchMenu, fetchTags } from '@/mixins/menu.js'
+import menu_store from '@/stores/menu_store.js'
 
 
 export default {
     name: 'MenuPage',
     components: {
         FilterMenu,
-        Menu
+        Menu,
+        Cart,
+        DetailModal,
+        LoadingModal,
+        ConfirmModal,
     },
     data() {
         return {
             active_tag: "All dishes",
-            display_list: menuItems().slice(),
-            menu_items: menuItems().slice(),
-            tag_list: tagList().slice()
+            display_list: menu_store.getters.getMenu().value,
+            menu_items: menu_store.getters.getMenu().value,
+            tag_list: menu_store.getters.getTags().value,
+            window: {
+                width: 0,
+                height: 0,
+            }
         }
     },
     methods: {
@@ -55,43 +111,65 @@ export default {
             }else{
                 this.display_list = Array()
 
-                for (let i=0; i<this.menu_items.length; i++){
-                    let item = this.menu_items[i]
-                    if (item.tag == tag){
+                for (const item of this.menu_items){
+                    if (item.item_tag == tag){
                         this.display_list.push(item)
                     }
                 }
             }
-
             this.active_tag = tag
+        },
+        handleResize() {
+            this.window.width = window.innerWidth;
+            this.window.height = window.innerHeight;
+        },
+        toggleCart() {
+            menu_store.commit("toggleCart")
         }
-    }
+    },
+    computed: {
+        cart_active: () => {
+            return menu_store.state.cart_active
+        },
+    },
+    created() {
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
+    },
+    unmounted () {
+        window.removeEventListener('resize', this.handleResize);
+    },
+    beforeRouteEnter(to, from, next) {
+        //make sure that the data is fetched before this page is created
+        if (menu_store.state.menu_items === null || menu_store.state.taglist === null){
+            Promise.allSettled([fetchMenu(), fetchTags()]).then((values) => {
+                menu_store.commit('setMenu', values[0])
+                menu_store.commit('setTags', values[1])
+                next()
+            })
+        }else{
+            next()
+        }
+    } 
 }
 </script>
 
 
 <style scoped>
+.body-wrapper {
+    padding-top: 70px;
+}
 .navbar-wrapper span {
     font-weight: bold;
     color: #2c3a57;
 }
-.home-button {
-    height: 100%;
-    width: auto;
-    margin-right: 15%;
-    color: #ffffff;
-    font-size: 150%;
-    background: #2c3a57;
-    border: none;
-    border-radius:.70rem!important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    float: left;
+.home-button-wrapper, .home-text-wrapper {
+    display: inline-block;
 }
-.body-wrapper {
-    padding-left: 5%;
-    padding-right: 5%;
+.home-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .title-wrapper {
     margin-left: 1%;
@@ -106,6 +184,17 @@ export default {
     float: left;
     font-weight: bold;
     font-size: 25px;
+}
+.menu-reduce-right {
+    margin-right: 35%;
+}
+.menu-reduce-bottom {
+    margin-bottom: 230px;
+}
+.navbar-reduce-right {
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-right: 35%;
 }
 @media only screen and (max-width: 420px){
     .home-text {
@@ -126,6 +215,7 @@ export default {
         position:relative;
         top:5px;
     }
+    
 }
 @media only screen and (min-width: 421px) and (max-width: 575px){
     .home-text {

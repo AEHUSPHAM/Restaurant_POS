@@ -1,6 +1,9 @@
+.firebase
 .DS_Store
 node_modules
 /dist
+functions/.gitignore
+functions/node_modules
 
 
 # local env files
