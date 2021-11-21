@@ -8,7 +8,7 @@
                 <img v-bind:src="item.img_src" v-bind:alt="item.img_alt">
             </div>
             <div class="col-md-9 col-sm-9 col-9 w-100">
-                <div class="row" style="margin-bottom: 6px;">
+                <div class="row" style="margin-bottom: -7px;">
                     <div class="item-label col-md-12 col-sm-12 col-12 p-0">
                         <p class="item-name">
                             {{item_index}}. {{item.item_name}}
@@ -16,6 +16,17 @@
                         <button type="button" class="edit" @click="editItem">
                             <i class="fa fa-edit"></i>
                         </button>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12" style="height: 25px; margin-bottom: 9px; border-bottom: 1px solid black;">
+                        <p style="float: left; display: flex; font-size: 12px; ">
+                            Topping:
+                        </p>
+                        <p class="topping-money">
+                            {{ formatMoney(item.total_price - item.item_price) }}
+                        </p>
                     </div>
                 </div>
                 <div class="row">
@@ -29,7 +40,6 @@
                         <button class="plus" @click="increaseItemQuantity">
                             <i class="fa fa-plus"></i>
                         </button>
-                        
                         <b>
                             <p class="price">
                                 {{formatMoney(item.item_price)}}
@@ -109,6 +119,16 @@ img {
     overflow: hidden;
     white-space: nowrap;
     font-weight: bold;
+    font-size: 14px;
+}
+
+.topping-money {
+    color: #FF0000;
+    font-size: 14px;
+    display: flex;
+    float: right;
+    margin: 0 auto;
+    margin-right: 12px;
 }
 
 .edit {
@@ -191,7 +211,7 @@ img {
 }
 
 
-@media only screen and (max-width: 1000px ){
+@media only screen and (max-width: 767px ){
     .item-name {
         font-size: 11px;
     }

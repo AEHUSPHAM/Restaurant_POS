@@ -277,7 +277,7 @@ export default {
     padding-left: 10px;
     padding-right: 10px;
     height: calc(100% - 150px);
-    width: 30%;
+    width: 38%;
     position: fixed;
     z-index: 1000;
     top: 0;
@@ -293,7 +293,7 @@ export default {
 .cart-open-small {
     padding-left: 10px;
     padding-right: 10px;
-    height: 280px;
+    height: 230px;
     width: 70%;
     position: fixed;
     z-index: 1;
@@ -314,7 +314,7 @@ export default {
     display: none;
 }
 .cart-footer-open {
-    width: 30%;
+    width: 38%;
     height: 150px;
     position: fixed;
     bottom: 0;
@@ -372,7 +372,7 @@ export default {
     border-radius: 10px;
     margin-bottom: 15px;
     padding-top: 2%;
-    width: 70%;
+    width: 60%;
     height: 50px;
     justify-content: center;
 }
