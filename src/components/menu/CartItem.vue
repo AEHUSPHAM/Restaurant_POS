@@ -20,11 +20,11 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-md-12 col-sm-12 col-12" style="height: 25px; margin-bottom: 9px; border-bottom: 1px solid black;">
-                        <p style="float: left; display: flex; font-size: 12px; ">
+                    <div class="topping-money col-md-12 col-sm-12 col-12">
+                        <p style="color:#808080; float:left;">
                             Topping:
                         </p>
-                        <p class="topping-money">
+                        <p style="float:right;">
                             {{ formatMoney(item.total_price - item.item_price) }}
                         </p>
                     </div>
@@ -123,10 +123,15 @@ img {
 }
 
 .topping-money {
+    height: 25px;
+    margin-bottom: 9px;
+    border-bottom: 1px solid #808080;
+}
+
+.topping-money p {
     color: #FF0000;
     font-size: 14px;
     display: flex;
-    float: right;
     margin: 0 auto;
     margin-right: 12px;
 }
